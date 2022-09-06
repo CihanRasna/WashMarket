@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,7 +15,8 @@ namespace RSNManagers
         // ReSharper disable once StaticMemberInGenericType
         private static readonly object Lock = new();
 
-        [FormerlySerializedAs("_persistent")] [SerializeField] private bool persistent = true;
+        [FormerlySerializedAs("_persistent")] [SerializeField]
+        private bool persistent = true;
 
         #endregion
 
@@ -62,22 +64,21 @@ namespace RSNManagers
 
         #region Methods
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (persistent)
                 DontDestroyOnLoad(gameObject);
-            OnAwake();
         }
 
-        protected virtual void OnAwake()
+        protected virtual void Start()
         {
         }
 
-        protected virtual void OnStart()
+        protected virtual void OnEnable()
         {
         }
 
-        protected virtual void OnExit()
+        protected virtual void OnDisable()
         {
         }
 

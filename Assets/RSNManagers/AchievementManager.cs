@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace RSNManagers
 {
-    public class AchievementManager : MonoBehaviour
+    public class AchievementManager : Singleton<AchievementManager>
     {
     }
 }
