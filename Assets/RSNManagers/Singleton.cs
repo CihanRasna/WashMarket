@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -66,8 +67,8 @@ namespace RSNManagers
 
         protected virtual void Awake()
         {
-            if (persistent)
-                DontDestroyOnLoad(gameObject);
+            if (transform.parent) transform.SetParent(null,true);
+            if (persistent) DontDestroyOnLoad(gameObject);
         }
 
         protected virtual void Start()
