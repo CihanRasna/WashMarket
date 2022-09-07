@@ -2,22 +2,117 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c626480-8279-4d16-99cb-7a2b6f1b15fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/GameplayScripts.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameplayScripts/Actor.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameplayScripts/Actor.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameplayScripts/Player.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameplayScripts/Player.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Misc.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Documentaion.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Documentaion.pdf.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/Example Scene.unity" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/Example Scene.unity.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/Ground.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/Ground.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/JoystickPlayerExample.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/JoystickPlayerExample.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/JoystickSetterExample.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/JoystickSetterExample.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/Player.mat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Examples/Player.mat.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Dynamic Joystick.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Dynamic Joystick.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Fixed Joystick.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Fixed Joystick.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Floating Joystick.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Floating Joystick.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Variable Joystick.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Prefabs/Variable Joystick.prefab.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Base.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Base/Joystick.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Base/Joystick.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/DynamicJoystickEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/DynamicJoystickEditor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/FloatingJoystickEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/FloatingJoystickEditor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/JoystickEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/JoystickEditor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/VariableJoystickEditor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Editor/VariableJoystickEditor.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/DynamicJoystick.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/DynamicJoystick.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/FixedJoystick.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/FixedJoystick.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/FloatingJoystick.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/FloatingJoystick.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Outline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Outline.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Outline_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Outline_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Plain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Plain.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Plain_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Plain_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Ridged.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Ridged.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Ridged_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/All Axis Backgrounds/AllAxis_Ridged_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Outline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Outline.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Outline_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Outline_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Plain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Plain.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Plain_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Plain_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Ridged.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Ridged.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Ridged_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Handles/Handle_Ridged_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Outline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Outline.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Outline_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Outline_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Plain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Plain.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Plain_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Plain_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Ridged.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Ridged.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Ridged_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Horizontal Backgrounds/Horizontal_Ridged_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Outline.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Outline.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Outline_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Outline_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Plain.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Plain.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Plain_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Plain_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Ridged.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Ridged.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Ridged_Arrows.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Joystick Pack/Sprites/Vertical Backgrounds/Vertical_Ridged_Arrows.png.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Prefab.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WashMarket/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WashMarket/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/AchievementManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/AchievementManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameplayScripts/Actor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameplayScripts/Actor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameplayScripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameplayScripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/GameManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/GameManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/InputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/RoomManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/RoomManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/Singleton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/SoundManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/RSNManagers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/RSNManagers/UIManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/InputManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +121,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/GameplayScripts/Actor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/GameplayScripts/Room.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/RSNManagers/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.8.9/Runtime/Behaviours/CinemachineVirtualCamera.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -51,7 +148,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor &amp; Play">
     <configuration name="UnitTests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath C:\Users\Cihan\Documents\RSNRepo\WashMarket -testResults Logs/results.xml -testPlatform EditMode -debugCodeOptimization" />
@@ -92,6 +189,8 @@
       <workItem from="1662459346389" duration="55000" />
       <workItem from="1662459876018" duration="355000" />
       <workItem from="1662482385894" duration="315000" />
+      <workItem from="1662502188599" duration="8884000" />
+      <workItem from="1662538707819" duration="3965000" />
     </task>
     <servers />
   </component>

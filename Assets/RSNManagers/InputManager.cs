@@ -1,12 +1,16 @@
+using GameplayScripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace RSNManagers
 {
-    public class InputManager : Singleton<InputManager> , IPointerDownHandler , IDragHandler , IPointerUpHandler
+    public class InputManager : Singleton<InputManager>, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {
-        [SerializeField] private Image joystick;
+        [SerializeField] private Joystick joystick;
+        [SerializeField] private Player currentPlayer;
+
+        private bool _hasInputValue;
+        private bool _hasMover;
 
         protected override void Awake()
         {
@@ -21,6 +25,8 @@ namespace RSNManagers
         protected override void Start()
         {
             base.Start();
+            currentPlayer = GameManager.Instance.currentPlayer;
+            _hasMover = currentPlayer;
         }
 
         protected override void OnDisable()
@@ -28,19 +34,30 @@ namespace RSNManagers
             base.OnDisable();
         }
 
+        private void Update()
+        {
+            if (_hasInputValue && _hasMover)
+            {
+                currentPlayer.Move(joystick.Direction);
+            }
+        }
+
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("DOWN");
+            joystick.OnPointerDown(eventData);
+            _hasInputValue = true;
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            Debug.Log("DRAG");
+            joystick.OnDrag(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            Debug.Log("UP");
+            joystick.OnPointerUp(eventData);
+            _hasInputValue = false;
         }
     }
 }
