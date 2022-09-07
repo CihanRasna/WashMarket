@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3540013711201407771}
   - component: {fileID: 8820926248966224004}
   - component: {fileID: 2280500728958913392}
+  - component: {fileID: -6644856426747901579}
   m_Layer: 0
   m_Name: WashingMachineLevel1
   m_TagString: Untagged
@@ -116,3 +117,15 @@ MonoBehaviour:
   capacity: 5
   consumption: 10
   nextLevelMachine: {fileID: 0}
+--- !u!114 &-6644856426747901579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4376063615226028654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9bc055802630ec479501aa7848d6695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
