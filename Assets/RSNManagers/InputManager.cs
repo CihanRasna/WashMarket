@@ -12,26 +12,11 @@ namespace RSNManagers
         private bool _hasInputValue;
         private bool _hasMover;
 
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-        }
-
         protected override void Start()
         {
             base.Start();
             currentPlayer = GameManager.Instance.currentPlayer;
             _hasMover = currentPlayer;
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
         }
 
         private void Update()
@@ -41,7 +26,6 @@ namespace RSNManagers
                 currentPlayer.Move(joystick.Direction);
             }
         }
-
 
         public void OnPointerDown(PointerEventData eventData)
         {
