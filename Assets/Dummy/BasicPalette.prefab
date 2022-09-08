@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridLayout: {fileID: 5938793393651355185}
-  MainTilemap: {fileID: 2849021564615296909}
+  mainTilemap: {fileID: 2849021564615296909}
   whiteTile: {fileID: 11400000, guid: b49d557d7001b084d80de96c740f6b63, type: 2}
   prefab1: {fileID: -6644856426747901579, guid: cb25d614f3aa5d041a4b80c1a602640c, type: 3}
   prefab2: {fileID: -6644856426747901579, guid: e433914566eb8b14e978738c951325f3, type: 3}

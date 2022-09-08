@@ -129,3 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bc055802630ec479501aa7848d6695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
+  ghostColor: {r: 0, g: 0.59607846, b: 1, a: 0.5019608}
+  normalColor: {r: 0, g: 0.59607846, b: 1, a: 1}

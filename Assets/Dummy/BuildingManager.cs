@@ -1,31 +1,26 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class BuildingSystem : MonoBehaviour
+public class BuildingManager : RSNManagers.Singleton<BuildingManager>
 {
-    public static BuildingSystem currentSystem;
-
     public GridLayout gridLayout;
     private Grid _grid;
-    [SerializeField] private Tilemap MainTilemap;
+    [SerializeField] private Tilemap mainTilemap;
     [SerializeField] private TileBase whiteTile;
 
     public PlaceableObject prefab1;
     public PlaceableObject prefab2;
 
-    private PlaceableObject objectToPlace;
+    private PlaceableObject _objectToPlace;
 
     private static Camera _mainCamera;
 
     #region Life Cycle
 
-    private void Awake()
+    protected override void Awake()
     {
-        currentSystem = this;
         _mainCamera = Camera.main;
         _grid = gridLayout.gameObject.GetComponent<Grid>();
     }
@@ -41,27 +36,33 @@ public class BuildingSystem : MonoBehaviour
             InitializeWithObject(prefab2);
         }
 
-        if (!objectToPlace)
+        if (!_objectToPlace)
         {
             return;
+        }
+        
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _objectToPlace.Rotate();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (CanPlaceableAtPosition(objectToPlace))
+            if (CanPlaceableAtPosition(_objectToPlace))
             {
-                objectToPlace.Place();
-                var start = gridLayout.WorldToCell(objectToPlace.GetStartPosition());
-                TakeArea(start,objectToPlace.Size);
+                _objectToPlace.Place();
+                var start = gridLayout.WorldToCell(_objectToPlace.GetStartPosition());
+                TakeArea(start,_objectToPlace.Size);
             }
             else
             {
-                Destroy(objectToPlace.gameObject);
+                Destroy(_objectToPlace.gameObject);
             }
         }
         else if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Destroy(objectToPlace.gameObject);
+            Destroy(_objectToPlace.gameObject);
         }
     }
 
@@ -79,10 +80,10 @@ public class BuildingSystem : MonoBehaviour
     {
         var cellPos = gridLayout.WorldToCell(position);
         position = _grid.GetCellCenterWorld(cellPos);
-        return position;
+        return position + Vector3.up;
     }
 
-    public static TileBase[] GetTilesBlock(BoundsInt area, Tilemap tilemap)
+    private static IEnumerable<TileBase> GetTilesBlock(BoundsInt area, Tilemap tilemap)
     {
         var size = area.size;
         var array = new TileBase[size.x * size.y * size.z];
@@ -104,21 +105,21 @@ public class BuildingSystem : MonoBehaviour
 
     private void InitializeWithObject(PlaceableObject prefab)
     {
-        var pos = SnapCoordinateToGrid(Vector3.zero);
+        var pos = SnapCoordinateToGrid(GetMouseWorldPosition());
         var obj = Instantiate(prefab, pos, Quaternion.identity);
         obj.AddComponent<ObjectDrag>();
-        objectToPlace = obj;
+        _objectToPlace = obj;
     }
 
     private bool CanPlaceableAtPosition(PlaceableObject placeableObject)
     {
         var area = new BoundsInt
         {
-            position = gridLayout.WorldToCell(objectToPlace.GetStartPosition()),
+            position = gridLayout.WorldToCell(_objectToPlace.GetStartPosition()),
             size = placeableObject.Size
         };
 
-        var baseArray = GetTilesBlock(area, MainTilemap);
+        var baseArray = GetTilesBlock(area, mainTilemap);
 
         foreach (var tileBase in baseArray)
         {
@@ -133,7 +134,7 @@ public class BuildingSystem : MonoBehaviour
 
     private void TakeArea(Vector3Int start, Vector3Int size)
     {
-        MainTilemap.BoxFill(start, whiteTile, start.x, start.y, start.x + size.x, start.y + size.y);
+        mainTilemap.BoxFill(start, whiteTile, start.x, start.y, start.x + size.x, start.y + size.y);
     }
 
     #endregion

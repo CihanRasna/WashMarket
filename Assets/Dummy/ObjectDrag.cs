@@ -7,14 +7,20 @@ public class ObjectDrag : MonoBehaviour
 {
     private Vector3 offset;
 
-    private void OnMouseDown()
+    private void Awake()
     {
-        offset = transform.position - BuildingSystem.GetMouseWorldPosition();
+        offset = transform.position - BuildingManager.GetMouseWorldPosition();
+    }
+
+    private void Update()
+    {
+        var pos = BuildingManager.GetMouseWorldPosition() + offset;
+        transform.position = BuildingManager.Instance.SnapCoordinateToGrid(pos);
     }
 
     private void OnMouseDrag()
     {
-        var pos = BuildingSystem.GetMouseWorldPosition() + offset;
-        transform.position = BuildingSystem.currentSystem.SnapCoordinateToGrid(pos);
+        var pos = BuildingManager.GetMouseWorldPosition() + offset;
+        transform.position = BuildingManager.Instance.SnapCoordinateToGrid(pos);
     }
 }
