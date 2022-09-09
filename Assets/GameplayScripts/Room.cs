@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameplayScripts
 {
@@ -9,9 +11,25 @@ namespace GameplayScripts
         public bool isActiveRoom;
         [SerializeField] private List<GameObject> walls;
         [SerializeField] private List<Room> neighborRooms = new(4);
+        [SerializeField] private NavMeshSurface _meshSurface;
 
         private int _roomID;
         private int _roomUniqueID;
+
+        public NavMeshData GetNavmeshData()
+        {
+            return _meshSurface.navMeshData;
+        }
+        public void BuildNavMeshData()
+        {
+            _meshSurface.enabled = true;
+            _meshSurface.BuildNavMesh();
+        }
+
+        public void RemoveNavMeshData()
+        {
+            _meshSurface.navMeshData = null;
+        }
 
         public void GetIDFromManager(int id, bool isActiveRoom)
         {
@@ -35,7 +53,7 @@ namespace GameplayScripts
                     Vector3.Distance(neighborRoom.transform.position, w.transform.position));
                 var asd = orderByDist.First();
                 var dist = Vector3.Distance(asd.transform.position, neighborRoom.transform.position);
-                if (dist <= GetComponent<MeshRenderer>().bounds.extents.magnitude)
+                if (dist <= _meshSurface.GetComponent<MeshRenderer>().bounds.extents.magnitude)
                 {
                     asd.gameObject.SetActive(false);
                 }

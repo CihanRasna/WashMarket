@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GameplayScripts;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace RSNManagers
 {
@@ -12,7 +13,6 @@ namespace RSNManagers
         [SerializeField] private List<Room> currentlyActiveRooms;
         [SerializeField] private int horizontalRoomCount = 3;
         [SerializeField] private int verticalRoomCount = 5;
-
 
         protected override void Awake()
         {
@@ -26,6 +26,14 @@ namespace RSNManagers
             var activeRoomCount = PersistManager.Instance.ActiveRoomCount;
             ActivateRooms(activeRoomCount);
             FindNeighborRooms();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ActivateRoomsDynamic();
+            }
         }
 
         private void InstantiateRoomPrefabs()
@@ -49,7 +57,6 @@ namespace RSNManagers
                         posName = $"[1,{i + 1},0]";
                     }
 
-
                     var room = Instantiate(roomPrefab, desiredPos, Quaternion.identity, roomHolder);
                     room.name = $"Room {posName}    Order : {count}";
                     roomsOnScene.Add(room);
@@ -64,11 +71,49 @@ namespace RSNManagers
             {
                 var currentRoom = roomsOnScene[i];
                 currentRoom.GetIDFromManager(i, i < activeRoomCount);
+
+                if (i == activeRoomCount -1)
+                {
+                    Debug.Log(currentRoom.gameObject.name);
+                    currentRoom.BuildNavMeshData();
+                }
+                
+                if (i < activeRoomCount)
+                {
+                    currentlyActiveRooms.Add(currentRoom);
+                    currentRoom.gameObject.SetActive(true);
+                }
+            }
+        }
+
+        private void ActivateRoomsDynamic()
+        {
+            var activeRoomCount = PersistManager.Instance.ActiveRoomCount;
+            if (activeRoomCount >= horizontalRoomCount * verticalRoomCount) return;
+            
+            activeRoomCount = PersistManager.Instance.ActiveRoomCount += 1;
+            var currentActiveRooms = currentlyActiveRooms.Count;
+            var lastRoom = currentlyActiveRooms[^1];
+            var navmeshData = lastRoom.GetNavmeshData();
+            Destroy(navmeshData);
+
+            for (var i = currentActiveRooms; i < activeRoomCount; i++)
+            {
+                var currentRoom = roomsOnScene[i];
+                currentRoom.GetIDFromManager(i, i < activeRoomCount);
                 if (i < activeRoomCount)
                 {
                     currentlyActiveRooms.Add(currentRoom);
                 }
+
+                if (i == activeRoomCount - 1)
+                {
+                    currentRoom.BuildNavMeshData();
+                }
             }
+
+            lastRoom.RemoveNavMeshData();
+            FindNeighborRooms();
         }
 
         private void FindNeighborRooms()
