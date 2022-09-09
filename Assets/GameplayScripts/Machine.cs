@@ -1,8 +1,10 @@
+using System;
+using RSNManagers;
 using UnityEngine;
 
 namespace GameplayScripts
 {
-    public abstract class Machine : MonoBehaviour
+    public abstract class Machine : MonoBehaviour, IWorkable, IRepairable
     {
         public enum Level
         {
@@ -12,12 +14,77 @@ namespace GameplayScripts
         }
 
         public Level currentLevel;
-        
-        [SerializeField] private float workTime;
-        [SerializeField] private float durability;
-        [SerializeField] private float capacity;
-        [SerializeField] private float consumption;
-        [SerializeField] private Machine nextLevelMachine;
-        
+
+        [SerializeField] protected float singleWorkTime;
+        [SerializeField] protected float durability;
+        [SerializeField] protected float capacity;
+        [SerializeField] protected float consumption;
+        [SerializeField] protected Machine nextLevelMachine;
+
+        private event Action WorkDoneAction;
+
+        protected Customer _currentCustomer;
+        protected CustomerItem _customerItems;
+        protected float _workedTime = 0;
+        protected int _durabilityWashCount;
+
+        public bool occupied;
+        [field: SerializeField] public bool Filled { get; protected set; }
+
+        private void Start()
+        {
+            _workedTime = 0f;
+            occupied = false;
+            _durabilityWashCount = (int)(durability / singleWorkTime);
+            GameManager.Instance.allMachines.Add(this);
+        }
+
+        protected virtual void Working()
+        {
+            var deltaTime = Time.deltaTime;
+            if (durability <= 0 || _durabilityWashCount == 0)
+            {
+                Repair();
+                return;
+            }
+
+            _workedTime += deltaTime;
+            durability -= deltaTime;
+            if (_workedTime >= singleWorkTime)
+            {
+                DoneWork();
+            }
+        }
+
+        public void StartWork(Customer customer)
+        {
+            _currentCustomer = customer;
+            WorkDoneAction += _currentCustomer.MachineFinished;
+
+            if (!Filled)
+            {
+                Filled = true;
+                //START EVENTS LIKE A ANIMS
+            }
+        }
+
+        public void DoneWork()
+        {
+            WorkDoneAction?.Invoke();
+            _durabilityWashCount -= 1;
+            _workedTime = 0f;
+            Filled = false;
+        }
+
+        public void Empty()
+        {
+            WorkDoneAction -= _currentCustomer.MachineFinished;
+            _currentCustomer = null;
+            occupied = false;
+        }
+
+        public void Repair()
+        {
+        }
     }
 }
