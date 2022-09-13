@@ -11,6 +11,7 @@ namespace RSNManagers
 
         private bool _hasInputValue;
         private bool _hasMover;
+        private bool _firstTouch;
 
         protected override void Start()
         {
@@ -29,6 +30,11 @@ namespace RSNManagers
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!_firstTouch)
+            {
+                _firstTouch = true;
+                GameManager.Instance.StartGame();
+            }
             joystick.OnPointerDown(eventData);
             _hasInputValue = true;
         }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,8 +17,9 @@ namespace GameplayScripts
             Patrol,
             GoingForItems,
             GatheringItems,
-            DudeGoingHome,
-            Payment
+            GoingForPayment,
+            Payment,
+            DudeGoingHome
         }
 
         public enum WorkType
@@ -36,7 +36,7 @@ namespace GameplayScripts
         private Vector3 _targetPosition;
         private Machine _currentlyUsingMachine;
 
-        private readonly WaitForSeconds _initWaitForSeconds = new(2f);
+        private readonly WaitForSeconds _initWaitForSeconds = new(1f);
         private readonly WaitForSeconds _fillWaitForSeconds = new(3f);
 
         private GameManager _gameManager;
@@ -75,9 +75,8 @@ namespace GameplayScripts
             {
                 return workType = WorkType.Iron;
             }
-                
+
             return workType = WorkType.Pay;
-            
         }
 
         private IEnumerator LookingForFreeMachine()
@@ -99,8 +98,9 @@ namespace GameplayScripts
                 }
                 else
                 {
-                    state = State.Payment;
-                    GoToPay();
+                    state = State.GoingForPayment;
+                    var paydesk = (Paydesk)_currentlyUsingMachine;
+                    paydesk.AddCustomerToQueue(this);
                     yield break;
                 }
             }
@@ -132,6 +132,15 @@ namespace GameplayScripts
                 }
             }
 
+            if (state == State.GoingForPayment)
+            {
+                var dist = agent.remainingDistance;
+                if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
+                {
+                    state = State.Payment;
+                }
+            }
+
             if (state == State.Patrol)
             {
                 /*var dist = agent.remainingDistance;
@@ -149,7 +158,13 @@ namespace GameplayScripts
             _currentlyUsingMachine.FinishInteraction();
             _currentlyUsingMachine.StartWork(this);
             state = State.Patrol;
-            agent.destination = RandomNavSphere(transform.position, 5f, -1);
+            agent.destination = _gameManager.leavePos.position; //RandomNavSphere(transform.position, 5f, -1);
+        }
+
+        public void GoToPaymentQueuePosition(Vector3 pos)
+        {
+            state = State.GoingForPayment;
+            agent.destination = pos;
         }
 
         private IEnumerator StartEmptyingRoutine()
@@ -163,18 +178,6 @@ namespace GameplayScripts
 
             state = State.LookingForMachine;
             StartCoroutine(LookingForFreeMachine());
-        }
-
-        public void GoToPay()
-        {
-            var paydesk = (Paydesk)_currentlyUsingMachine;
-            if (!paydesk.Customers.Contains(this))
-            {
-                paydesk.Customers.Enqueue(this);
-            }
-
-            var pos = paydesk.CustomerQueuePositions[paydesk.Customers.Count - 1];
-            agent.destination = pos;
         }
 
         public void MachineFinished()

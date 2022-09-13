@@ -27,7 +27,6 @@ namespace RSNManagers
 
         [SerializeField] private List<Actor> possibleCustomers;
         public List<Machine> allMachines;
-        public Paydesk paydesk;
         public Transform leavePos;
         public ClothPicker clothPicker;
 
@@ -41,7 +40,7 @@ namespace RSNManagers
         protected override void Start()
         {
             base.Start();
-            StartGame();
+            //StartGame();
         }
 
         private void LoadGame()
@@ -58,11 +57,25 @@ namespace RSNManagers
             playerCamera.LookAt = currentPlayerTransform;
         }
 
-        private void StartGame()
+        public void StartGame()
         {
             if (currentState is GameStates.Loaded or GameStates.Paused)
             {
+                Debug.Log("STARTED");
                 currentState = GameStates.Started;
+                StartCoroutine(TestMe());
+            }
+        }
+
+        private IEnumerator TestMe()
+        {
+            for (var i = 0; i < 30; i++)
+            {
+                var customer = Instantiate(possibleCustomers[0], leavePos.position,Quaternion.identity);
+                for (var j = 0; j < 5; j++)
+                {
+                    yield return null;
+                }
             }
         }
 
@@ -123,7 +136,7 @@ namespace RSNManagers
             if (machine == null) return null;
             if (desiredType == typeof(Paydesk))
             {
-                Debug.Log("PAYDESK AQ");
+                Debug.Log("PAYDESK AQ",machine.gameObject);
                 machine.occupied = false;
             }
             else
