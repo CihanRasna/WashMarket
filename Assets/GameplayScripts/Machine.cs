@@ -20,6 +20,7 @@ namespace GameplayScripts
         [SerializeField] protected float capacity;
         [SerializeField] protected float consumption;
         [SerializeField] protected Machine nextLevelMachine;
+        [SerializeField] protected Animator animator;
 
         private event Action WorkDoneAction;
 
@@ -31,7 +32,7 @@ namespace GameplayScripts
         public bool occupied;
         [field: SerializeField] public bool Filled { get; protected set; }
 
-        private void Start()
+        protected virtual void Start()
         {
             _workedTime = 0f;
             occupied = false;
@@ -56,14 +57,19 @@ namespace GameplayScripts
             }
         }
 
-        public void StartWork(Customer customer)
+        public void MachineIsOccupied(Customer customer)
         {
             _currentCustomer = customer;
+        }
+
+        public void StartWork(Customer customer)
+        {
             WorkDoneAction += _currentCustomer.MachineFinished;
 
             if (!Filled)
             {
                 Filled = true;
+                CurrentlyWorking();
                 //START EVENTS LIKE A ANIMS
             }
         }
@@ -74,6 +80,7 @@ namespace GameplayScripts
             _durabilityWashCount -= 1;
             _workedTime = 0f;
             Filled = false;
+            CurrentlyWorking();
         }
 
         public void Empty()
@@ -86,5 +93,14 @@ namespace GameplayScripts
         public void Repair()
         {
         }
+
+        #region AnimatorOverrideMethods
+
+        public abstract void StartInteraction();
+        public abstract void CurrentlyWorking();
+        public abstract void FinishInteraction();
+
+
+        #endregion
     }
 }

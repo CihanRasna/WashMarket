@@ -59,6 +59,7 @@ namespace GameplayScripts
 
             if (_currentlyUsingMachine)
             {
+                _currentlyUsingMachine.MachineIsOccupied(this);
                 var targetForward = _currentlyUsingMachine.transform;
                 _targetPosition = targetForward.position + targetForward.forward;
                 state = State.GoingForMachine;
@@ -105,7 +106,9 @@ namespace GameplayScripts
 
         private IEnumerator StartFillRoutine()
         {
+            _currentlyUsingMachine.StartInteraction();
             yield return _fillWaitForSeconds;
+            _currentlyUsingMachine.FinishInteraction();
             _currentlyUsingMachine.StartWork(this);
             state = State.Patrol;
             agent.destination = RandomNavSphere(transform.position, 5f, -1);
@@ -113,7 +116,9 @@ namespace GameplayScripts
 
         private IEnumerator StartEmptyingRoutine()
         {
+            _currentlyUsingMachine.StartInteraction();
             yield return _fillWaitForSeconds;
+            _currentlyUsingMachine.FinishInteraction();
             
             _currentlyUsingMachine.Empty();
             _currentlyUsingMachine = null;
