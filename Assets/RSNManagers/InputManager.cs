@@ -8,14 +8,18 @@ namespace RSNManagers
     {
         [SerializeField] private Joystick joystick;
         [SerializeField] private Player currentPlayer;
+        [SerializeField] private LayerMask rayCastLayers;
+        
 
         private bool _hasInputValue;
         private bool _hasMover;
         private bool _firstTouch;
+        private Camera _camera;
 
         protected override void Start()
         {
             base.Start();
+            _camera = Camera.main;
             currentPlayer = GameManager.Instance.currentPlayer;
             _hasMover = currentPlayer;
         }
@@ -34,6 +38,14 @@ namespace RSNManagers
             {
                 _firstTouch = true;
                 GameManager.Instance.StartGame();
+            }
+
+            var ray = _camera.ScreenPointToRay(Input.mousePosition);
+        
+            if (Physics.Raycast(ray, out var hit,1000f,rayCastLayers)) 
+            {
+                Debug.Log(hit.collider.gameObject.name);
+                return;
             }
             joystick.OnPointerDown(eventData);
             _hasInputValue = true;

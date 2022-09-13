@@ -557,7 +557,6 @@ MonoBehaviour:
   possibleCustomers:
   - {fileID: -4005421165298465005, guid: 871159fc7ceae5f4daf2464f0be8b2e6, type: 3}
   allMachines: []
-  paydesk: {fileID: 0}
   leavePos: {fileID: 1297872149}
   clothPicker: {fileID: 817231340}
 --- !u!114 &817231340
@@ -637,6 +636,9 @@ MonoBehaviour:
   persistent: 1
   joystick: {fileID: 8170153793240616037}
   currentPlayer: {fileID: 0}
+  rayCastLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!224 &829765584
 RectTransform:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ namespace RSNManagers
             Loading,
             Loaded,
             Started,
+            Placement,
             Paused,
             Failed,
         }
@@ -69,14 +70,9 @@ namespace RSNManagers
 
         private IEnumerator TestMe()
         {
-            for (var i = 0; i < 30; i++)
-            {
-                var customer = Instantiate(possibleCustomers[0], leavePos.position,Quaternion.identity);
-                for (var j = 0; j < 5; j++)
-                {
-                    yield return null;
-                }
-            }
+            var customer = Instantiate(possibleCustomers[0], leavePos.position,Quaternion.identity);
+            yield return new WaitForSeconds(10f);
+            StartCoroutine(TestMe());
         }
 
         private void PauseGame()
