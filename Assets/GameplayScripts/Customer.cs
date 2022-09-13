@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,7 +29,9 @@ namespace GameplayScripts
             Iron,
             Pay
         }
-        
+
+        [SerializeField] private WorkType workType;
+
         [SerializeField] private State state = State.Idle;
         private Vector3 _targetPosition;
         private Machine _currentlyUsingMachine;
@@ -37,11 +40,14 @@ namespace GameplayScripts
         private readonly WaitForSeconds _fillWaitForSeconds = new(3f);
 
         private GameManager _gameManager;
+        [SerializeField] private CustomerItem _customerItem;
 
         private IEnumerator Start()
         {
             yield return _initWaitForSeconds;
             _gameManager = GameManager.Instance;
+            _customerItem = Instantiate(_gameManager.clothPicker.PickACustomerItem());
+
             if (state == State.Idle)
             {
                 state = State.LookingForMachine;
@@ -53,18 +59,50 @@ namespace GameplayScripts
             }
         }
 
+        private WorkType CheckClothesWorkType()
+        {
+            if (_customerItem.needWash)
+            {
+                return workType = WorkType.Wash;
+            }
+
+            if (_customerItem.needDry)
+            {
+                return workType = WorkType.Dry;
+            }
+
+            if (_customerItem.needIron)
+            {
+                return workType = WorkType.Iron;
+            }
+                
+            return workType = WorkType.Pay;
+            
+        }
+
         private IEnumerator LookingForFreeMachine()
         {
-            _currentlyUsingMachine = _gameManager.FindClosestMachine(WorkType.Wash, transform);
+            var clothesWorkType = CheckClothesWorkType();
+            _currentlyUsingMachine = _gameManager.FindClosestMachine(clothesWorkType, transform);
 
             if (_currentlyUsingMachine)
             {
-                _currentlyUsingMachine.MachineIsOccupied(this);
                 var targetForward = _currentlyUsingMachine.transform;
                 _targetPosition = targetForward.position + targetForward.forward;
-                state = State.GoingForMachine;
                 agent.destination = _targetPosition;
-                yield break;
+
+                if (workType != WorkType.Pay)
+                {
+                    _currentlyUsingMachine.MachineIsOccupied(this);
+                    state = State.GoingForMachine;
+                    yield break;
+                }
+                else
+                {
+                    state = State.Payment;
+                    GoToPay();
+                    yield break;
+                }
             }
 
             state = State.WaitingForMachine;
@@ -119,27 +157,42 @@ namespace GameplayScripts
             _currentlyUsingMachine.StartInteraction();
             yield return _fillWaitForSeconds;
             _currentlyUsingMachine.FinishInteraction();
-            
+
             _currentlyUsingMachine.Empty();
             _currentlyUsingMachine = null;
-            GoToPay();
+
+            state = State.LookingForMachine;
+            StartCoroutine(LookingForFreeMachine());
         }
 
         public void GoToPay()
         {
-            state = State.Payment;
-            var paydesk = _gameManager.paydesk;
+            var paydesk = (Paydesk)_currentlyUsingMachine;
             if (!paydesk.Customers.Contains(this))
             {
                 paydesk.Customers.Enqueue(this);
             }
-            
+
             var pos = paydesk.CustomerQueuePositions[paydesk.Customers.Count - 1];
             agent.destination = pos;
         }
 
         public void MachineFinished()
         {
+            var clothesWorkType = CheckClothesWorkType();
+            if (clothesWorkType == WorkType.Wash)
+            {
+                _customerItem.needWash = false;
+            }
+            else if (clothesWorkType == WorkType.Dry)
+            {
+                _customerItem.needDry = false;
+            }
+            else if (clothesWorkType == WorkType.Iron)
+            {
+                _customerItem.needIron = false;
+            }
+
             state = State.GoingForItems;
             agent.destination = _targetPosition;
         }

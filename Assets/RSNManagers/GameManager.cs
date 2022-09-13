@@ -29,6 +29,7 @@ namespace RSNManagers
         public List<Machine> allMachines;
         public Paydesk paydesk;
         public Transform leavePos;
+        public ClothPicker clothPicker;
 
         protected override void Awake()
         {
@@ -120,9 +121,17 @@ namespace RSNManagers
             }
 
             if (machine == null) return null;
-            machine.occupied = true;
-            return machine;
+            if (desiredType == typeof(Paydesk))
+            {
+                Debug.Log("PAYDESK AQ");
+                machine.occupied = false;
+            }
+            else
+            {
+                machine.occupied = true;
+            }
 
+            return machine;
         }
     }
 }
