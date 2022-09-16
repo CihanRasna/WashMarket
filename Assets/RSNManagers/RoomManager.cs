@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using GameplayScripts;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,6 +38,7 @@ namespace RSNManagers
             }
         }
 
+        [Button]
         private void InstantiateRoomPrefabs()
         {
             var count = 1;
@@ -63,6 +66,16 @@ namespace RSNManagers
                     count += 1;
                 }
             }
+        }
+
+        [Button]
+        private void RemoveRoomPrefabs()
+        {
+            foreach (var room in roomsOnScene)
+            {
+                DestroyImmediate(room.gameObject);
+            }
+            roomsOnScene.Clear();
         }
 
         private void ActivateRooms(int activeRoomCount)

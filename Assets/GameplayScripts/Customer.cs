@@ -41,6 +41,7 @@ namespace GameplayScripts
 
         private GameManager _gameManager;
         [SerializeField] private CustomerItem _customerItem;
+        [SerializeField] private int _workCost;
 
         private IEnumerator Start()
         {
@@ -157,6 +158,7 @@ namespace GameplayScripts
             yield return _fillWaitForSeconds;
             _currentlyUsingMachine.FinishInteraction();
             _currentlyUsingMachine.StartWork(this);
+            _workCost += _currentlyUsingMachine.UsingPrice;
             state = State.Patrol;
             agent.destination = _gameManager.leavePos.position; //RandomNavSphere(transform.position, 5f, -1);
         }
@@ -202,6 +204,7 @@ namespace GameplayScripts
 
         public void PaymentDone()
         {
+            PersistManager.Instance.Currency += _workCost;
             state = State.DudeGoingHome;
             agent.destination = _gameManager.leavePos.position;
         }

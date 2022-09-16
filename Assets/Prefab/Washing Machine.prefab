@@ -301,6 +301,7 @@ MonoBehaviour:
   durability: 300
   capacity: 5
   consumption: 3
+  usingPrice: 15
   nextLevelMachine: {fileID: 0}
   animator: {fileID: 6622622915416581941}
   occupied: 0

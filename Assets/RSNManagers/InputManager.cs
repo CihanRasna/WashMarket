@@ -44,7 +44,7 @@ namespace RSNManagers
         
             if (Physics.Raycast(ray, out var hit,1000f,rayCastLayers)) 
             {
-                Debug.Log(hit.collider.gameObject.name);
+                Debug.Log(hit.collider.TryGetComponent(out Machine machine));
                 return;
             }
             joystick.OnPointerDown(eventData);

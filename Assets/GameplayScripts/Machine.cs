@@ -19,8 +19,11 @@ namespace GameplayScripts
         [SerializeField] protected float durability;
         [SerializeField] protected float capacity;
         [SerializeField] protected float consumption;
+        [SerializeField] protected int usingPrice;
         [SerializeField] protected Machine nextLevelMachine;
         [SerializeField] protected Animator animator;
+
+        public int UsingPrice => usingPrice;
 
         private event Action WorkDoneAction;
 
