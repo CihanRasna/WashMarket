@@ -15,11 +15,19 @@ namespace RSNManagers
         [SerializeField] private List<Room> currentlyActiveRooms;
         [SerializeField] private int horizontalRoomCount = 3;
         [SerializeField] private int verticalRoomCount = 5;
+        [SerializeField] private SaveableEntity saveableEntity;
+        [SerializeField] private List<string> roomIDList;
+        [SerializeField] private bool instantiateRoomOnAwake;
+        public List<Room> RoomsOnScene => roomsOnScene;
+        public List<Room> ActiveRooms => currentlyActiveRooms;
 
         protected override void Awake()
         {
             base.Awake();
-            InstantiateRoomPrefabs();
+            if (instantiateRoomOnAwake)
+            {
+                InstantiateRoomPrefabs();
+            }
         }
 
         protected override void Start()
@@ -29,6 +37,26 @@ namespace RSNManagers
             ActivateRooms(activeRoomCount);
             FindNeighborRooms();
         }
+
+        [Button]
+        private void GenerateIDList()
+        {
+            var count = horizontalRoomCount * verticalRoomCount;
+            var currentIDCount = roomIDList.Count;
+            for (var i = currentIDCount; i < count; i++)
+            {
+                roomIDList.Add(GenerateID());
+            }
+        }
+
+        #region SAVELOADID
+
+        private string GenerateID()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
+        #endregion
 
         private void Update()
         {
@@ -63,6 +91,7 @@ namespace RSNManagers
                     var room = Instantiate(roomPrefab, desiredPos, Quaternion.identity, roomHolder);
                     room.name = $"Room {posName}    Order : {count}";
                     roomsOnScene.Add(room);
+                    room.GetUniqueID(roomIDList[count - 1]);
                     count += 1;
                 }
             }
@@ -75,6 +104,7 @@ namespace RSNManagers
             {
                 DestroyImmediate(room.gameObject);
             }
+
             roomsOnScene.Clear();
         }
 
@@ -83,14 +113,14 @@ namespace RSNManagers
             for (var i = 0; i < roomsOnScene.Count; i++)
             {
                 var currentRoom = roomsOnScene[i];
-                currentRoom.GetIDFromManager(i, i < activeRoomCount);
+                currentRoom.CheckIfActiveRoom(i < activeRoomCount);
 
-                if (i == activeRoomCount -1)
+                if (i == activeRoomCount - 1)
                 {
                     Debug.Log(currentRoom.gameObject.name);
                     currentRoom.BuildNavMeshData();
                 }
-                
+
                 if (i < activeRoomCount)
                 {
                     currentlyActiveRooms.Add(currentRoom);
@@ -103,7 +133,7 @@ namespace RSNManagers
         {
             var activeRoomCount = PersistManager.Instance.ActiveRoomCount;
             if (activeRoomCount >= horizontalRoomCount * verticalRoomCount) return;
-            
+
             activeRoomCount = PersistManager.Instance.ActiveRoomCount += 1;
             var currentActiveRooms = currentlyActiveRooms.Count;
             var lastRoom = currentlyActiveRooms[^1];
@@ -113,7 +143,7 @@ namespace RSNManagers
             for (var i = currentActiveRooms; i < activeRoomCount; i++)
             {
                 var currentRoom = roomsOnScene[i];
-                currentRoom.GetIDFromManager(i, i < activeRoomCount);
+                currentRoom.CheckIfActiveRoom(i < activeRoomCount);
                 if (i < activeRoomCount)
                 {
                     currentlyActiveRooms.Add(currentRoom);

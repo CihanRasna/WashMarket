@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace GameplayScripts
 {
+    [Serializable]
     public abstract class Machine : MonoBehaviour, IWorkable, IRepairable
     {
         public enum Level
         {
-            Level1,
-            Level2,
-            Level3
+            Level1 = 1,
+            Level2 = 2,
+            Level3 = 3
         }
 
         public Level currentLevel;
