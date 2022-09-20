@@ -7,6 +7,5 @@ namespace GameplayScripts
     {
         [SerializeField] protected float speed = 3f;
         [SerializeField] protected NavMeshAgent agent;
-        [SerializeField] public string roomUniqueID;
     }
 }

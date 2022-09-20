@@ -29,6 +29,23 @@ namespace RSNManagers
                 PlayerPrefs.SetInt(ActiveRoomKey, _activeRoomCount);
             }
         }
+        
+        public Vector3 PlayersLastPos
+        {
+            get
+            {
+                var x = PlayerPrefs.GetFloat("PlayerX", 0);
+                var y = PlayerPrefs.GetFloat("PlayerY", 0);
+                var z = PlayerPrefs.GetFloat("PlayerZ", 0);
+                return new Vector3(x, y, z);
+            }
+            set
+            {
+                PlayerPrefs.SetFloat("PlayerX", value.x);
+                PlayerPrefs.SetFloat("PlayerY", value.x);
+                PlayerPrefs.SetFloat("PlayerZ", value.x);
+            }
+        }
 
         protected override void Awake()
         {

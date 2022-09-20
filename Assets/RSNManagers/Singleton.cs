@@ -16,8 +16,7 @@ namespace RSNManagers
         // ReSharper disable once StaticMemberInGenericType
         private static readonly object Lock = new();
 
-        [FormerlySerializedAs("_persistent")] [SerializeField]
-        private bool persistent = true;
+        [SerializeField] private bool persistent = true;
 
         #endregion
 
@@ -96,7 +95,7 @@ namespace RSNManagers
 
         #region Methods
 
-        private void OnApplicationQuit()
+        protected virtual void OnApplicationQuit()
         {
             Quitting = true;
         }

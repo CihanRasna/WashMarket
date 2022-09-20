@@ -56,6 +56,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+  agent: {fileID: 0}
+  roomUniqueID: 
 --- !u!195 &9012648949551997800
 NavMeshAgent:
   m_ObjectHideFlags: 0

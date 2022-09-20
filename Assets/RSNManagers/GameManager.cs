@@ -30,6 +30,8 @@ namespace RSNManagers
         public List<Machine> allMachines;
         public Transform leavePos;
         public ClothPicker clothPicker;
+        [SerializeField] private Vector3 lastKnownPosOfPlayer;
+        
 
         protected override void Awake()
         {
@@ -51,6 +53,7 @@ namespace RSNManagers
 
             if (currentPlayer) return;
             currentPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity) as Player;
+            currentPlayer.transform.position = PersistManager.Instance.PlayersLastPos;
 
             if (!currentPlayer) return;
             var currentPlayerTransform = currentPlayer.transform;
@@ -64,7 +67,7 @@ namespace RSNManagers
             {
                 Debug.Log("STARTED");
                 currentState = GameStates.Started;
-                StartCoroutine(TestMe());
+                //StartCoroutine(TestMe());
             }
         }
 

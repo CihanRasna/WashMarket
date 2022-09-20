@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace RSNManagers
 {
-    public class SaveLoadManager : Singleton<SaveLoadManager>
+    public class SaveLoadManager : MonoBehaviour//Singleton<SaveLoadManager> NOT USING FOR NOW
     {
         private const string SaveDirectory = "/SaveData/";
         private const string FileName = "SaveGame.rsn";

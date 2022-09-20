@@ -98,6 +98,8 @@ GameObject:
   - component: {fileID: 3522754548078067230}
   - component: {fileID: 3967871281849957809}
   - component: {fileID: 4545136739920501735}
+  - component: {fileID: -1151233151597536409}
+  - component: {fileID: -5484289684981959656}
   m_Layer: 6
   m_Name: IronMachine
   m_TagString: Untagged
@@ -233,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9dec77613fa4fb0a62bc89693457069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 0
+  currentLevel: 1
   singleWorkTime: 5
   durability: 500
   capacity: 3
@@ -243,6 +245,65 @@ MonoBehaviour:
   animator: {fileID: 3967871281849957809}
   occupied: 0
   <Filled>k__BackingField: 0
+--- !u!114 &-1151233151597536409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257438795114150266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabId: 8060554386040434170
+  localRefs:
+    _Keys:
+    - {fileID: 7257438795114150266}
+    - {fileID: 5692835953173976818}
+    - {fileID: 104293775198287938}
+    - {fileID: 4183535442347310286, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
+    - {fileID: 7048414278568015202}
+    - {fileID: 2100000, guid: eef4888fd52819747a0a8f56f0c9d82e, type: 2}
+    - {fileID: 5352810178614112129}
+    - {fileID: 3522754548078067230}
+    - {fileID: 3967871281849957809}
+    - {fileID: 4545136739920501735}
+    - {fileID: 11500000, guid: a9dec77613fa4fb0a62bc89693457069, type: 3}
+    - {fileID: -1151233151597536409}
+    - {fileID: 8991762081278227768}
+    - {fileID: 4366667685076451605}
+    - {fileID: 6928336660766587240}
+    - {fileID: 5429175398427104042, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
+    - {fileID: 3837790845018712889}
+    - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 2019044067007384621}
+    - {fileID: 7379350738104643308}
+    - {fileID: 5038816548225521245}
+    - {fileID: 4809794220370922126, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
+    - {fileID: 7390990598968065895}
+    _Values: e13b4ae8fb2dd1084edaeda87ba87d349e02a19eaa140532a05a123f949b5877744f3308d5e7a55f2b5893d5e9ae9b483e84b62ed414d633371789563f109d4d8176332c75755f7a58fe8bae7fd0b74ff55b010fe42aa26088ffc1138f046019bc465760e2c7bd37dbc4292a77d84c063127b465ee52cd57d3d3b37437720a5ca25a9539d8e8ce421838e9a854cdd751b4bb44b6b8c5070d14ae33b67a326e4c317977e3bdedd21af6f64cb568240206fc6228f2b6c01423
+--- !u!114 &-5484289684981959656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257438795114150266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveLayer: 0
+  saveTag: 0
+  saveName: 0
+  saveHideFlags: 0
+  saveActive: 0
+  saveChildren: 0
+  componentsToSave:
+  - {fileID: 5692835953173976818}
 --- !u!1 &8991762081278227768
 GameObject:
   m_ObjectHideFlags: 0

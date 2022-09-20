@@ -7,7 +7,7 @@ namespace GameplayScripts
 {
     public class Customer : Actor
     {
-        private enum State
+        public enum State
         {
             Idle,
             WaitingForMachine,
