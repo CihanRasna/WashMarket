@@ -1,11 +1,13 @@
 using System;
-using RSNManagers;
+using DG.Tweening;
 using UnityEngine;
 
 namespace GameplayScripts
 {
     public class Player : Actor
     {
+        private static readonly int Blend = Animator.StringToHash("Blend");
+
         public void Move(Vector2 direction)
         {
             var myTransform = transform;
@@ -14,6 +16,19 @@ namespace GameplayScripts
             targetForward.z += direction.y;
             myTransform.forward = targetForward;
             myTransform.position += targetForward * (speed * direction.magnitude * Time.deltaTime);
+            animator.SetFloat(Blend, direction.magnitude);
+        }
+
+        public void Stop()
+        {
+            transform.DOKill();
+            var valueToLerp = animator.GetFloat(Blend);
+            DOVirtual.Float(valueToLerp, 0f, 0.25f, OnVirtualUpdate).SetEase(Ease.InQuart);
+        }
+
+        private void OnVirtualUpdate(float v)
+        {
+            animator.SetFloat(Blend, v);
         }
 
 

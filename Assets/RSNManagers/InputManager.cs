@@ -59,6 +59,10 @@ namespace RSNManagers
         public void OnPointerUp(PointerEventData eventData)
         {
             joystick.OnPointerUp(eventData);
+            if (_hasInputValue && _hasMover)
+            {
+                currentPlayer.Stop();
+            }
             _hasInputValue = false;
         }
     }
