@@ -6,16 +6,22 @@ namespace GameplayScripts
 {
     public class Player : Actor
     {
+        private void Start()
+        {
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Y))
             {
-                SaveLoadManager.Instance.Save();
+                PersistData.Instance.SetVector3("Pos",transform.position);
+                PersistData.Instance.Save();
+                //SaveLoadManager.Instance.Save();
             }
 
             if (Input.GetKeyDown(KeyCode.L))
             {
-                SaveLoadManager.Instance.Load();
+                //SaveLoadManager.Instance.Load();
             }
         }
 

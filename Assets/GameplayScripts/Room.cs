@@ -15,10 +15,37 @@ namespace GameplayScripts
         public bool isActiveRoom;
         [SerializeField] private List<GameObject> walls;
         [SerializeField] private List<Room> neighborRooms = new(4);
-        [SerializeField] private List< Machine> currentMachines;
+        [SerializeField] private List<Machine> currentMachines;
         [SerializeField] private NavMeshSurface meshSurface;
         [SerializeField] public string uniqueID;
-        
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                var data = PersistData.Instance;
+                data.SetRoom(uniqueID, currentMachines);
+                //PersistData.Instance.SetRooms(uniqueID, currentMachines);
+                PersistData.Instance.Save();
+                //SaveLoadManager.Instance.Save();
+            }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                var data = PersistData.Instance;
+                var room = data.GetRoom(uniqueID, null);
+                if (room.Count > 0)
+                {
+                    foreach (var m in room)
+                    {
+                        Debug.Log(m.GetType());
+                    }
+                }
+                else
+                {
+                    Debug.Log("NULL");
+                }
+            }
+        }
 
         public NavMeshData GetNavmeshData()
         {

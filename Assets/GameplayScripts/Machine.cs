@@ -25,7 +25,6 @@ namespace GameplayScripts
         [SerializeField] protected Animator animator;
 
         public int UsingPrice => usingPrice;
-
         private event Action WorkDoneAction;
 
         protected Customer _currentCustomer;
