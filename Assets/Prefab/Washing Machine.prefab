@@ -181,6 +181,8 @@ GameObject:
   - component: {fileID: 8724097740378962990}
   - component: {fileID: 7348942349668219222}
   - component: {fileID: 6622622915416581941}
+  - component: {fileID: 7953719414624502282}
+  - component: {fileID: -5278298360647751010}
   m_Layer: 6
   m_Name: Washing Machine
   m_TagString: Untagged
@@ -303,6 +305,7 @@ MonoBehaviour:
   consumption: 3
   nextLevelMachine: {fileID: 0}
   animator: {fileID: 6622622915416581941}
+  myRoom: {fileID: 0}
   occupied: 0
   <Filled>k__BackingField: 0
 --- !u!95 &6622622915416581941
@@ -325,3 +328,62 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7953719414624502282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678642170257324841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabId: 5938512181962581406
+  localRefs:
+    _Keys:
+    - {fileID: 8678642170257324841}
+    - {fileID: 8303348802049925523}
+    - {fileID: 4941768391310896694}
+    - {fileID: 4183535442347310286, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
+    - {fileID: 7165305496537537276}
+    - {fileID: 2100000, guid: fbc9a8a72088b574eb7b877319454b2c, type: 2}
+    - {fileID: 8168519392163610458}
+    - {fileID: 8724097740378962990}
+    - {fileID: 7348942349668219222}
+    - {fileID: 11500000, guid: 09b748ab6e6b4b7d938530e25fe71248, type: 3}
+    - {fileID: 6622622915416581941}
+    - {fileID: 7953719414624502282}
+    - {fileID: 8666006547416082553}
+    - {fileID: 7462965150389555642}
+    - {fileID: 5420860361624445763}
+    - {fileID: 5429175398427104042, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
+    - {fileID: 5204358573605311677}
+    - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 420653111626376955}
+    - {fileID: 4495742287263934442}
+    - {fileID: 5503801762177658248}
+    - {fileID: 4809794220370922126, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
+    - {fileID: 7474771267959749648}
+    _Values: 6c89c14f30fea00ea823b3c3834bda5ef5a2ae434956084fac02a42b742f6b59176ee8140dbfa52674339773876f4c3c1c6d912f033d1b3d6eef03cd5d347c2870f3250dcb119336fc88b77cee7bd61cb21ff0f862c3aa2653aba51dbbd8c857503f1c846aa6f80a27a4cd847961b10c18e67f7d25748b349e4cb91f6b757a2441a0d351a1ad4d5718fbd1bdf626ac4ba44dfa2aa6b4ce24b4e7e61eecd99f6320f143d98d5f6b39cc296bdeb9b7d53bf905c2b970a5cb74
+--- !u!114 &-5278298360647751010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678642170257324841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveLayer: 0
+  saveTag: 0
+  saveName: 0
+  saveHideFlags: 0
+  saveActive: 0
+  saveChildren: 0
+  componentsToSave:
+  - {fileID: 7348942349668219222}

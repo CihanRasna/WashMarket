@@ -21,6 +21,7 @@ namespace GameplayScripts
         [SerializeField] protected float consumption;
         [SerializeField] protected Machine nextLevelMachine;
         [SerializeField] protected Animator animator;
+        [SerializeField] private Room myRoom;
 
         private event Action WorkDoneAction;
 

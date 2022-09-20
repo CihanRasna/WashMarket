@@ -13,8 +13,7 @@ namespace GameplayScripts
         [SerializeField] private List<Room> neighborRooms = new(4);
         [SerializeField] private NavMeshSurface _meshSurface;
 
-        private int _roomID;
-        private int _roomUniqueID;
+        [SerializeField] private string uniqueID;
 
         public NavMeshData GetNavmeshData()
         {
@@ -31,12 +30,13 @@ namespace GameplayScripts
             _meshSurface.navMeshData = null;
         }
 
-        public void GetIDFromManager(int id, bool isActiveRoom)
+        public void GetUniqueID(string id)
+        {
+            uniqueID = id;
+        }
+        public void CheckIfActiveRoom(bool isActiveRoom)
         {
             this.isActiveRoom = isActiveRoom;
-            _roomID = id;
-            _roomUniqueID = $"{gameObject.name},{_roomID.ToString()}".GetHashCode();
-
             gameObject.SetActive(isActiveRoom);
         }
 

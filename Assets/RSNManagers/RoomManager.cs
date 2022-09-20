@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using GameplayScripts;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,11 +15,13 @@ namespace RSNManagers
         [SerializeField] private List<Room> currentlyActiveRooms;
         [SerializeField] private int horizontalRoomCount = 3;
         [SerializeField] private int verticalRoomCount = 5;
+        [SerializeField] private List<string> roomIDList;
+        
 
         protected override void Awake()
         {
             base.Awake();
-            InstantiateRoomPrefabs();
+            //InstantiateRoomPrefabs();
         }
 
         protected override void Start()
@@ -36,6 +40,7 @@ namespace RSNManagers
             }
         }
 
+        [Button]
         private void InstantiateRoomPrefabs()
         {
             var count = 1;
@@ -59,18 +64,50 @@ namespace RSNManagers
 
                     var room = Instantiate(roomPrefab, desiredPos, Quaternion.identity, roomHolder);
                     room.name = $"Room {posName}    Order : {count}";
+                    room.GetUniqueID(roomIDList[count - 1]);
                     roomsOnScene.Add(room);
                     count += 1;
                 }
             }
         }
 
+        [Button]
+        private void RemoveRoomPrefabs()
+        {
+            foreach (var r in roomsOnScene)
+            {
+                DestroyImmediate(r.gameObject);
+            }
+            roomsOnScene.Clear();
+        }
+        
+        [Button]
+        private void GenerateIDList()
+        {
+            var count = horizontalRoomCount * verticalRoomCount;
+            var currentIDCount = roomIDList.Count;
+            for (var i = currentIDCount; i < count; i++)
+            {
+                roomIDList.Add(GenerateID());
+            }
+        }
+
+        #region SAVELOADID
+
+        private string GenerateID()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
+        #endregion
+
+
         private void ActivateRooms(int activeRoomCount)
         {
             for (var i = 0; i < roomsOnScene.Count; i++)
             {
                 var currentRoom = roomsOnScene[i];
-                currentRoom.GetIDFromManager(i, i < activeRoomCount);
+                currentRoom.CheckIfActiveRoom(i < activeRoomCount);
 
                 if (i == activeRoomCount -1)
                 {
@@ -100,7 +137,6 @@ namespace RSNManagers
             for (var i = currentActiveRooms; i < activeRoomCount; i++)
             {
                 var currentRoom = roomsOnScene[i];
-                currentRoom.GetIDFromManager(i, i < activeRoomCount);
                 if (i < activeRoomCount)
                 {
                     currentlyActiveRooms.Add(currentRoom);
