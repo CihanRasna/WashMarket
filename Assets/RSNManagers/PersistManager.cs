@@ -56,7 +56,7 @@ namespace RSNManagers
 
         protected override void Awake()
         {
-            Currency = PlayerPrefs.GetInt(CurrencyKey, 1000);
+            Currency = PlayerPrefs.GetInt(CurrencyKey, 1000000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
         }
     }

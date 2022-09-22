@@ -56,6 +56,8 @@ namespace GameplayScripts
                     OpenUpList();
                     PersistManager.Instance.Currency -= desiredMachine.BuyPrice;
                     var machine = Instantiate(desiredMachine,Vector3.zero, Quaternion.identity);
+                    var draggable = machine.gameObject.AddComponent<Draggable>();
+                    InputManager.Instance.HasDraggableObject(draggable);
                 }
             }
         }
