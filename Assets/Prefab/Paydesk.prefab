@@ -33,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8696811477882425003}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -2.39, y: 1, z: 3.96}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+  machineName: Paydesk
   singleWorkTime: 3
   durability: 1500
   capacity: 0
@@ -123,6 +124,7 @@ MonoBehaviour:
   usingPrice: 0
   nextLevelMachine: {fileID: 0}
   animator: {fileID: 5181336137344829670}
+  buyPrice: 500
   occupied: 0
   <Filled>k__BackingField: 0
   clerk: {fileID: 0}

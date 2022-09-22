@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RSNManagers
 {
     public class PersistManager : Singleton<PersistManager>
     {
+        public UnityAction<int> CurrencyChangedEvent;
+        
         private const string CurrencyKey = "Currency";
         private int _currency;
 
@@ -14,6 +17,8 @@ namespace RSNManagers
             {
                 _currency = value;
                 PlayerPrefs.SetInt(CurrencyKey, _currency);
+                PlayerPrefs.Save();
+                CurrencyChangedEvent?.Invoke(_currency);
             }
         }
 
@@ -27,6 +32,7 @@ namespace RSNManagers
             {
                 _activeRoomCount = value;
                 PlayerPrefs.SetInt(ActiveRoomKey, _activeRoomCount);
+                PlayerPrefs.Save();
             }
         }
         
@@ -44,12 +50,13 @@ namespace RSNManagers
                 PlayerPrefs.SetFloat("PlayerX", value.x);
                 PlayerPrefs.SetFloat("PlayerY", value.x);
                 PlayerPrefs.SetFloat("PlayerZ", value.x);
+                PlayerPrefs.Save();
             }
         }
 
         protected override void Awake()
         {
-            Currency = PlayerPrefs.GetInt(CurrencyKey, 0);
+            Currency = PlayerPrefs.GetInt(CurrencyKey, 1000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
         }
     }

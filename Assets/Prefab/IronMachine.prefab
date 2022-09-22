@@ -236,6 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+  machineName: Ironing Table
   singleWorkTime: 5
   durability: 500
   capacity: 3
@@ -243,6 +244,7 @@ MonoBehaviour:
   usingPrice: 10
   nextLevelMachine: {fileID: 0}
   animator: {fileID: 3967871281849957809}
+  buyPrice: 1000
   occupied: 0
   <Filled>k__BackingField: 0
 --- !u!114 &-1151233151597536409

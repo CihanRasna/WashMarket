@@ -9,7 +9,6 @@ namespace RSNManagers
         [SerializeField] private Joystick joystick;
         [SerializeField] private Player currentPlayer;
         [SerializeField] private LayerMask rayCastLayers;
-        
 
         private bool _hasInputValue;
         private bool _hasMover;

@@ -1,5 +1,4 @@
 using System;
-using ES3Internal;
 using RSNManagers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace GameplayScripts
 
         public Level currentLevel;
 
+        [SerializeField] private string machineName;
         [SerializeField] protected float singleWorkTime;
         [SerializeField] private protected float durability;
         [SerializeField] protected float capacity;
@@ -25,8 +25,11 @@ namespace GameplayScripts
         [SerializeField] protected int usingPrice;
         [SerializeField] protected Machine nextLevelMachine;
         [SerializeField] protected Animator animator;
+        [SerializeField] private int buyPrice = 100;
+
 
         public int UsingPrice => usingPrice;
+        public int BuyPrice => buyPrice;
         private event Action WorkDoneAction;
 
         protected Customer _currentCustomer;
@@ -38,13 +41,14 @@ namespace GameplayScripts
         public bool occupied;
         [field: SerializeField] public bool Filled { get; protected set; }
 
+        public (string machineName, Level currentLevel, float singleWorkTime, float durability, int usingPrice, int buyPrice) RefValuesForUI()
+        {
+            return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice);
+        }
+
         [Button]
         private void Sell()
         {
-            ES3AutoSaveMgr.RemoveAutoSave(GetComponent<ES3AutoSave>());
-            var asd = ES3ReferenceMgrBase.Current as ES3ReferenceMgr;
-            asd.Optimize();
-            asd.RefreshDependencies();
             Destroy(gameObject);
         }
 
@@ -54,6 +58,7 @@ namespace GameplayScripts
             {
                 remainDurability = durability;
             }
+
             _workedTime = 0f;
             occupied = false;
             GameManager.Instance.allMachines.Add(this);
@@ -69,6 +74,7 @@ namespace GameplayScripts
                     _needsRepair = true;
                     NeedRepair();
                 }
+
                 return;
             }
 
@@ -122,7 +128,6 @@ namespace GameplayScripts
         public abstract void StartInteraction();
         public abstract void CurrentlyWorking();
         public abstract void FinishInteraction();
-
 
         #endregion
     }

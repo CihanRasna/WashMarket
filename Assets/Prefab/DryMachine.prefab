@@ -319,6 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevel: 1
+  machineName: Dryer Machine
   singleWorkTime: 5
   durability: 300
   capacity: 5
@@ -326,6 +327,7 @@ MonoBehaviour:
   usingPrice: 10
   nextLevelMachine: {fileID: 0}
   animator: {fileID: 7527438852413750130}
+  buyPrice: 800
   occupied: 0
   <Filled>k__BackingField: 0
 --- !u!114 &8492847874532230849
