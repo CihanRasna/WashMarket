@@ -16,15 +16,13 @@ GameObject:
   - component: {fileID: 8971887195600403818}
   - component: {fileID: 1326407158080097468}
   - component: {fileID: 5181336137344829670}
-  - component: {fileID: 328564130475788773}
-  - component: {fileID: 3421559237183155452}
   m_Layer: 6
   m_Name: Paydesk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8007118925522283915
 Transform:
   m_ObjectHideFlags: 0
@@ -181,52 +179,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &328564130475788773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8696811477882425003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabId: 4385668771134105532
-  localRefs:
-    _Keys:
-    - {fileID: 8696811477882425003}
-    - {fileID: 8007118925522283915}
-    - {fileID: 7846730426161240834}
-    - {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-    - {fileID: 294853089080175666}
-    - {fileID: 2100000, guid: 5de00b8ea757a6449aa26ad8e6666bb0, type: 2}
-    - {fileID: 7374872937197008130}
-    - {fileID: 7503116552334236399}
-    - {fileID: 11500000, guid: 2e6ebb208349e3047b3badd30ffb9c08, type: 3}
-    - {fileID: 5181336137344829670}
-    - {fileID: 8971887195600403818}
-    - {fileID: 1326407158080097468}
-    - {fileID: 328564130475788773}
-    _Values: ac78d9d54be7384ba73677da56f3935f8e5eadaf11bc76384fc54d22a59efc716453364513fccf0fbe010d32ad27b009cfc880156dc43569ee1286859a15a50939067503bc4e4b75d14391ed35561a27ebbbac23e219fc5fe333a9fe8ab68b56a5fc07584e52b37f
---- !u!114 &3421559237183155452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8696811477882425003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveLayer: 0
-  saveTag: 0
-  saveName: 0
-  saveHideFlags: 0
-  saveActive: 0
-  saveChildren: 0
-  componentsToSave:
-  - {fileID: 8007118925522283915}
