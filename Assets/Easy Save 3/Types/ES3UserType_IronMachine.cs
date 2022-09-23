@@ -16,7 +16,7 @@ namespace ES3Types
 		{
 			var instance = (GameplayScripts.IronMachine)obj;
 			
-			writer.WriteProperty("currentLevel", instance.currentLevel, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(GameplayScripts.Machine.Level)));
+			writer.WriteProperty("currentLevel", instance.currentLevel, ES3Type_enum.Instance);
 			writer.WritePrivateField("singleWorkTime", instance);
 			writer.WritePrivateField("durability", instance);
 			writer.WritePrivateField("capacity", instance);
@@ -42,7 +42,7 @@ namespace ES3Types
 				{
 					
 					case "currentLevel":
-						instance.currentLevel = reader.Read<GameplayScripts.Machine.Level>();
+						instance.currentLevel = reader.Read<GameplayScripts.Machine.Level>(ES3Type_enum.Instance);
 						break;
 					case "singleWorkTime":
 					instance = (GameplayScripts.IronMachine)reader.SetPrivateField("singleWorkTime", reader.Read<System.Single>(), instance);

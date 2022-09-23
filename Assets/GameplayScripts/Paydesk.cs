@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using RSNManagers;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameplayScripts
@@ -18,21 +19,18 @@ namespace GameplayScripts
         {
             GameManager.Instance.allMachines.Add(this);
             CustomerQueuePositions = new Dictionary<int, Transform>(5);
-            var position = transform.position;
-            var forward = position + transform.forward;
-            var isBackward = forward.z <= 0 ? 1 : -1;
+            const float offset = 1f;
 
             for (var i = 0; i < 5; i++)
             {
-                var offset = 1.5f * isBackward;
-                forward.z += offset;
+                var pos = new Vector3(.3f, 0, ((i + 1) * offset));
                 var posHandler = new GameObject
                 {
                     transform =
                     {
                         name = $"[{i}]. Slot",
                         parent = transform,
-                        position = forward
+                        localPosition = pos
                     }
                 };
                 CustomerQueuePositions[i] = posHandler.transform;

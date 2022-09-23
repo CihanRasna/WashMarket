@@ -4,10 +4,9 @@ namespace GameplayScripts
 {
     public class IronMachine : Machine
     {
-        private static readonly int CoverOpen = Animator.StringToHash("CoverOpen");
-        private static readonly int CoverClosed = Animator.StringToHash("CoverClosed");
         private static readonly int IsWorking = Animator.StringToHash("IsWorking");
-        
+
+
         private void Update()
         {
             if (occupied && Filled)
@@ -17,7 +16,6 @@ namespace GameplayScripts
         }
         public override void StartInteraction()
         {
-            animator.SetTrigger(CoverOpen);
         }
 
         public override void CurrentlyWorking()
@@ -27,7 +25,6 @@ namespace GameplayScripts
 
         public override void FinishInteraction()
         {
-            animator.SetTrigger(CoverClosed);
         }
     }
 }

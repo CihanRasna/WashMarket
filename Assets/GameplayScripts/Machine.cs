@@ -2,6 +2,7 @@ using System;
 using RSNManagers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameplayScripts
 {
@@ -25,11 +26,15 @@ namespace GameplayScripts
         [SerializeField] protected int usingPrice;
         [SerializeField] protected Machine nextLevelMachine;
         [SerializeField] protected Animator animator;
-        [SerializeField] private int buyPrice = 100;
+        [SerializeField] protected int buyPrice = 100;
+        [SerializeField] protected LayerMask unplaceableLayers;
+        [SerializeField] protected Transform machineMesh;
+        public NavMeshObstacle navMeshObstacle;
 
-
+        public LayerMask UnplaceableLayers => unplaceableLayers;
         public int UsingPrice => usingPrice;
         public int BuyPrice => buyPrice;
+        public Transform MeshObject => machineMesh;
         private event Action WorkDoneAction;
 
         protected Customer _currentCustomer;
@@ -54,6 +59,8 @@ namespace GameplayScripts
 
         protected virtual void Start()
         {
+            navMeshObstacle ??= GetComponent<NavMeshObstacle>();
+            
             if (remainDurability == 0 && !_needsRepair)
             {
                 remainDurability = durability;

@@ -11,8 +11,9 @@ namespace RSNManagers
         [SerializeField] private Joystick joystick;
         [SerializeField] private Player currentPlayer;
         [SerializeField] private LayerMask placementLayers;
-            [SerializeField] private LayerMask rayCastLayers;
+        [SerializeField] private LayerMask rayCastLayers;
 
+        private Machine _currentMachine = null;
         private Draggable _currentDraggable = null;
 
         private bool _hasInputValue;
@@ -32,8 +33,9 @@ namespace RSNManagers
             _hasMover = currentPlayer;
         }
 
-        public void HasDraggableObject(Draggable draggable)
+        public void HasDraggableObject(Machine machine,Draggable draggable)
         {
+            _currentMachine = machine;
             _currentDraggable = draggable;
         }
 
@@ -52,12 +54,10 @@ namespace RSNManagers
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
                     _currentDraggable.transform.DOLocalRotate(new Vector3(0, 90f, 0), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
-                   // _currentDraggable.transform.Rotate(0,90f,0, Space.Self);
                 }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     _currentDraggable.transform.DORotate(new Vector3(0, -90f, 0), 0.3f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
-                    //_currentDraggable.transform.Rotate(0,-90f,0, Space.Self);
                 }
                 if (RaycastFromMouse(out var hit, placementLayers))
                 {
@@ -68,8 +68,9 @@ namespace RSNManagers
                         y = Mathf.RoundToInt(pos.y),
                         z = Mathf.RoundToInt(pos.z)
                     };
+                    var selfPos = _currentDraggable.transform.position;
 
-                    _currentDraggable.transform.position = roundedPos;
+                    _currentDraggable.transform.position = new Vector3(roundedPos.x,selfPos.y,roundedPos.z);
                 }
             }
         }
@@ -88,10 +89,12 @@ namespace RSNManagers
                 GameManager.Instance.StartGame();
             }
 
-            if (_currentDraggable)
+            if (_currentDraggable && _currentDraggable.CanPlace)
             {
-                Destroy(_currentDraggable);
+                _currentMachine.navMeshObstacle.enabled = true;
+                _currentDraggable.Placed();
                 _currentDraggable = null;
+                _currentMachine = null;
             }
 
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
