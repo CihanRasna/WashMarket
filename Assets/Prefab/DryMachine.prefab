@@ -180,8 +180,8 @@ GameObject:
   - component: {fileID: 7527438852413750130}
   - component: {fileID: 6513287019694875307}
   - component: {fileID: 8492847874532230849}
-  - component: {fileID: -2647904629288502909}
   - component: {fileID: -4036249707050673506}
+  - component: {fileID: 4106548153712688451}
   m_Layer: 6
   m_Name: DryMachine
   m_TagString: Untagged
@@ -325,7 +325,23 @@ MonoBehaviour:
     - {fileID: 4809794220370922126, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
     - {fileID: 6063293604017037399}
     _Values: d7310a84e679b81c024be79efec1212c77eaec18d47a196cd6a7e7f35c08567fa9a3f95025e38d4db1f452352b8ae61d037dc7a3958a6f2aa8967171594cf02f952e68f735311b4cfa8d009a55b3d26a0e3d54cdcca3dd2b3815387376d08b6aaa776f919889dc5493284f173b261b7c9426293e8d81a244cdef3a3b822c7a6c5d9e67e028e4404ac1caf0df41b3ea1e34cebcf67a95187fd905021bc522a02f08cbb909dd70fe50ef1e376b413c0b7ed9586e51e871e7387917f8dc1eda7a62d53e18f2930b045c33f3f7a3a153c263
---- !u!114 &-2647904629288502909
+--- !u!54 &-4036249707050673506
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5471353098330285934}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4106548153712688451
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,24 +360,8 @@ MonoBehaviour:
   saveActive: 0
   saveChildren: 0
   componentsToSave:
-  - {fileID: 4658399916958547412}
   - {fileID: 6513287019694875307}
---- !u!54 &-4036249707050673506
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5471353098330285934}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  - {fileID: 4658399916958547412}
 --- !u!1 &6005067059038083224
 GameObject:
   m_ObjectHideFlags: 0

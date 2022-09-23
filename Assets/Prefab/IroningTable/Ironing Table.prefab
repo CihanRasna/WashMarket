@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7496623720865217904}
   - component: {fileID: 7419542543216421167}
   - component: {fileID: 4790185519300310712}
-  - component: {fileID: 3251480091606539834}
   - component: {fileID: 2152042555400817400}
+  - component: {fileID: -2451083786343250952}
   m_Layer: 0
   m_Name: Ironing Table
   m_TagString: Untagged
@@ -113,25 +113,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3251480091606539834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209110068860759106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveLayer: 0
-  saveTag: 0
-  saveName: 0
-  saveHideFlags: 0
-  saveActive: 0
-  saveChildren: 0
-  componentsToSave: []
 --- !u!114 &2152042555400817400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +155,27 @@ MonoBehaviour:
     - {fileID: 2082469209388596682}
     - {fileID: 2100000, guid: eef4888fd52819747a0a8f56f0c9d82e, type: 2}
     _Values: 397af4d07ffe60047526a29e6549e9247fa709581ec60c348fb780cc495a8a2fb2abbb0a94d44c48ed4264ecf50a6c198134b90e36cfe9726fc042c77d94ba1a648c124671206f56a43e93239ee0c17cb498b4ea5e84071ec3489cd39184ca5778b5ae7de24d745fa40fb374630d104e83bf7c1648a5781f85f408babd43e72808ebabe832449a6724558e6d377b824bc7b2ae2df84cf11e2ecef8ed44b9a119082382b046067f39a51bc461cb19a8098e420df56a45cf43fa8dba634bad236b4d8a9aeb072efb3e337488dc878f5215
+--- !u!114 &-2451083786343250952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209110068860759106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveLayer: 0
+  saveTag: 0
+  saveName: 0
+  saveHideFlags: 0
+  saveActive: 0
+  saveChildren: 0
+  componentsToSave:
+  - {fileID: 7661911302501536338}
+  - {fileID: 697275998212159224}
 --- !u!1 &712064445670148703
 GameObject:
   m_ObjectHideFlags: 0

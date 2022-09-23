@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 3227894102229257444}
   - component: {fileID: 7108091026406030816}
   - component: {fileID: 2769512113279595410}
-  - component: {fileID: 917350434312660133}
+  - component: {fileID: -6933867052206788}
   m_Layer: 6
   m_Name: PaymentDesk
   m_TagString: Untagged
@@ -249,7 +249,7 @@ MonoBehaviour:
     - {fileID: 1686470430711778208}
     - {fileID: -6200502243224066735, guid: af0e40b58cd47ca49a10cc2d60adab52, type: 3}
     _Values: 869636b076775d7b00683d878e19134a36e324005fd7217faaf6d662464e0d4c567568e1d3643e2833e0b4e7f2c4541425a5d88a8ebd5319b091306cb3738057ad53f8f6a92fa165c643221f2044023a30f4bfd2346fd6270e7c01d2f00fc64508a0074e6c1211751365ea480d3fbc6326eccff1914d424d
---- !u!114 &917350434312660133
+--- !u!114 &-6933867052206788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -268,4 +268,5 @@ MonoBehaviour:
   saveActive: 0
   saveChildren: 0
   componentsToSave:
+  - {fileID: 5488548739836320695}
   - {fileID: 7849114036662150273}

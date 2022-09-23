@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -4005421165298465005}
   - component: {fileID: 9012648949551997800}
   - component: {fileID: -7323824833724491115}
-  - component: {fileID: -4715552042424855228}
   m_Layer: 9
   m_Name: Customer
   m_TagString: Untagged
@@ -59,7 +58,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   agent: {fileID: 9012648949551997800}
-  roomUniqueID: 
+  animator: {fileID: 0}
   workType: 0
   state: 0
   _customerItem: {fileID: 0}
@@ -122,26 +121,6 @@ MonoBehaviour:
     - {fileID: 7669416332161871093}
     - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     _Values: 741044626ec3573a4f7aa41ffce3183d27a8442700b92450f955ebb00416106899caea1d8d870c07b74919c35d4d1974006883b7b8168846140b96e62858ca668a0db8c6ce35cb619d3cde49d2e7ad46919f4f926638de50adcfce66e10dcf5e824cc7b06aad593564deac0b0b2ee603b9dd5488093700522e6819fe67657f56f3c33879df02233e077a0abb1b15a424b6d1ad04b8465546b3e5212d39a76237
---- !u!114 &-4715552042424855228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747308759092960425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cfcc9ceea0bf419cb3bcaf548c2600d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveLayer: 0
-  saveTag: 0
-  saveName: 0
-  saveHideFlags: 0
-  saveActive: 0
-  saveChildren: 0
-  componentsToSave:
-  - {fileID: 3189034832999614984}
 --- !u!1 &5189543723072461646
 GameObject:
   m_ObjectHideFlags: 0
