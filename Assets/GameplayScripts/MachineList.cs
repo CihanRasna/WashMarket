@@ -55,10 +55,10 @@ namespace GameplayScripts
                 if (currency >= desiredMachine.BuyPrice)
                 {
                     OpenUpList();
-                    PersistManager.Instance.Currency -= desiredMachine.BuyPrice;
+                    //PersistManager.Instance.Currency -= desiredMachine.BuyPrice;
                     var machine = Instantiate(desiredMachine);
                     var draggable = machine.gameObject.AddComponent<Draggable>();
-                    draggable.GetLayerMaskAndMeshData(machine.UnplaceableLayers,machine.navMeshObstacle);
+                    draggable.GetLayerMaskAndMeshData(machine.UnplaceableLayers,machine.navMeshObstacle, desiredMachine.BuyPrice);
                     draggable.GetMachineMeshObject(machine.MeshObject);
                     InputManager.Instance.HasDraggableObject(machine,draggable);
                 }

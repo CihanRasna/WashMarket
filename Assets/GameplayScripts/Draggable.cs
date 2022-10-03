@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,9 +16,11 @@ namespace GameplayScripts
         public Transform machineObject;
         public bool isRotating = false;
         private readonly List<GameObject> _collisionObjects = new List<GameObject>();
+        private int _price;
 
-        public void GetLayerMaskAndMeshData(LayerMask layerMask,NavMeshObstacle meshObstacle)
+        public void GetLayerMaskAndMeshData(LayerMask layerMask,NavMeshObstacle meshObstacle, int price = 0)
         {
+            _price = price;
             navMeshObstacle = meshObstacle;
             unplaceableLayers = layerMask;
             navMeshObstacle.enabled = false;
@@ -87,6 +90,8 @@ namespace GameplayScripts
             machineObject.DOScale(1f, 0.4f);
             machineObject.DOLocalMoveY(0f, 0.5f).OnComplete((() =>
             {
+                if (_price != 0) 
+                    PersistManager.Instance.Currency -= _price;
                 Destroy(this);
             })).SetEase(Ease.OutBounce);
         }
