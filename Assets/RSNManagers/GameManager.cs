@@ -36,7 +36,7 @@ namespace RSNManagers
         protected override void Awake()
         {
             base.Awake();
-            Application.targetFrameRate = 60;
+            //Application.targetFrameRate = 60;
             LoadGame();
         }
 
@@ -52,7 +52,7 @@ namespace RSNManagers
             currentState = GameStates.Loaded;
 
             if (currentPlayer) return;
-            currentPlayer = Instantiate(playerPrefab, transform.position, Quaternion.identity) as Player;
+            currentPlayer = Instantiate(playerPrefab) as Player;
             currentPlayer.transform.position = PersistManager.Instance.PlayersLastPos;
 
             if (!currentPlayer) return;

@@ -20,7 +20,7 @@ namespace RSNManagers
         private bool _hasMover;
         private bool _firstTouch;
         private Camera _camera;
-        
+
         private Vector3 _screenPoint;
         private Vector3 _offset;
         private float _yPos;
@@ -33,7 +33,7 @@ namespace RSNManagers
             _hasMover = currentPlayer;
         }
 
-        public void HasDraggableObject(Machine machine,Draggable draggable)
+        public void HasDraggableObject(Machine machine, Draggable draggable)
         {
             _currentMachine = machine;
             _currentDraggable = draggable;
@@ -51,14 +51,20 @@ namespace RSNManagers
         {
             if (_currentDraggable)
             {
-                if (Input.GetKeyDown(KeyCode.Q))
+                if (!_currentDraggable.isRotating && Input.GetKeyDown(KeyCode.Q))
                 {
-                    _currentDraggable.transform.DOLocalRotate(new Vector3(0, 90f, 0), 0.3f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+                    _currentDraggable.isRotating = true;
+                    _currentDraggable.transform.DOLocalRotate(new Vector3(0, 90f, 0), 0.3f, RotateMode.LocalAxisAdd)
+                        .SetEase(Ease.InOutQuad).OnComplete((() => _currentDraggable.isRotating = false));
                 }
-                if (Input.GetKeyDown(KeyCode.E))
+
+                if (!_currentDraggable.isRotating && Input.GetKeyDown(KeyCode.E))
                 {
-                    _currentDraggable.transform.DORotate(new Vector3(0, -90f, 0), 0.3f,RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuad);
+                    _currentDraggable.isRotating = true;
+                    _currentDraggable.transform.DORotate(new Vector3(0, -90f, 0), 0.3f, RotateMode.LocalAxisAdd)
+                        .SetEase(Ease.InOutQuad).OnComplete((() => _currentDraggable.isRotating = false));
                 }
+
                 if (RaycastFromMouse(out var hit, placementLayers))
                 {
                     var pos = hit.point;
@@ -68,10 +74,17 @@ namespace RSNManagers
                         y = Mathf.RoundToInt(pos.y),
                         z = Mathf.RoundToInt(pos.z)
                     };
-                    var selfPos = _currentDraggable.transform.position;
+                    var draggableTransform = _currentDraggable.transform;
+                    var selfPos = draggableTransform.position;
 
-                    _currentDraggable.transform.position = new Vector3(roundedPos.x,selfPos.y,roundedPos.z);
+                    draggableTransform.position = new Vector3(roundedPos.x, selfPos.y, roundedPos.z);
                 }
+            }
+
+            if (!_currentDraggable && Input.GetKeyDown(KeyCode.B))
+            {
+                UIManager.Instance.SingleMachineSelected(null);
+                UIManager.Instance.PurchaseButtonIsPressed();
             }
         }
 
@@ -89,21 +102,29 @@ namespace RSNManagers
                 GameManager.Instance.StartGame();
             }
 
-            if (_currentDraggable && _currentDraggable.CanPlace)
+            if (_currentDraggable)
             {
-                _currentMachine.navMeshObstacle.enabled = true;
-                _currentDraggable.Placed();
-                _currentDraggable = null;
-                _currentMachine = null;
+                if (_currentDraggable.CanPlace)
+                {
+                    _currentMachine.navMeshObstacle.enabled = true;
+                    _currentDraggable.Placed();
+                    _currentDraggable = null;
+                    _currentMachine = null;
+                }
+            }
+            else
+            {
+                var ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out var hit, 1000f, rayCastLayers))
+                {
+                    hit.collider.TryGetComponent(out Machine machine);
+                    UIManager.Instance.PurchaseButtonIsPressed(true);
+                    UIManager.Instance.SingleMachineSelected(machine);
+                    return;
+                }
             }
 
-            var ray = _camera.ScreenPointToRay(Input.mousePosition);
-        
-            if (Physics.Raycast(ray, out var hit,1000f,rayCastLayers)) 
-            {
-                Debug.Log(hit.collider.TryGetComponent(out Machine machine));
-                return;
-            }
             joystick.OnPointerDown(eventData);
             _hasInputValue = true;
         }
@@ -112,7 +133,6 @@ namespace RSNManagers
         {
             if (_currentDraggable)
             {
-                
             }
             else
             {
@@ -127,6 +147,7 @@ namespace RSNManagers
             {
                 currentPlayer.Stop();
             }
+
             _hasInputValue = false;
         }
     }

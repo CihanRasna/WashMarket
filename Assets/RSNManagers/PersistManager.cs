@@ -48,14 +48,15 @@ namespace RSNManagers
             set
             {
                 PlayerPrefs.SetFloat("PlayerX", value.x);
-                PlayerPrefs.SetFloat("PlayerY", value.x);
-                PlayerPrefs.SetFloat("PlayerZ", value.x);
+                PlayerPrefs.SetFloat("PlayerY", value.y);
+                PlayerPrefs.SetFloat("PlayerZ", value.z);
                 PlayerPrefs.Save();
             }
         }
 
         protected override void Awake()
-        {
+        { 
+            base.Awake();
             Currency = PlayerPrefs.GetInt(CurrencyKey, 1000000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
         }

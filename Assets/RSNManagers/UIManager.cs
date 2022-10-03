@@ -2,13 +2,14 @@ using System;
 using GameplayScripts;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 namespace RSNManagers
 {
     public class UIManager : Singleton<UIManager>
     {
         [SerializeField] private MachineList machineList;
+        [SerializeField] private SingleMachinePanel singleMachinePanel;
         [SerializeField] private TextMeshProUGUI currencyText;
 
         protected override void Start()
@@ -23,19 +24,20 @@ namespace RSNManagers
             currencyText.text = currency.ToString();
         }
 
+        public void PurchaseButtonIsPressed(bool forceDeactivate = false)
+        {
+            machineList.OpenUpList(forceDeactivate);
+        }
+
+        public void SingleMachineSelected(Machine machine)
+        {
+            singleMachinePanel.OpenUpMachinePanel(machine);
+        }
+
 
         public void OpenFailedPanel()
         {
             Debug.Log("failed");
-        }
-
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                machineList.OpenUpList();
-            }
         }
     }
 }

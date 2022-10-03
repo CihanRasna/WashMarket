@@ -95,9 +95,9 @@ namespace RSNManagers
 
         #region Methods
 
-        protected virtual void OnApplicationQuit()
+        protected virtual void OnDestroy()
         {
-            Quitting = true;
+            //Quitting = true;
         }
 
         #endregion

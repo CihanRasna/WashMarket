@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4790185519300310712}
   - component: {fileID: 2152042555400817400}
   - component: {fileID: -2451083786343250952}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ironing Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 4957429949862994285}
   - component: {fileID: 8981436519419158554}
   - component: {fileID: 9042456991466480768}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TableMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 6007588512541146236}
   - component: {fileID: 2493151352868078040}
   - component: {fileID: 2082469209388596682}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 1458508934498752402}
   - component: {fileID: 2110584447917081949}
   - component: {fileID: 6244180412341777689}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}

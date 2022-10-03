@@ -28,14 +28,14 @@ namespace RSNManagers
             {
                 InstantiateRoomPrefabs();
             }
+            var activeRoomCount = PersistManager.Instance.ActiveRoomCount;
+            ActivateRooms(activeRoomCount);
+            FindNeighborRooms();
         }
 
         protected override void Start()
         {
             base.Start();
-            var activeRoomCount = PersistManager.Instance.ActiveRoomCount;
-            ActivateRooms(activeRoomCount);
-            FindNeighborRooms();
         }
 
         [Button]
