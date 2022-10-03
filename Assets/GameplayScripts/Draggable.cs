@@ -1,26 +1,33 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace GameplayScripts
 {
     public class Draggable : MonoBehaviour
     {
+        private NavMeshObstacle navMeshObstacle;
         public LayerMask unplaceableLayers;
         public GameObject dummyGameObject;
         public Material dummyMaterial;
         public Transform machineObject;
+        public bool isRotating = false;
+        private readonly List<GameObject> _collisionObjects = new List<GameObject>();
 
-        public void GetLayerMask(LayerMask layerMask)
+        public void GetLayerMaskAndMeshData(LayerMask layerMask,NavMeshObstacle meshObstacle)
         {
+            navMeshObstacle = meshObstacle;
             unplaceableLayers = layerMask;
+            navMeshObstacle.enabled = false;
             CreateDummyMesh();
         }
 
         private bool _canPlace = false;
         public bool CanPlace => _canPlace;
 
-        private void OnTriggerEnter(Collider other)
+        /*private void OnTriggerEnter(Collider other)
         {
             var wrongLayer = (unplaceableLayers.value & (1 << other.gameObject.layer)) > 0;
             if (wrongLayer)
@@ -28,9 +35,41 @@ namespace GameplayScripts
                 _canPlace = false;
                 dummyMaterial.DOColor(Color.red, 0.2f);
             }
+        }*/
+
+        private void OnTriggerEnter(Collider other)
+        {
+            _collisionObjects.Add(other.gameObject);
+            CheckForPlacement();
         }
 
         private void OnTriggerExit(Collider other)
+        {
+            _collisionObjects.Remove(other.gameObject);
+            CheckForPlacement();
+        }
+
+        private void CheckForPlacement()
+        {
+            var count = _collisionObjects.Count;
+            for (var i = 0; i < count; i++)
+            {
+                var other = _collisionObjects[i];
+                var wrongLayer = (unplaceableLayers.value & (1 << other.layer)) > 0;
+                if (wrongLayer)
+                {
+                    _canPlace = false;
+                    dummyMaterial.DOColor(Color.red, 0.2f);
+                    return;
+                }
+            }
+
+            _canPlace = true;
+            dummyMaterial.DOColor(Color.green, 0.2f);
+        }
+
+
+        /*private void OnTriggerExit(Collider other)
         {
             var wrongLayer = (unplaceableLayers.value & (1 << other.gameObject.layer)) > 0;
             if (wrongLayer)
@@ -38,10 +77,11 @@ namespace GameplayScripts
                 _canPlace = true;
                 dummyMaterial.DOColor(Color.green, 0.2f);
             }
-        }
+        }*/
 
         public void Placed()
         {
+            navMeshObstacle.enabled = true;
             Destroy(dummyGameObject);
             DOTween.Kill(this);
             machineObject.DOScale(1f, 0.4f);
@@ -72,6 +112,7 @@ namespace GameplayScripts
             dummyGameObject.transform.localScale = desiredSize;
             dummyGameObject.transform.Rotate(Vector3.right * 90f);
             dummyMaterial = dummyGameObject.GetComponent<Renderer>().material;
+            dummyMaterial.color = Color.green;
         }
     }
 }
