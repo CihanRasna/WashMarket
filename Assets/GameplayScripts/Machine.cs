@@ -24,9 +24,11 @@ namespace GameplayScripts
         [SerializeField] protected float capacity;
         [SerializeField] protected float consumption;
         [SerializeField] protected int usingPrice;
-        [SerializeField] protected Machine nextLevelMachine;
         [SerializeField] protected Animator animator;
         [SerializeField] protected int buyPrice = 100;
+        [SerializeField] private int sellPrice;
+        [SerializeField] private int totalGain;
+
         [SerializeField] protected LayerMask unplaceableLayers;
         [SerializeField] protected Transform machineMesh;
         public NavMeshObstacle navMeshObstacle;
@@ -35,6 +37,7 @@ namespace GameplayScripts
         public int UsingPrice => usingPrice;
         public int BuyPrice => buyPrice;
         public Transform MeshObject => machineMesh;
+        public float RemainDurability => remainDurability;
         private event Action WorkDoneAction;
 
         protected Customer _currentCustomer;
@@ -46,9 +49,11 @@ namespace GameplayScripts
         public bool occupied;
         [field: SerializeField] public bool Filled { get; protected set; }
 
-        public (string machineName, Level currentLevel, float singleWorkTime, float durability, int usingPrice, int buyPrice) RefValuesForUI()
+        public (string machineName, Level currentLevel, float singleWorkTime, float durability, int usingPrice, int
+            buyPrice, float capacity, float consumption, int sellPrice, int totalGain) RefValuesForUI()
         {
-            return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice);
+            return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice, capacity, consumption,
+                sellPrice, totalGain);
         }
 
         [Button]
@@ -60,7 +65,7 @@ namespace GameplayScripts
         protected virtual void Start()
         {
             navMeshObstacle ??= GetComponent<NavMeshObstacle>();
-            
+
             if (remainDurability == 0 && !_needsRepair)
             {
                 remainDurability = durability;
@@ -115,6 +120,7 @@ namespace GameplayScripts
             WorkDoneAction?.Invoke();
             _workedTime = 0f;
             Filled = false;
+            totalGain += usingPrice;
             CurrentlyWorking();
         }
 

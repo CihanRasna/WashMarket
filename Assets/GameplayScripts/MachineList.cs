@@ -33,9 +33,10 @@ namespace GameplayScripts
             _rectTransform = GetComponent<RectTransform>();
         }
 
-        public void OpenUpList()
+        public void OpenUpList(bool forceDeactivate = false)
         {
             isActive = !isActive;
+            if (forceDeactivate) isActive = false;
             if (isActive)
             {
                 _rectTransform.DOAnchorPosX(100f, 1f);
@@ -57,7 +58,7 @@ namespace GameplayScripts
                     PersistManager.Instance.Currency -= desiredMachine.BuyPrice;
                     var machine = Instantiate(desiredMachine);
                     var draggable = machine.gameObject.AddComponent<Draggable>();
-                    draggable.GetLayerMask(machine.UnplaceableLayers);
+                    draggable.GetLayerMaskAndMeshData(machine.UnplaceableLayers,machine.navMeshObstacle);
                     draggable.GetMachineMeshObject(machine.MeshObject);
                     InputManager.Instance.HasDraggableObject(machine,draggable);
                 }
