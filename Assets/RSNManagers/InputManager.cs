@@ -25,11 +25,14 @@ namespace RSNManagers
         private Vector3 _offset;
         private float _yPos;
 
+        private UIManager UIManager;
+
         protected override void Start()
         {
             base.Start();
             _camera = Camera.main;
             currentPlayer = GameManager.Instance.currentPlayer;
+            UIManager = UIManager.Instance;
             _hasMover = currentPlayer;
         }
 
@@ -83,8 +86,8 @@ namespace RSNManagers
 
             if (!_currentDraggable && Input.GetKeyDown(KeyCode.B))
             {
-                UIManager.Instance.SingleMachineSelected(null);
-                UIManager.Instance.PurchaseButtonIsPressed();
+                UIManager.SingleMachineSelected(null);
+                UIManager.PurchaseButtonIsPressed();
             }
         }
 
@@ -119,8 +122,8 @@ namespace RSNManagers
                 if (Physics.Raycast(ray, out var hit, 1000f, rayCastLayers))
                 {
                     hit.collider.TryGetComponent(out Machine machine);
-                    UIManager.Instance.PurchaseButtonIsPressed(true);
-                    UIManager.Instance.SingleMachineSelected(machine);
+                    UIManager.PurchaseButtonIsPressed(true);
+                    UIManager.SingleMachineSelected(machine);
                     return;
                 }
             }

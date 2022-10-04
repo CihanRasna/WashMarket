@@ -35,6 +35,7 @@ namespace GameplayScripts
 
         public void OpenUpList(bool forceDeactivate = false)
         {
+            DOTween.Kill(transform);
             isActive = !isActive;
             if (forceDeactivate) isActive = false;
             if (isActive)

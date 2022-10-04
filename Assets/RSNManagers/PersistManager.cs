@@ -35,6 +35,19 @@ namespace RSNManagers
                 PlayerPrefs.Save();
             }
         }
+        private const string PassedDayCountKey = "PassedDayCount";
+        private int _passedDayCount;
+
+        public int PassedDayCount
+        {
+            get => _passedDayCount;
+            set
+            {
+                _passedDayCount = value;
+                PlayerPrefs.SetInt(PassedDayCountKey, _passedDayCount);
+                PlayerPrefs.Save();
+            }
+        }
         
         public Vector3 PlayersLastPos
         {
@@ -59,6 +72,7 @@ namespace RSNManagers
             base.Awake();
             Currency = PlayerPrefs.GetInt(CurrencyKey, 1000000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
+            PassedDayCount = PlayerPrefs.GetInt(PassedDayCountKey, 1);
         }
     }
 }
