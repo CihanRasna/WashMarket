@@ -17,7 +17,7 @@ namespace GameplayScripts
 
         protected override void Start()
         {
-            //GameManager.Instance.allMachines.Add(this);
+            navMeshObstacle.enabled = obstacleEnabled;
             CustomerQueuePositions = new Dictionary<int, Transform>(5);
             const float offset = 1f;
 
