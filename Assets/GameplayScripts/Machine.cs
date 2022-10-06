@@ -45,6 +45,7 @@ namespace GameplayScripts
         protected CustomerItem _customerItems;
         protected float _workedTime = 0;
         protected bool _needsRepair = false;
+        protected GameManager Manager;
 
         public bool occupied;
         [field: SerializeField] public bool Filled { get; protected set; }
@@ -62,6 +63,12 @@ namespace GameplayScripts
             Destroy(gameObject);
         }
 
+        protected virtual void Awake()
+        {
+            Manager = GameManager.Instance;
+            Manager.allMachines.Add(this);
+        }
+
         protected virtual void Start()
         {
             navMeshObstacle ??= GetComponent<NavMeshObstacle>();
@@ -73,7 +80,6 @@ namespace GameplayScripts
 
             _workedTime = 0f;
             occupied = false;
-            GameManager.Instance.allMachines.Add(this);
         }
 
         protected virtual void Working()

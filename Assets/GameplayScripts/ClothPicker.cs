@@ -5,13 +5,15 @@ namespace GameplayScripts
 {
     public class ClothPicker : MonoBehaviour
     {
-        [SerializeField] public List<CustomerItem> clothTypes;
+        [SerializeField] public List<CustomerItem> allClothTypes;
+        
+        [SerializeField] public List<CustomerItem> usableClothTypes;
 
         public CustomerItem PickACustomerItem()
         {
-            var clothTypesCount = clothTypes.Count;
+            var clothTypesCount = usableClothTypes.Count;
             var rndOrder = Random.Range(0, clothTypesCount);
-            return clothTypes[rndOrder];
+            return usableClothTypes[rndOrder];
         }
     }
 }

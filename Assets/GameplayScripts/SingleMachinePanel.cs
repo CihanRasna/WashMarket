@@ -11,7 +11,7 @@ namespace GameplayScripts
     public class SingleMachinePanel : MonoBehaviour
     {
         [SerializeField] private RectTransform rectTransform;
-        
+
         [SerializeField] private Machine currentSelectedMachine;
         [SerializeField] private TextMeshProUGUI machineNameTMP;
         [SerializeField] private TextMeshProUGUI machineLevelTMP;
@@ -32,9 +32,9 @@ namespace GameplayScripts
         {
             var machine = currentSelectedMachine;
             var draggable = machine.gameObject.AddComponent<Draggable>();
-            draggable.GetLayerMaskAndMeshData(machine.UnplaceableLayers,machine.navMeshObstacle);
-            draggable.GetMachineMeshObject(machine.MeshObject);
-            InputManager.Instance.HasDraggableObject(machine,draggable);
+            draggable.GetLayerMaskAndMeshData(machine.UnplaceableLayers, machine.navMeshObstacle);
+            draggable.GetMachineMeshObject(machine,machine.MeshObject);
+            InputManager.Instance.HasDraggableObject(machine, draggable);
             OpenUpMachinePanel();
         }
 
@@ -86,7 +86,7 @@ namespace GameplayScripts
             if (currentSelectedMachine)
             {
                 var machine = currentSelectedMachine;
-                var currentDurability = machine.RemainDurability.ToString(CultureInfo.InvariantCulture);
+                var currentDurability = machine.RemainDurability.ToString("00", CultureInfo.InvariantCulture);
                 var maxDurability = _machineMaxDurability.ToString(CultureInfo.InvariantCulture);
                 var fillAmount = machine.RemainDurability / _machineMaxDurability;
                 var color = Color.Lerp(Color.red, Color.green, fillAmount);
@@ -98,12 +98,10 @@ namespace GameplayScripts
 
         public void SellMachine()
         {
-            
         }
 
         public void RepairMachine()
         {
-            
         }
     }
 }

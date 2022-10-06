@@ -43,10 +43,14 @@ namespace GameplayScripts
         [SerializeField] private CustomerItem _customerItem;
         [SerializeField] private int _workCost;
 
+        private float _customerSessionTime;
+
         private IEnumerator Start()
         {
             yield return _initWaitForSeconds;
             _gameManager = GameManager.Instance;
+            var vertices = _gameManager.waitingAreaDemo.mesh.vertices;
+            agent.destination = vertices[Random.Range(0, vertices.Length)];
             _customerItem = Instantiate(_gameManager.clothPicker.PickACustomerItem());
 
             if (state == State.Idle)
@@ -113,6 +117,15 @@ namespace GameplayScripts
 
         private void Update()
         {
+            if (state == State.WaitingForMachine)
+            {
+                _customerSessionTime += Time.deltaTime;
+                if (_customerSessionTime >= 15f)
+                {
+                    ShopClosed(); // HAVE TO CHANGE TO CUSTOMER BEHAVIOUR AGAINST WAITING
+                }
+            }
+            
             if (state == State.GoingForMachine)
             {
                 var dist = agent.remainingDistance;
@@ -160,7 +173,7 @@ namespace GameplayScripts
             _currentlyUsingMachine.StartWork(this);
             _workCost += _currentlyUsingMachine.UsingPrice;
             state = State.Patrol;
-            agent.destination = _gameManager.leavePos.position; //RandomNavSphere(transform.position, 5f, -1);
+            agent.destination = RandomNavSphere(transform.position, 5f, -1); //_gameManager.leavePos.position; //;
         }
 
         public void GoToPaymentQueuePosition(Vector3 pos)
@@ -207,6 +220,18 @@ namespace GameplayScripts
             PersistManager.Instance.Currency += _workCost;
             state = State.DudeGoingHome;
             agent.destination = _gameManager.leavePos.position;
+        }
+
+        public void ShopClosed()
+        {
+            var available = state is State.Idle or State.WaitingForMachine or State.LookingForMachine or State.Payment;
+            
+            if (available)
+            {
+                state = State.DudeGoingHome;
+                agent.destination = _gameManager.leavePos.position;
+                _gameManager.ShiftEndedAction -= ShopClosed;
+            }
         }
 
         private Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)

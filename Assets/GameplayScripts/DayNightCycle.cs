@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using RSNManagers;
 using TMPro;
@@ -8,6 +9,9 @@ namespace GameplayScripts
 {
     public class DayNightCycle : MonoBehaviour
     {
+        public event Action<float> ShiftStartedAction;
+        public event Action ShiftEndedAction;
+        
         [SerializeField] private Image minuteHand;
         [SerializeField] private Image hourHand;
         [SerializeField] private Image clockBackground;
@@ -15,6 +19,9 @@ namespace GameplayScripts
 
         [SerializeField] private float dayTimeInSecond;
         [SerializeField] private float shiftTimeInSecond;
+
+        [SerializeField] private float closedTimeSlowerMultiplier = 3f;
+        
 
         //[SerializeField] private float dayTimeInRealTimeMinute;
         //[SerializeField] private float shiftTimeInRealtimeMinute;
@@ -31,12 +38,12 @@ namespace GameplayScripts
 
         private void Start()
         {
+            if (transform.parent) transform.SetParent(null,true);
+            DontDestroyOnLoad(gameObject);
             passedDayCount = PersistManager.Instance.PassedDayCount;
             _normalizeShiftValue = shiftTimeInSecond / dayTimeInSecond;
 
             shiftTMP.text = $"OPEN SHOP";
-
-            //ClockTimeTweener(dayTimeInRealTimeMinute, true);
         }
 
         private void ClockTimeTweener(float dayTime, bool inShift)
@@ -49,7 +56,8 @@ namespace GameplayScripts
 
             if (inShift)
             {
-                rotateAmount = new Vector3(0, 0, 360);
+                ShiftStartedAction.Invoke(shiftTimeInSecond);
+                //rotateAmount = new Vector3(0, 0, 360);
                 clockBackground.fillClockwise = true;
                 clockBackground.DOFillAmount(_normalizeShiftValue, 0.5f);
                 clockBackground.DOColor(new Color(0, 255, 0, 0.6667f), 0.5f);
@@ -91,15 +99,19 @@ namespace GameplayScripts
 
         private void CloseTime()
         {
-            shiftTMP.text = $"CLOSED";
-            passedDayCount += 1;
-            PersistManager.Instance.PassedDayCount = passedDayCount;
-            _passedTime = 0f;
             inShiftTime = false;
+            passedDayCount += 1;
+            _passedTime = 0f;
+            shiftTMP.text = $"CLOSED";
+            
+            ShiftEndedAction.Invoke();
+            
+            PersistManager.Instance.PassedDayCount = passedDayCount;
+
             StartOrSkipDay();
         }
 
-        private void StartOrSkipDay(bool isButtonClick = false)
+        public void StartOrSkipDay(bool isButtonClick = false)
         {
             if (!_firstDayOfSession)
             {
@@ -133,7 +145,7 @@ namespace GameplayScripts
                 }
                 else
                 {
-                    hourHandDuration = dayTimeInSecond * 2f;
+                    hourHandDuration = dayTimeInSecond * closedTimeSlowerMultiplier;
                     minuteHandDuration = hourHandDuration / 24f;
                     var rotateAmount = new Vector3(0, 0, 360);
 

@@ -35,17 +35,11 @@ namespace GameplayScripts
 
         public void OpenUpList(bool forceDeactivate = false)
         {
-            DOTween.Kill(transform);
-            isActive = !isActive;
-            if (forceDeactivate) isActive = false;
-            if (isActive)
-            {
-                _rectTransform.DOAnchorPosX(100f, 1f);
-            }
-            else
-            {
-                _rectTransform.DOAnchorPosX(-400f, 1f);
-            }
+            DOTween.Kill(1);
+
+            isActive = !forceDeactivate && !isActive;
+
+            _rectTransform.DOAnchorPosX(isActive ? 100f : -400f, 1f);
         }
         public void SpawnMachine()
         {
@@ -60,7 +54,7 @@ namespace GameplayScripts
                     var machine = Instantiate(desiredMachine);
                     var draggable = machine.gameObject.AddComponent<Draggable>();
                     draggable.GetLayerMaskAndMeshData(machine.UnplaceableLayers,machine.navMeshObstacle, desiredMachine.BuyPrice);
-                    draggable.GetMachineMeshObject(machine.MeshObject);
+                    draggable.GetMachineMeshObject(machine,machine.MeshObject);
                     InputManager.Instance.HasDraggableObject(machine,draggable);
                 }
             }

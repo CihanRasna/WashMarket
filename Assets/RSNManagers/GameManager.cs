@@ -25,18 +25,24 @@ namespace RSNManagers
         [SerializeField] private Actor playerPrefab;
         public Player currentPlayer;
         [SerializeField] private CinemachineVirtualCamera playerCamera;
+        [SerializeField] private DayNightCycle shiftTimer;
 
         [SerializeField] private List<Actor> possibleCustomers;
         public List<Machine> allMachines;
         public Transform leavePos;
+        public MeshFilter waitingAreaDemo;
+
         public ClothPicker clothPicker;
-        [SerializeField] private Vector3 lastKnownPosOfPlayer;
-        
+
+        public bool shopHasWasher = false;
+        public bool shopHasDryer = false;
+        public bool shopHasIronTable = false;
+        public event Action ShiftEndedAction;
 
         protected override void Awake()
         {
             base.Awake();
-            //Application.targetFrameRate = 60;
+            Application.targetFrameRate = 60;
             LoadGame();
         }
 
@@ -44,6 +50,46 @@ namespace RSNManagers
         {
             base.Start();
             //StartGame();
+
+            shiftTimer.ShiftStartedAction += ShiftStarted;
+            shiftTimer.ShiftEndedAction += ShiftEnded;
+            //CheckForActiveMachineTypes();
+        }
+
+        public void CheckForActiveMachineTypes()
+        {
+            Debug.Log("INVOKED");
+            clothPicker.usableClothTypes = new List<CustomerItem>(clothPicker.allClothTypes);
+
+            for (var i = 0; i < clothPicker.allClothTypes.Count; i++)
+            {
+                var currentType = clothPicker.allClothTypes[i];
+
+                if (!shopHasWasher && currentType.needWash)
+                {
+                    clothPicker.usableClothTypes.Remove(currentType);
+                }
+
+                if (!shopHasDryer && currentType.needDry)
+                {
+                    clothPicker.usableClothTypes.Remove(currentType);
+                }
+
+                if (!shopHasIronTable && currentType.needIron)
+                {
+                    clothPicker.usableClothTypes.Remove(currentType);
+                }
+            }
+        }
+
+        private void ShiftStarted(float shiftTime)
+        {
+            StartCoroutine(SpawnCustomers(shiftTime));
+        }
+
+        private void ShiftEnded()
+        {
+            ShiftEndedAction.Invoke();
         }
 
         private void LoadGame()
@@ -51,9 +97,9 @@ namespace RSNManagers
             if (currentState == GameStates.Loaded) return;
             currentState = GameStates.Loaded;
 
-            if (currentPlayer) return;
-            currentPlayer = Instantiate(playerPrefab) as Player;
-            currentPlayer.transform.position = PersistManager.Instance.PlayersLastPos;
+            if (currentPlayer) return; //TODO : LOGIC FIX
+            currentPlayer ??= Instantiate(playerPrefab) as Player;
+            //currentPlayer.transform.position = PersistManager.Instance.PlayersLastPos;
 
             if (!currentPlayer) return;
             var currentPlayerTransform = currentPlayer.transform;
@@ -71,11 +117,20 @@ namespace RSNManagers
             }
         }
 
-        private IEnumerator TestMe()
+        private IEnumerator SpawnCustomers(float totalShiftTime)
         {
-            var customer = Instantiate(possibleCustomers[0], leavePos.position,Quaternion.identity);
-            yield return new WaitForSeconds(10f);
-            StartCoroutine(TestMe());
+            var machineCount = allMachines.Count;
+            var machineDelayPerCustomer = 30f;
+            var spawnDelay = machineDelayPerCustomer / machineCount;
+            var totalPossibleCustomerCount = (int)(totalShiftTime / spawnDelay);
+            var waitForSeconds = new WaitForSeconds(spawnDelay);
+
+            for (var i = 0; i < totalPossibleCustomerCount; i++)
+            {
+                var customer = Instantiate(possibleCustomers[0], leavePos.position, Quaternion.identity) as Customer;
+                ShiftEndedAction += customer.ShopClosed;
+                yield return waitForSeconds;
+            }
         }
 
         private void PauseGame()
@@ -121,21 +176,28 @@ namespace RSNManagers
             {
                 var currentMachine = allMachines[i];
                 var machineTransform = currentMachine.transform;
-                if (currentMachine.GetType() == desiredType && !currentMachine.occupied)
+                if (currentMachine.GetType() == desiredType)
                 {
-                    var dist = (lookerTransform.position - machineTransform.position).sqrMagnitude;
-                    if (dist <= closestDist)
+                    if (!currentMachine.occupied)
                     {
-                        closestDist = dist;
-                        machine = currentMachine;
+                        var dist = (lookerTransform.position - machineTransform.position).sqrMagnitude;
+                        if (dist <= closestDist)
+                        {
+                            closestDist = dist;
+                            machine = currentMachine;
+                        }
                     }
+                }
+                else
+                {
+                    return null;
                 }
             }
 
-            if (machine == null) return null;
+            //if (machine == null) return null;
             if (desiredType == typeof(Paydesk))
             {
-                Debug.Log("PAYDESK AQ",machine.gameObject);
+                Debug.Log("PAYDESK AQ", machine.gameObject);
                 machine.occupied = false;
             }
             else

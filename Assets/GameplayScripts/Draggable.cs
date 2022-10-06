@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using RSNManagers;
 using UnityEngine;
@@ -13,12 +14,13 @@ namespace GameplayScripts
         public LayerMask unplaceableLayers;
         public GameObject dummyGameObject;
         public Material dummyMaterial;
+        public Machine machine;
         public Transform machineObject;
         public bool isRotating = false;
         private readonly List<GameObject> _collisionObjects = new List<GameObject>();
         private int _price;
 
-        public void GetLayerMaskAndMeshData(LayerMask layerMask,NavMeshObstacle meshObstacle, int price = 0)
+        public void GetLayerMaskAndMeshData(LayerMask layerMask, NavMeshObstacle meshObstacle, int price = 0)
         {
             _price = price;
             navMeshObstacle = meshObstacle;
@@ -29,16 +31,6 @@ namespace GameplayScripts
 
         private bool _canPlace = false;
         public bool CanPlace => _canPlace;
-
-        /*private void OnTriggerEnter(Collider other)
-        {
-            var wrongLayer = (unplaceableLayers.value & (1 << other.gameObject.layer)) > 0;
-            if (wrongLayer)
-            {
-                _canPlace = false;
-                dummyMaterial.DOColor(Color.red, 0.2f);
-            }
-        }*/
 
         private void OnTriggerEnter(Collider other)
         {
@@ -71,33 +63,46 @@ namespace GameplayScripts
             dummyMaterial.DOColor(Color.green, 0.2f);
         }
 
-
-        /*private void OnTriggerExit(Collider other)
+        private Transform GetClosestRoom(List<Room> rooms)
         {
-            var wrongLayer = (unplaceableLayers.value & (1 << other.gameObject.layer)) > 0;
-            if (wrongLayer)
+            Transform bestTarget = null;
+            var closestDistanceSqr = Mathf.Infinity;
+            var currentPosition = transform.position;
+
+            foreach (var potentialTarget in rooms)
             {
-                _canPlace = true;
-                dummyMaterial.DOColor(Color.green, 0.2f);
+                var directionToTarget = potentialTarget.transform.position - currentPosition;
+                var dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget.transform;
+                }
             }
-        }*/
+
+            return bestTarget;
+        }
 
         public void Placed()
         {
+            var roomManager = RoomManager.Instance;
+            var roomList = roomManager.ActiveRooms;
+            transform.parent = GetClosestRoom(roomList);
             navMeshObstacle.enabled = true;
             Destroy(dummyGameObject);
             DOTween.Kill(this);
             machineObject.DOScale(1f, 0.4f);
             machineObject.DOLocalMoveY(0f, 0.5f).OnComplete((() =>
             {
-                if (_price != 0) 
+                if (_price != 0)
                     PersistManager.Instance.Currency -= _price;
                 Destroy(this);
             })).SetEase(Ease.OutBounce);
         }
 
-        public void GetMachineMeshObject(Transform meshObject)
+        public void GetMachineMeshObject(Machine machine,Transform meshObject)
         {
+            this.machine = machine;
             meshObject.transform.localPosition += Vector3.up;
             machineObject = meshObject;
             machineObject.DOShakeScale(0.5f, .2f, 5).SetLoops(-1, LoopType.Yoyo).SetId(this);

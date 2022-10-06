@@ -48,10 +48,13 @@ namespace RSNManagers
             {
                 currentPlayer.Move(joystick.Direction);
             }
-        }
 
-        private void FixedUpdate()
-        {
+            if (!_currentDraggable && Input.GetKeyDown(KeyCode.B))
+            {
+                UIManager.SingleMachineSelected(null);
+                UIManager.PurchaseButtonIsPressed();
+            }
+            
             if (_currentDraggable)
             {
                 if (!_currentDraggable.isRotating && Input.GetKeyDown(KeyCode.Q))
@@ -83,14 +86,8 @@ namespace RSNManagers
                     draggableTransform.position = new Vector3(roundedPos.x, selfPos.y, roundedPos.z);
                 }
             }
-
-            if (!_currentDraggable && Input.GetKeyDown(KeyCode.B))
-            {
-                UIManager.SingleMachineSelected(null);
-                UIManager.PurchaseButtonIsPressed();
-            }
         }
-
+        
         private bool RaycastFromMouse(out RaycastHit h, LayerMask layer)
         {
             var ray = _camera.ScreenPointToRay(Input.mousePosition);

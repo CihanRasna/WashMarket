@@ -6,7 +6,6 @@ namespace GameplayScripts
     {
         private static readonly int IsWorking = Animator.StringToHash("IsWorking");
 
-
         private void Update()
         {
             if (occupied && Filled)
