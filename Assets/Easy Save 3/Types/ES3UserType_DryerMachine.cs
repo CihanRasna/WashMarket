@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("currentLevel", "machineName", "singleWorkTime", "durability", "capacity", "consumption", "usingPrice", "animator", "buyPrice", "sellPrice", "totalGain", "unplaceableLayers", "machineMesh", "navMeshObstacle", "remainDurability", "_workedTime", "_needsRepair")]
+	[ES3PropertiesAttribute("machineName", "durability", "totalGain", "obstacleEnabled", "remainDurability", "_workedTime", "_needsRepair")]
 	public class ES3UserType_DryerMachine : ES3ComponentType
 	{
 		public static ES3Type Instance = null;
@@ -16,20 +16,10 @@ namespace ES3Types
 		{
 			var instance = (GameplayScripts.DryerMachine)obj;
 			
-			writer.WriteProperty("currentLevel", instance.currentLevel, ES3Type_enum.Instance);
 			writer.WritePrivateField("machineName", instance);
-			writer.WritePrivateField("singleWorkTime", instance);
 			writer.WritePrivateField("durability", instance);
-			writer.WritePrivateField("capacity", instance);
-			writer.WritePrivateField("consumption", instance);
-			writer.WritePrivateField("usingPrice", instance);
-			writer.WritePrivateFieldByRef("animator", instance);
-			writer.WritePrivateField("buyPrice", instance);
-			writer.WritePrivateField("sellPrice", instance);
 			writer.WritePrivateField("totalGain", instance);
-			writer.WritePrivateField("unplaceableLayers", instance);
-			writer.WritePrivateFieldByRef("machineMesh", instance);
-			writer.WritePropertyByRef("navMeshObstacle", instance.navMeshObstacle);
+			writer.WriteProperty("obstacleEnabled", instance.obstacleEnabled, ES3Type_bool.Instance);
 			writer.WritePrivateField("remainDurability", instance);
 			writer.WritePrivateField("_workedTime", instance);
 			writer.WritePrivateField("_needsRepair", instance);
@@ -43,47 +33,17 @@ namespace ES3Types
 				switch(propertyName)
 				{
 					
-					case "currentLevel":
-						instance.currentLevel = reader.Read<GameplayScripts.Machine.Level>(ES3Type_enum.Instance);
-						break;
 					case "machineName":
 					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("machineName", reader.Read<System.String>(), instance);
-					break;
-					case "singleWorkTime":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("singleWorkTime", reader.Read<System.Single>(), instance);
 					break;
 					case "durability":
 					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("durability", reader.Read<System.Single>(), instance);
 					break;
-					case "capacity":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("capacity", reader.Read<System.Single>(), instance);
-					break;
-					case "consumption":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("consumption", reader.Read<System.Single>(), instance);
-					break;
-					case "usingPrice":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("usingPrice", reader.Read<System.Int32>(), instance);
-					break;
-					case "animator":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("animator", reader.Read<UnityEngine.Animator>(), instance);
-					break;
-					case "buyPrice":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("buyPrice", reader.Read<System.Int32>(), instance);
-					break;
-					case "sellPrice":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("sellPrice", reader.Read<System.Int32>(), instance);
-					break;
 					case "totalGain":
 					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("totalGain", reader.Read<System.Int32>(), instance);
 					break;
-					case "unplaceableLayers":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("unplaceableLayers", reader.Read<UnityEngine.LayerMask>(), instance);
-					break;
-					case "machineMesh":
-					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("machineMesh", reader.Read<UnityEngine.Transform>(), instance);
-					break;
-					case "navMeshObstacle":
-						instance.navMeshObstacle = reader.Read<UnityEngine.AI.NavMeshObstacle>();
+					case "obstacleEnabled":
+						instance.obstacleEnabled = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;
 					case "remainDurability":
 					instance = (GameplayScripts.DryerMachine)reader.SetPrivateField("remainDurability", reader.Read<System.Single>(), instance);

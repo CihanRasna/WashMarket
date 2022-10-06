@@ -91,6 +91,7 @@ namespace GameplayScripts
             var roomList = roomManager.ActiveRooms;
             gameManager.CheckForActiveMachineTypes();
             transform.parent = GetClosestRoom(roomList);
+            machine.obstacleEnabled = true;
             navMeshObstacle.enabled = true;
             Destroy(dummyGameObject);
             DOTween.Kill(this,true);

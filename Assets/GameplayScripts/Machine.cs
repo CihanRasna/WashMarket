@@ -32,6 +32,7 @@ namespace GameplayScripts
         [SerializeField] protected LayerMask unplaceableLayers;
         [SerializeField] protected Transform machineMesh;
         public NavMeshObstacle navMeshObstacle;
+        public bool obstacleEnabled = false;
 
         public LayerMask UnplaceableLayers => unplaceableLayers;
         public int UsingPrice => usingPrice;
@@ -76,6 +77,7 @@ namespace GameplayScripts
                 remainDurability = durability;
             }
 
+            navMeshObstacle.enabled = obstacleEnabled;
             _workedTime = 0f;
             occupied = false;
         }

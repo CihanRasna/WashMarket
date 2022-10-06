@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 7496623720865217904}
   - component: {fileID: 7419542543216421167}
   - component: {fileID: 4790185519300310712}
-  - component: {fileID: 2152042555400817400}
-  - component: {fileID: -2451083786343250952}
+  - component: {fileID: -5761482657158870336}
+  - component: {fileID: 2941449480705460217}
   m_Layer: 6
   m_Name: Ironing Table
   m_TagString: Untagged
@@ -58,9 +58,10 @@ MonoBehaviour:
   capacity: 3
   consumption: 0
   usingPrice: 10
-  nextLevelMachine: {fileID: 0}
   animator: {fileID: 6244180412341777689}
   buyPrice: 1000
+  sellPrice: 0
+  totalGain: 0
   unplaceableLayers:
     serializedVersion: 2
     m_Bits: 832
@@ -113,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2152042555400817400
+--- !u!114 &-5761482657158870336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baff8732cd3074ef88b34f9cc487846d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabId: 4260777381639737640
+  prefabId: 2635028927700881522
   localRefs:
     _Keys:
     - {fileID: 209110068860759106}
@@ -133,12 +134,12 @@ MonoBehaviour:
     - {fileID: 7661911302501536338}
     - {fileID: 11500000, guid: a9dec77613fa4fb0a62bc89693457069, type: 3}
     - {fileID: 6244180412341777689}
+    - {fileID: 4957429949862994285}
     - {fileID: 7419542543216421167}
     - {fileID: 7496623720865217904}
     - {fileID: 4790185519300310712}
-    - {fileID: 2152042555400817400}
+    - {fileID: -5761482657158870336}
     - {fileID: 712064445670148703}
-    - {fileID: 4957429949862994285}
     - {fileID: 8981436519419158554}
     - {fileID: 5902005963727480655, guid: ac941cf407f58a549b1b0935a88070fe, type: 3}
     - {fileID: 9042456991466480768}
@@ -154,8 +155,8 @@ MonoBehaviour:
     - {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
     - {fileID: 2082469209388596682}
     - {fileID: 2100000, guid: eef4888fd52819747a0a8f56f0c9d82e, type: 2}
-    _Values: 397af4d07ffe60047526a29e6549e9247fa709581ec60c348fb780cc495a8a2fb2abbb0a94d44c48ed4264ecf50a6c198134b90e36cfe9726fc042c77d94ba1a648c124671206f56a43e93239ee0c17cb498b4ea5e84071ec3489cd39184ca5778b5ae7de24d745fa40fb374630d104e83bf7c1648a5781f85f408babd43e72808ebabe832449a6724558e6d377b824bc7b2ae2df84cf11e2ecef8ed44b9a119082382b046067f39a51bc461cb19a8098e420df56a45cf43fa8dba634bad236b4d8a9aeb072efb3e337488dc878f5215
---- !u!114 &-2451083786343250952
+    _Values: 48f8c50108e80416a86f3b2fc826a2679f7542103db91913e2548deb6c3dc515a3b91fd6ba8efb47216145321266974b52e9569bc27f1971dfb120b45b18aa6aaa25d3824578212c718aefdc73e7017a43bdc2a96c9e272361524a9451505d07b8db88ec931505350b820c4d6ff5e509b1a5f819db54d6484ef622f22d8dda20d218db68a0eb18593d0862166d254b553854e4ac58442c63063f9f9cf31307675d2d7a561a7c6864bf51ddd3f2bfda275433442657d13716bcc1921f744ab228ff058b64605d904bbd48ed0667597145
+--- !u!114 &2941449480705460217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,6 +177,7 @@ MonoBehaviour:
   componentsToSave:
   - {fileID: 7661911302501536338}
   - {fileID: 697275998212159224}
+  - {fileID: 7419542543216421167}
 --- !u!1 &712064445670148703
 GameObject:
   m_ObjectHideFlags: 0

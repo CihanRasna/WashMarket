@@ -159,6 +159,15 @@ namespace GameplayScripts
                     state = State.Payment;
                 }
             }
+            
+            if (state == State.DudeGoingHome)
+            {
+                var dist = agent.remainingDistance;
+                if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
 
             if (state == State.Patrol)
             {
@@ -178,7 +187,9 @@ namespace GameplayScripts
             _currentlyUsingMachine.StartWork(this);
             _workCost += _currentlyUsingMachine.UsingPrice;
             state = State.Patrol;
-            agent.destination = RandomNavSphere(transform.position, 5f, -1); //_gameManager.leavePos.position; //;
+            var vertices = _gameManager.waitingAreaDemo.mesh.vertices;
+            agent.destination = vertices[Random.Range(0, vertices.Length)];
+            //agent.destination = RandomNavSphere(transform.position, 5f, -1); //_gameManager.leavePos.position; //;
         }
 
         public void GoToPaymentQueuePosition(Vector3 pos)
