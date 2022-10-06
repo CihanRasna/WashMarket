@@ -58,12 +58,14 @@ namespace GameplayScripts
             if (_isActive)
             {
                 currentSelectedMachine = machine;
+                sellButton.onClick.AddListener(SellMachine);
                 RefValuesFromMachine();
                 rectTransform.DOAnchorPosX(-100f, 1f);
             }
             else
             {
                 currentSelectedMachine = null;
+                sellButton.onClick.RemoveListener(SellMachine);
                 rectTransform.DOAnchorPosX(400f, 1f);
             }
         }
@@ -98,6 +100,12 @@ namespace GameplayScripts
 
         public void SellMachine()
         {
+            if (currentSelectedMachine)
+            {
+                currentSelectedMachine.Sell(out var sellPrice);
+                PersistManager.Instance.Currency += sellPrice;
+                OpenUpMachinePanel();
+            }
         }
 
         public void RepairMachine()

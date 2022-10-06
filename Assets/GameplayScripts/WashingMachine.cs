@@ -1,4 +1,5 @@
 using System;
+using RSNManagers;
 using UnityEngine;
 
 namespace GameplayScripts
@@ -8,6 +9,16 @@ namespace GameplayScripts
         private static readonly int CoverOpen = Animator.StringToHash("CoverOpen");
         private static readonly int CoverClosed = Animator.StringToHash("CoverClosed");
         private static readonly int IsWorking = Animator.StringToHash("IsWorking");
+
+        public override void Sell(out int price)
+        {
+            base.Sell(out price);
+            
+            Manager.allMachines.Remove(this);
+            Manager.washingMachines.Remove(this);
+            Manager.CheckForActiveMachineTypes();
+            Destroy(gameObject);
+        }
 
         private void Update()
         {

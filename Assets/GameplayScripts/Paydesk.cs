@@ -17,7 +17,7 @@ namespace GameplayScripts
 
         protected override void Start()
         {
-            GameManager.Instance.allMachines.Add(this);
+            //GameManager.Instance.allMachines.Add(this);
             CustomerQueuePositions = new Dictionary<int, Transform>(5);
             const float offset = 1f;
 
@@ -49,7 +49,6 @@ namespace GameplayScripts
 
                 CustomerQueuePositions.TryGetValue(customers.IndexOf(customer), out var targetTransform);
                 customer.GoToPaymentQueuePosition(targetTransform.position);
-                Debug.Log(targetTransform.position);
             }
             else
             {

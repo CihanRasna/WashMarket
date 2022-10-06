@@ -39,6 +39,10 @@ namespace RSNManagers
         public bool shopHasIronTable = false;
         public event Action ShiftEndedAction;
 
+        public List<WashingMachine> washingMachines = new List<WashingMachine>();
+        public List<DryerMachine> dryerMachines = new List<DryerMachine>();
+        public List<IronMachine> ironMachines = new List<IronMachine>();
+
         protected override void Awake()
         {
             base.Awake();
@@ -53,12 +57,40 @@ namespace RSNManagers
 
             shiftTimer.ShiftStartedAction += ShiftStarted;
             shiftTimer.ShiftEndedAction += ShiftEnded;
-            //CheckForActiveMachineTypes();
+            
+            CheckForActiveMachineTypes();
         }
 
-        public void CheckForActiveMachineTypes()
+        private void MachineListSeparator()
         {
-            Debug.Log("INVOKED");
+            var currentMachines = allMachines;
+            
+            for (var i = 0; i < currentMachines.Count; i++)
+            {
+                var currentMachine = currentMachines[i];
+                if (currentMachine.GetType() == typeof(WashingMachine) && !washingMachines.Contains(currentMachine as WashingMachine))
+                {
+                    washingMachines.Add(currentMachine as WashingMachine);
+                }
+                if (currentMachine.GetType() == typeof(DryerMachine) && !dryerMachines.Contains(currentMachine as DryerMachine))
+                {
+                    dryerMachines.Add(currentMachine as DryerMachine);
+                }
+                if (currentMachine.GetType() == typeof(IronMachine) && !ironMachines.Contains(currentMachine as IronMachine))
+                {
+                    ironMachines.Add(currentMachine as IronMachine);
+                }
+            }
+        }
+
+        public void CheckForActiveMachineTypes() //TODO : NEED FIX FOR PERFORMANCE ISSUE
+        {
+            MachineListSeparator();
+
+            shopHasWasher = washingMachines.Count != 0;
+            shopHasDryer = dryerMachines.Count != 0;
+            shopHasIronTable = ironMachines.Count != 0;
+            
             clothPicker.usableClothTypes = new List<CustomerItem>(clothPicker.allClothTypes);
 
             for (var i = 0; i < clothPicker.allClothTypes.Count; i++)
@@ -188,13 +220,9 @@ namespace RSNManagers
                         }
                     }
                 }
-                else
-                {
-                    return null;
-                }
             }
 
-            //if (machine == null) return null;
+            if (machine == null) return null;
             if (desiredType == typeof(Paydesk))
             {
                 Debug.Log("PAYDESK AQ", machine.gameObject);

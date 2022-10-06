@@ -10,8 +10,8 @@ namespace GameplayScripts
         public enum State
         {
             Idle,
-            WaitingForMachine,
-            LookingForMachine,
+            WaitingForFreeMachine,
+            LookingForFreeMachine,
             GoingForMachine,
             FillMachine,
             Patrol,
@@ -55,10 +55,10 @@ namespace GameplayScripts
 
             if (state == State.Idle)
             {
-                state = State.LookingForMachine;
+                state = State.LookingForFreeMachine;
             }
 
-            if (state == State.LookingForMachine)
+            if (state == State.LookingForFreeMachine)
             {
                 StartCoroutine(LookingForFreeMachine());
             }
@@ -88,7 +88,8 @@ namespace GameplayScripts
         {
             var clothesWorkType = CheckClothesWorkType();
             _currentlyUsingMachine = _gameManager.FindClosestMachine(clothesWorkType, transform);
-
+            
+            Debug.Log(_currentlyUsingMachine);
             if (_currentlyUsingMachine)
             {
                 var targetForward = _currentlyUsingMachine.transform;
@@ -104,23 +105,25 @@ namespace GameplayScripts
                 else
                 {
                     state = State.GoingForPayment;
-                    var paydesk = (Paydesk)_currentlyUsingMachine;
-                    paydesk.AddCustomerToQueue(this);
+                    //var paydesk = (Paydesk)_currentlyUsingMachine;
+                    //paydesk.AddCustomerToQueue(this);
                     yield break;
                 }
             }
 
-            state = State.WaitingForMachine;
+            state = State.WaitingForFreeMachine;
+            var vertices = _gameManager.waitingAreaDemo.mesh.vertices;
+            agent.destination = vertices[Random.Range(0, vertices.Length)];
             yield return _initWaitForSeconds;
             StartCoroutine(LookingForFreeMachine());
         }
 
         private void Update()
         {
-            if (state == State.WaitingForMachine)
+            if (state == State.WaitingForFreeMachine)
             {
                 _customerSessionTime += Time.deltaTime;
-                if (_customerSessionTime >= 15f)
+                if (_customerSessionTime >= 30f)
                 {
                     ShopClosed(); // HAVE TO CHANGE TO CUSTOMER BEHAVIOUR AGAINST WAITING
                 }
@@ -151,6 +154,8 @@ namespace GameplayScripts
                 var dist = agent.remainingDistance;
                 if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
                 {
+                    var paydesk = (Paydesk)_currentlyUsingMachine;
+                    paydesk.AddCustomerToQueue(this);
                     state = State.Payment;
                 }
             }
@@ -191,7 +196,7 @@ namespace GameplayScripts
             _currentlyUsingMachine.Empty();
             _currentlyUsingMachine = null;
 
-            state = State.LookingForMachine;
+            state = State.LookingForFreeMachine;
             StartCoroutine(LookingForFreeMachine());
         }
 
@@ -224,7 +229,7 @@ namespace GameplayScripts
 
         public void ShopClosed()
         {
-            var available = state is State.Idle or State.WaitingForMachine or State.LookingForMachine or State.Payment;
+            var available = state is State.Idle or State.WaitingForFreeMachine or State.LookingForFreeMachine or State.Payment;
             
             if (available)
             {

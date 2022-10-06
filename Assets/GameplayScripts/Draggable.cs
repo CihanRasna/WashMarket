@@ -86,11 +86,14 @@ namespace GameplayScripts
         public void Placed()
         {
             var roomManager = RoomManager.Instance;
+            var gameManager = GameManager.Instance;
+            
             var roomList = roomManager.ActiveRooms;
+            gameManager.CheckForActiveMachineTypes();
             transform.parent = GetClosestRoom(roomList);
             navMeshObstacle.enabled = true;
             Destroy(dummyGameObject);
-            DOTween.Kill(this);
+            DOTween.Kill(this,true);
             machineObject.DOScale(1f, 0.4f);
             machineObject.DOLocalMoveY(0f, 0.5f).OnComplete((() =>
             {

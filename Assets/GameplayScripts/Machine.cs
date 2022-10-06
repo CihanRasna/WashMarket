@@ -45,6 +45,7 @@ namespace GameplayScripts
         protected CustomerItem _customerItems;
         protected float _workedTime = 0;
         protected bool _needsRepair = false;
+        
         protected GameManager Manager;
 
         public bool occupied;
@@ -56,13 +57,10 @@ namespace GameplayScripts
             return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice, capacity, consumption,
                 sellPrice, totalGain);
         }
-
-        [Button]
-        private void Sell()
+        public virtual void Sell(out int price)
         {
-            Destroy(gameObject);
+            price = sellPrice;
         }
-
         protected virtual void Awake()
         {
             Manager = GameManager.Instance;
