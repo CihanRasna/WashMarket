@@ -301,8 +301,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4020067, y: 2.0277233, z: 1.6002783}
-  m_Center: {x: 0, y: 1.0138617, z: 0.07521449}
+  m_Size: {x: 1.4020067, y: 2.0277233, z: 3.200556}
+  m_Center: {x: 0, y: 1.0138617, z: 0.85}
 --- !u!208 &8724097740378962990
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -347,6 +347,7 @@ MonoBehaviour:
     m_Bits: 832
   machineMesh: {fileID: 6252596459931785006}
   navMeshObstacle: {fileID: 8724097740378962990}
+  obstacleEnabled: 0
   occupied: 0
   <Filled>k__BackingField: 0
 --- !u!95 &6622622915416581941

@@ -227,8 +227,8 @@ namespace GameplayScripts
                 _customerItem.needIron = false;
             }
 
-            state = State.GoingForItems;
             agent.destination = _targetPosition;
+            state = State.GoingForItems;
         }
 
         public void PaymentDone()

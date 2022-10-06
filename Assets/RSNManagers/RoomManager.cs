@@ -33,11 +33,6 @@ namespace RSNManagers
             FindNeighborRooms();
         }
 
-        protected override void Start()
-        {
-            base.Start();
-        }
-
         [Button]
         private void GenerateIDList()
         {
