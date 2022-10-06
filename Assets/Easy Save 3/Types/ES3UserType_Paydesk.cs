@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("clerk", "customers", "currentLevel", "machineName", "singleWorkTime", "durability", "capacity", "consumption", "usingPrice", "animator", "buyPrice", "sellPrice", "totalGain", "unplaceableLayers", "machineMesh", "navMeshObstacle", "remainDurability", "_workedTime", "_needsRepair", "occupied", "<Filled>k__BackingField")]
+	[ES3PropertiesAttribute("customers", "currentLevel", "machineName", "singleWorkTime", "durability", "capacity", "consumption", "usingPrice", "animator", "buyPrice", "sellPrice", "totalGain", "unplaceableLayers", "machineMesh", "navMeshObstacle", "remainDurability", "_workedTime", "_needsRepair")]
 	public class ES3UserType_Paydesk : ES3ComponentType
 	{
 		public static ES3Type Instance = null;
@@ -16,7 +16,6 @@ namespace ES3Types
 		{
 			var instance = (GameplayScripts.Paydesk)obj;
 			
-			writer.WritePrivateFieldByRef("clerk", instance);
 			writer.WritePrivateField("customers", instance);
 			writer.WriteProperty("currentLevel", instance.currentLevel, ES3Internal.ES3TypeMgr.GetOrCreateES3Type(typeof(GameplayScripts.Machine.Level)));
 			writer.WritePrivateField("machineName", instance);
@@ -35,8 +34,6 @@ namespace ES3Types
 			writer.WritePrivateField("remainDurability", instance);
 			writer.WritePrivateField("_workedTime", instance);
 			writer.WritePrivateField("_needsRepair", instance);
-			writer.WriteProperty("occupied", instance.occupied, ES3Type_bool.Instance);
-			writer.WritePrivateField("<Filled>k__BackingField", instance);
 		}
 
 		protected override void ReadComponent<T>(ES3Reader reader, object obj)
@@ -47,9 +44,6 @@ namespace ES3Types
 				switch(propertyName)
 				{
 					
-					case "clerk":
-					instance = (GameplayScripts.Paydesk)reader.SetPrivateField("clerk", reader.Read<GameplayScripts.Actor>(), instance);
-					break;
 					case "customers":
 					instance = (GameplayScripts.Paydesk)reader.SetPrivateField("customers", reader.Read<System.Collections.Generic.List<GameplayScripts.Customer>>(), instance);
 					break;
@@ -103,12 +97,6 @@ namespace ES3Types
 					break;
 					case "_needsRepair":
 					instance = (GameplayScripts.Paydesk)reader.SetPrivateField("_needsRepair", reader.Read<System.Boolean>(), instance);
-					break;
-					case "occupied":
-						instance.occupied = reader.Read<System.Boolean>(ES3Type_bool.Instance);
-						break;
-					case "<Filled>k__BackingField":
-					instance = (GameplayScripts.Paydesk)reader.SetPrivateField("<Filled>k__BackingField", reader.Read<System.Boolean>(), instance);
 					break;
 					default:
 						reader.Skip();

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ES3Types
 {
 	[UnityEngine.Scripting.Preserve]
-	[ES3PropertiesAttribute("currentLevel", "machineName", "singleWorkTime", "durability", "capacity", "consumption", "usingPrice", "animator", "buyPrice", "sellPrice", "totalGain", "unplaceableLayers", "machineMesh", "navMeshObstacle", "remainDurability", "_workedTime", "_needsRepair", "occupied", "<Filled>k__BackingField")]
+	[ES3PropertiesAttribute("currentLevel", "machineName", "singleWorkTime", "durability", "capacity", "consumption", "usingPrice", "animator", "buyPrice", "sellPrice", "totalGain", "unplaceableLayers", "machineMesh", "navMeshObstacle", "remainDurability", "_workedTime", "_needsRepair")]
 	public class ES3UserType_WashingMachine : ES3ComponentType
 	{
 		public static ES3Type Instance = null;
@@ -33,8 +33,6 @@ namespace ES3Types
 			writer.WritePrivateField("remainDurability", instance);
 			writer.WritePrivateField("_workedTime", instance);
 			writer.WritePrivateField("_needsRepair", instance);
-			writer.WriteProperty("occupied", instance.occupied, ES3Type_bool.Instance);
-			writer.WritePrivateField("<Filled>k__BackingField", instance);
 		}
 
 		protected override void ReadComponent<T>(ES3Reader reader, object obj)
@@ -95,12 +93,6 @@ namespace ES3Types
 					break;
 					case "_needsRepair":
 					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("_needsRepair", reader.Read<System.Boolean>(), instance);
-					break;
-					case "occupied":
-						instance.occupied = reader.Read<System.Boolean>(ES3Type_bool.Instance);
-						break;
-					case "<Filled>k__BackingField":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("<Filled>k__BackingField", reader.Read<System.Boolean>(), instance);
 					break;
 					default:
 						reader.Skip();
