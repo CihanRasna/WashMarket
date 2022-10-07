@@ -93,23 +93,28 @@ namespace GameplayScripts
 
             return workType = WorkType.Pay;
         }
+
+        public void MachineBroke()
+        {
+            _currentlyUsingMachine = null;
+            animator.SetTrigger(Walk);
+            state = State.DudeGoingHome;
+            agent.destination = _gameManager.leavePos.position;
+        }
         
         public void MachineFinished()
         {
             var clothesWorkType = CheckClothesWorkType();
             if (clothesWorkType == WorkType.Wash)
             {
-                Debug.Log("WASH");
                 _customerItem.needWash = false;
             }
             else if (clothesWorkType == WorkType.Dry)
             {
-                Debug.Log("DRY");
                 _customerItem.needDry = false;
             }
             else if (clothesWorkType == WorkType.Iron)
             {
-                Debug.Log("IRON");
                 _customerItem.needIron = false;
             }
 

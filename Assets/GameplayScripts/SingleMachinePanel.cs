@@ -81,6 +81,8 @@ namespace GameplayScripts
             sellPriceTMP.text = $"SellPrice : {machineRefs.sellPrice}";
             totalGainTMP.text = $"Total Gain : {machineRefs.totalGain}";
             _machineMaxDurability = machineRefs.durability;
+            durabilityFillImage.transform.parent.gameObject.SetActive(machineRefs.durability != 0);
+            capacityTMP.gameObject.SetActive(machineRefs.capacity != 0);
         }
 
         private void LateUpdate()

@@ -358,7 +358,7 @@ MonoBehaviour:
   currentLevel: 1
   machineName: Paydesk
   singleWorkTime: 3
-  durability: 1500
+  durability: 0
   capacity: 0
   consumption: 0
   usingPrice: 0
@@ -482,4 +482,3 @@ MonoBehaviour:
   componentsToSave:
   - {fileID: 5488548739836320695}
   - {fileID: 7849114036662150273}
-  - {fileID: 121571667314662877}

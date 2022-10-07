@@ -1,6 +1,6 @@
 using System;
+using DG.Tweening;
 using RSNManagers;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -31,6 +31,8 @@ namespace GameplayScripts
 
         [SerializeField] protected LayerMask unplaceableLayers;
         [SerializeField] protected Transform machineMesh;
+        [SerializeField] protected Renderer machineButton;
+        
         public NavMeshObstacle navMeshObstacle;
         public bool obstacleEnabled = false;
 
@@ -40,6 +42,7 @@ namespace GameplayScripts
         public Transform MeshObject => machineMesh;
         public float RemainDurability => remainDurability;
         private event Action WorkDoneAction;
+        private event Action MachineBrokeAction;
 
         protected Customer _currentCustomer;
         protected float remainDurability;
@@ -66,20 +69,41 @@ namespace GameplayScripts
         {
             Manager = GameManager.Instance;
             Manager.allMachines.Add(this);
+            var euler = transform.eulerAngles;
+            transform.rotation = Quaternion.Euler(new Vector3(0, euler.y, 0));
         }
 
         protected virtual void Start()
         {
             navMeshObstacle ??= GetComponent<NavMeshObstacle>();
+            
+            ButtonColorChanger(Color.green);
 
-            if (remainDurability == 0 && !_needsRepair)
+            if (remainDurability <= 0)
             {
-                remainDurability = durability;
+                if (_needsRepair)
+                {
+                    RepairBehaviourOverride();
+                }
+                else
+                {
+                    remainDurability = durability;
+                }
+            }
+            else
+            {
+                occupied = false;
             }
 
             navMeshObstacle.enabled = obstacleEnabled;
             _workedTime = 0f;
-            occupied = false;
+        }
+
+        private void ButtonColorChanger(Color color)
+        {
+            DOTween.Kill(333);
+            machineButton.material.color = Color.white;
+            machineButton.material.DOColor(color, 1f).SetLoops(-1, LoopType.Yoyo).SetId(333);
         }
 
         protected virtual void Working()
@@ -90,14 +114,14 @@ namespace GameplayScripts
                 if (!_needsRepair)
                 {
                     _needsRepair = true;
-                    NeedRepair();
+                    RepairBehaviourOverride();
                 }
 
                 return;
             }
 
             _workedTime += deltaTime;
-            remainDurability -= deltaTime;
+            remainDurability -= deltaTime * consumption;
             if (_workedTime >= singleWorkTime)
             {
                 DoneWork();
@@ -111,7 +135,9 @@ namespace GameplayScripts
 
         public void StartWork(Customer customer)
         {
+            ButtonColorChanger(Color.red);
             WorkDoneAction += _currentCustomer.MachineFinished;
+            MachineBrokeAction += _currentCustomer.MachineBroke;
 
             if (!Filled)
             {
@@ -123,7 +149,8 @@ namespace GameplayScripts
 
         public void DoneWork()
         {
-            WorkDoneAction?.Invoke();
+            ButtonColorChanger(Color.green);
+            WorkDoneAction.Invoke();
             _workedTime = 0f;
             Filled = false;
             totalGain += usingPrice;
@@ -133,13 +160,28 @@ namespace GameplayScripts
         public void Empty()
         {
             WorkDoneAction -= _currentCustomer.MachineFinished;
+            MachineBrokeAction -= _currentCustomer.MachineBroke;
             _currentCustomer = null;
             occupied = false;
         }
 
-        public void NeedRepair()
+        public void INeedRepair()
         {
-            return;
+            if (_currentCustomer)
+            {
+                MachineBrokeAction.Invoke();
+                MachineBrokeAction -= _currentCustomer.MachineBroke;
+            }
+            
+            ButtonColorChanger(Color.red);
+            _currentCustomer = null;
+            _needsRepair = true;
+            occupied = _needsRepair;
+        }
+
+        protected virtual void RepairBehaviourOverride()
+        {
+            INeedRepair();
         }
 
         #region AnimatorOverrideMethods

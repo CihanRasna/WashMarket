@@ -124,7 +124,7 @@ namespace GameplayScripts
             dummyGameObject.transform.parent = transform;
             dummyGameObject.transform.localPosition = desiredPos;
             dummyGameObject.transform.localScale = desiredSize;
-            dummyGameObject.transform.Rotate(Vector3.right * 90f);
+            dummyGameObject.transform.DOLocalRotate(new Vector3(90f, 0f, 0f), 0f);
             dummyMaterial = dummyGameObject.GetComponent<Renderer>().material;
             dummyMaterial.color = Color.green;
         }

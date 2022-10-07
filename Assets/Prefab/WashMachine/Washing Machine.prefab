@@ -346,6 +346,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 832
   machineMesh: {fileID: 6252596459931785006}
+  machineButton: {fileID: 7474771267959749648}
   navMeshObstacle: {fileID: 8724097740378962990}
   obstacleEnabled: 0
   occupied: 0

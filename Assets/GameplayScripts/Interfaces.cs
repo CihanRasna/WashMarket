@@ -9,6 +9,6 @@ namespace GameplayScripts
 
     public interface IRepairable
     {
-        void NeedRepair();
+        public void INeedRepair();
     }
 }
