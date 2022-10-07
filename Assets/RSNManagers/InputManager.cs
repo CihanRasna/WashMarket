@@ -123,6 +123,10 @@ namespace RSNManagers
                     UIManager.SingleMachineSelected(machine);
                     return;
                 }
+                else
+                {
+                    Debug.Log("NO RAY HIT");
+                }
             }
 
             joystick.OnPointerDown(eventData);

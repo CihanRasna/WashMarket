@@ -5,6 +5,7 @@ using Cinemachine;
 using GameplayScripts;
 using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace RSNManagers
 {
@@ -61,6 +62,7 @@ namespace RSNManagers
             ES3AutoSaveMgr.Current.Load();
             
             CheckForActiveMachineTypes();
+            CalculateCornerPoints();
         }
 
         private void MachineListSeparator()
@@ -227,7 +229,7 @@ namespace RSNManagers
             if (machine == null) return null;
             if (desiredType == typeof(Paydesk))
             {
-                Debug.Log("PAYDESK AQ", machine.gameObject);
+                //Debug.Log("PAYDESK AQ", machine.gameObject);
                 machine.occupied = false;
             }
             else
@@ -236,6 +238,46 @@ namespace RSNManagers
             }
 
             return machine;
+        }
+
+        private List<Vector3> _verticesList = new List<Vector3>();
+        private readonly List<Vector3> _corners = new List<Vector3>();
+        private readonly List<Vector3> _edgeVectors = new List<Vector3>();
+        
+        private void CalculateEdgeVectors(int vectorCorner)
+        {
+            _edgeVectors.Clear();
+
+            _edgeVectors.Add(_corners[3] - _corners[vectorCorner]);
+            _edgeVectors.Add(_corners[1] - _corners[vectorCorner]);
+        }
+
+        private void CalculateCornerPoints()
+        {
+            _verticesList = new List<Vector3>(waitingAreaDemo.mesh.vertices);
+            _corners.Clear();
+            
+            _corners.Add(transform.TransformPoint(_verticesList[0])); //corner points are added to show  on the editor
+            _corners.Add(transform.TransformPoint(_verticesList[10]));
+            _corners.Add(transform.TransformPoint(_verticesList[110]));
+            _corners.Add(transform.TransformPoint(_verticesList[120]));
+        }
+
+        public Vector3 CalculateRandomPoint()
+        {
+            int randomCornerIdx = Random.Range(0, 2) == 0 ? 0 : 2; 
+            CalculateEdgeVectors(randomCornerIdx);
+
+            var u = Random.Range(0.0f, 1.0f); 
+            var v = Random.Range(0.0f, 1.0f);
+
+            if (v + u > 1)
+            {
+                v = 1 - v;
+                u = 1 - u;
+            }
+
+            return _corners[randomCornerIdx] + u * _edgeVectors[0] + v * _edgeVectors[1];
         }
     }
 }
