@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using RSNManagers;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameplayScripts
@@ -12,6 +10,8 @@ namespace GameplayScripts
         private Dictionary<int, Transform> CustomerQueuePositions { get; set; }
 
         [SerializeField] private List<Customer> customers;
+        [SerializeField] private List<Transform> queuePositions;
+        
 
         private bool _inPayment = false;
 
@@ -19,11 +19,10 @@ namespace GameplayScripts
         {
             navMeshObstacle.enabled = obstacleEnabled;
             CustomerQueuePositions = new Dictionary<int, Transform>(5);
-            const float offset = 1f;
 
-            for (var i = 0; i < 5; i++)
+            /*for (var i = 0; i < 5; i++)
             {
-                var pos = new Vector3(.3f, 0, ((i + 1) * offset));
+                var pos = new Vector3(.3f, 0, ((i * 1.5f) * offset));
                 var posHandler = new GameObject
                 {
                     transform =
@@ -34,6 +33,11 @@ namespace GameplayScripts
                     }
                 };
                 CustomerQueuePositions[i] = posHandler.transform;
+            }*/
+
+            for (var i = 0; i < queuePositions.Count; i++)
+            {
+                CustomerQueuePositions[i] = queuePositions[i];
             }
         }
 
@@ -77,7 +81,7 @@ namespace GameplayScripts
         private void Update()
         {
             occupied = customers.Count >= 5;
-            if (clerk && !_currentCustomer && !_inPayment && customers.Count > 0)
+            if (clerk && customers.Count > 0 && !_currentCustomer && !_inPayment && customers[0].StateReadonly == Customer.State.Payment)
             {
                 StartCoroutine(StartPaymentSequence());
             }

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace GameplayScripts
 {
-    [Serializable]
+    [Serializable,SelectionBase]
     public abstract class Machine : MonoBehaviour, IWorkable, IRepairable
     {
         public enum Level

@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace GameplayScripts
 {
+    [SelectionBase]
     public class Player : Actor
     {
         private static readonly int Blend = Animator.StringToHash("Blend");

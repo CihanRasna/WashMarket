@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace GameplayScripts
 {
+    [SelectionBase]
     public class Customer : Actor
     {
         public enum State
@@ -33,6 +36,8 @@ namespace GameplayScripts
         [SerializeField] private WorkType workType;
 
         [SerializeField] private State state = State.Idle;
+        public State StateReadonly => state;
+        
         private Vector3 _targetPosition;
         private Machine _currentlyUsingMachine;
 
@@ -44,6 +49,9 @@ namespace GameplayScripts
         [SerializeField] private int _workCost;
 
         private float _customerSessionTime;
+        private static readonly int CarryWalk = Animator.StringToHash("CarryWalk");
+        private static readonly int Walk = Animator.StringToHash("Walk");
+        private static readonly int Speed = Animator.StringToHash("Speed");
 
         private IEnumerator Start()
         {
@@ -62,6 +70,8 @@ namespace GameplayScripts
             {
                 StartCoroutine(LookingForFreeMachine());
             }
+            
+            Debug.Log("SPAWNED");
         }
 
         private WorkType CheckClothesWorkType()
@@ -83,15 +93,39 @@ namespace GameplayScripts
 
             return workType = WorkType.Pay;
         }
+        
+        public void MachineFinished()
+        {
+            var clothesWorkType = CheckClothesWorkType();
+            if (clothesWorkType == WorkType.Wash)
+            {
+                Debug.Log("WASH");
+                _customerItem.needWash = false;
+            }
+            else if (clothesWorkType == WorkType.Dry)
+            {
+                Debug.Log("DRY");
+                _customerItem.needDry = false;
+            }
+            else if (clothesWorkType == WorkType.Iron)
+            {
+                Debug.Log("IRON");
+                _customerItem.needIron = false;
+            }
+
+            animator.SetTrigger(Walk);
+            agent.destination = _targetPosition;
+            state = State.GoingForItems;
+        }
 
         private IEnumerator LookingForFreeMachine()
         {
             var clothesWorkType = CheckClothesWorkType();
             _currentlyUsingMachine = _gameManager.FindClosestMachine(clothesWorkType, transform);
-            
-            Debug.Log(_currentlyUsingMachine);
+
             if (_currentlyUsingMachine)
             {
+                animator.SetTrigger(CarryWalk);
                 var targetForward = _currentlyUsingMachine.transform;
                 _targetPosition = targetForward.position + targetForward.forward;
                 agent.destination = _targetPosition;
@@ -105,21 +139,23 @@ namespace GameplayScripts
                 else
                 {
                     state = State.GoingForPayment;
-                    //var paydesk = (Paydesk)_currentlyUsingMachine;
-                    //paydesk.AddCustomerToQueue(this);
+                    var paydesk = (Paydesk)_currentlyUsingMachine;
+                    paydesk.AddCustomerToQueue(this);
                     yield break;
                 }
             }
 
+            animator.SetTrigger(CarryWalk);
             state = State.WaitingForFreeMachine;
-            var vertices = _gameManager.waitingAreaDemo.mesh.vertices;
-            agent.destination = vertices[Random.Range(0, vertices.Length)];
+            agent.destination = _gameManager.CalculateRandomPoint();
             yield return _initWaitForSeconds;
             StartCoroutine(LookingForFreeMachine());
         }
 
         private void Update()
         {
+            animator.SetFloat(Speed, agent.velocity.normalized.magnitude);
+
             if (state == State.WaitingForFreeMachine)
             {
                 _customerSessionTime += Time.deltaTime;
@@ -128,45 +164,29 @@ namespace GameplayScripts
                     ShopClosed(); // HAVE TO CHANGE TO CUSTOMER BEHAVIOUR AGAINST WAITING
                 }
             }
-            
-            if (state == State.GoingForMachine)
+
+            if (state == State.GoingForMachine && AgentIsArrived())
             {
-                var dist = agent.remainingDistance;
-                if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
-                {
-                    state = State.FillMachine;
-                    StartCoroutine(StartFillRoutine());
-                }
+                state = State.FillMachine;
+                StartCoroutine(StartFillRoutine());
             }
 
-            if (state == State.GoingForItems)
+            if (state == State.GoingForItems && AgentIsArrived())
             {
-                var dist = agent.remainingDistance;
-                if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
-                {
-                    state = State.GatheringItems;
-                    StartCoroutine(StartEmptyingRoutine());
-                }
+                state = State.GatheringItems;
+                StartCoroutine(StartEmptyingRoutine());
             }
 
-            if (state == State.GoingForPayment)
+            if (state == State.GoingForPayment && AgentIsArrived())
             {
-                var dist = agent.remainingDistance;
-                if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
-                {
-                    var paydesk = (Paydesk)_currentlyUsingMachine;
-                    paydesk.AddCustomerToQueue(this);
-                    state = State.Payment;
-                }
+                //var paydesk = (Paydesk)_currentlyUsingMachine;
+                //paydesk.AddCustomerToQueue(this);
+                state = State.Payment;
             }
-            
-            if (state == State.DudeGoingHome)
+
+            if (state == State.DudeGoingHome && AgentIsArrived())
             {
-                var dist = agent.remainingDistance;
-                if (agent.pathStatus == NavMeshPathStatus.PathComplete && dist == 0)
-                {
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
             }
 
             if (state == State.Patrol)
@@ -183,12 +203,15 @@ namespace GameplayScripts
         {
             _currentlyUsingMachine.StartInteraction();
             yield return _fillWaitForSeconds;
+
             _currentlyUsingMachine.FinishInteraction();
             _currentlyUsingMachine.StartWork(this);
             _workCost += _currentlyUsingMachine.UsingPrice;
+
             state = State.Patrol;
-            var vertices = _gameManager.waitingAreaDemo.mesh.vertices;
-            agent.destination = vertices[Random.Range(0, vertices.Length)];
+            animator.SetTrigger(Walk);
+            
+            agent.destination = _gameManager.CalculateRandomPoint();
             //agent.destination = RandomNavSphere(transform.position, 5f, -1); //_gameManager.leavePos.position; //;
         }
 
@@ -211,28 +234,10 @@ namespace GameplayScripts
             StartCoroutine(LookingForFreeMachine());
         }
 
-        public void MachineFinished()
-        {
-            var clothesWorkType = CheckClothesWorkType();
-            if (clothesWorkType == WorkType.Wash)
-            {
-                _customerItem.needWash = false;
-            }
-            else if (clothesWorkType == WorkType.Dry)
-            {
-                _customerItem.needDry = false;
-            }
-            else if (clothesWorkType == WorkType.Iron)
-            {
-                _customerItem.needIron = false;
-            }
-
-            agent.destination = _targetPosition;
-            state = State.GoingForItems;
-        }
-
         public void PaymentDone()
         {
+            Debug.Log("PAY");
+            animator.SetTrigger(CarryWalk);
             PersistManager.Instance.Currency += _workCost;
             state = State.DudeGoingHome;
             agent.destination = _gameManager.leavePos.position;
@@ -240,8 +245,9 @@ namespace GameplayScripts
 
         public void ShopClosed()
         {
-            var available = state is State.Idle or State.WaitingForFreeMachine or State.LookingForFreeMachine or State.Payment;
-            
+            var available = state is State.Idle or State.WaitingForFreeMachine or State.LookingForFreeMachine
+                or State.Payment;
+
             if (available)
             {
                 state = State.DudeGoingHome;
@@ -264,6 +270,18 @@ namespace GameplayScripts
             }
 
             return navHit.position;
+        }
+
+        private bool AgentIsArrived()
+        {
+            return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance &&
+                   (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(agent.destination,0.2f);
         }
     }
 }
