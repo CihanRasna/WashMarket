@@ -70,7 +70,7 @@ namespace RSNManagers
         protected override void Awake()
         { 
             base.Awake();
-            Currency = PlayerPrefs.GetInt(CurrencyKey, 5100);
+            Currency = PlayerPrefs.GetInt(CurrencyKey, 1000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
             PassedDayCount = PlayerPrefs.GetInt(PassedDayCountKey, 1);
         }
