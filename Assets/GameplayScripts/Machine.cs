@@ -20,7 +20,8 @@ namespace GameplayScripts
 
         [SerializeField] private string machineName;
         [SerializeField] protected float singleWorkTime;
-        [SerializeField] private protected float durability;
+        [SerializeField] private float maxDurability;
+        [SerializeField] protected float durability;
         [SerializeField] protected float capacity;
         [SerializeField] protected float consumption;
         [SerializeField] protected int usingPrice;
@@ -53,33 +54,39 @@ namespace GameplayScripts
         protected GameManager Manager;
 
         public bool occupied;
+        private static readonly int MachineBroken = Animator.StringToHash("MachineBroken");
+        private static readonly int Repaired = Animator.StringToHash("MachineRepaired");
         [field: SerializeField] public bool Filled { get; protected set; }
 
         public (string machineName, Level currentLevel, float singleWorkTime, float durability, int usingPrice, int
-            buyPrice, float capacity, float consumption, int sellPrice, int totalGain) RefValuesForUI()
+            buyPrice, float capacity, float consumption, int sellPrice, int totalGain,int repairPrice) RefValuesForUI()
         {
+            RepairPricing(out var repairPrice,out var ratio,out var corruptAmount);
             return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice, capacity, consumption,
-                sellPrice, totalGain);
+                sellPrice, totalGain,repairPrice);
         }
         public virtual void Sell(out int price)
         {
             price = sellPrice;
+            Manager.allMachines.Remove(this);
         }
         protected virtual void Awake()
         {
             Manager = GameManager.Instance;
             Manager.allMachines.Add(this);
-            var euler = transform.eulerAngles;
-            transform.rotation = Quaternion.Euler(new Vector3(0, euler.y, 0));
         }
 
         protected virtual void Start()
         {
+            var euler = transform.localEulerAngles;
+            Debug.Log(euler);
+            transform.localEulerAngles = new Vector3(0, euler.y, 0);
+            
             navMeshObstacle ??= GetComponent<NavMeshObstacle>();
             
             ButtonColorChanger(Color.green);
 
-            if (remainDurability <= 0)
+            if (remainDurability <= 0f)
             {
                 if (_needsRepair)
                 {
@@ -101,9 +108,12 @@ namespace GameplayScripts
 
         private void ButtonColorChanger(Color color)
         {
-            DOTween.Kill(333);
-            machineButton.material.color = Color.white;
-            machineButton.material.DOColor(color, 1f).SetLoops(-1, LoopType.Yoyo).SetId(333);
+            if (machineButton)
+            {
+                machineButton.material.color = Color.white;
+                DOTween.Kill(333);
+                machineButton.material.DOColor(color, 1f).SetLoops(-1, LoopType.Yoyo).SetId(333);
+            }
         }
 
         protected virtual void Working()
@@ -165,6 +175,25 @@ namespace GameplayScripts
             occupied = false;
         }
 
+        public void RepairPricing(out int repairPrice, out float ratio, out float corruptAmount)
+        {
+            corruptAmount = maxDurability * 0.1f;
+            ratio = Mathf.Clamp01(remainDurability / durability);
+            var halfPrice = buyPrice * 0.5f;
+            repairPrice = Mathf.FloorToInt(halfPrice * (1 - ratio));
+        }
+
+        public void MachineRepaired()
+        {
+            if (_needsRepair)
+                animator.SetTrigger(Repaired);
+
+            occupied = false;
+            RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
+            durability -= (1f - ratio) * corruptAmount;
+            DOTween.To(() => remainDurability, x => remainDurability = x, durability, 0.5f);
+        }
+
         public void INeedRepair()
         {
             if (_currentCustomer)
@@ -172,11 +201,14 @@ namespace GameplayScripts
                 MachineBrokeAction.Invoke();
                 MachineBrokeAction -= _currentCustomer.MachineBroke;
             }
-            
-            ButtonColorChanger(Color.red);
+
+            ButtonColorChanger(Color.white);
             _currentCustomer = null;
             _needsRepair = true;
             occupied = _needsRepair;
+            Filled = false;
+            
+            animator.SetTrigger(MachineBroken);
         }
 
         protected virtual void RepairBehaviourOverride()

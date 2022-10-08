@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using GameplayScripts;
+using GameplayScripts.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,6 +14,9 @@ namespace RSNManagers
         [SerializeField] private MachineList machineList;
         [SerializeField] private SingleMachinePanel singleMachinePanel;
         [SerializeField] private TextMeshProUGUI currencyText;
+
+        [SerializeField] private List<Panel> uiPanels;
+        
         private int _lastKnownCurrency;
 
         protected override void Start()
@@ -37,6 +42,14 @@ namespace RSNManagers
         public void SingleMachineSelected(Machine machine)
         {
             singleMachinePanel.OpenUpMachinePanel(machine);
+        }
+
+        public void CloseAllPanels()
+        {
+            foreach (var panel in uiPanels)
+            {
+                panel.HidePanel();
+            }
         }
 
 

@@ -11,7 +11,14 @@ namespace GameplayScripts
 
         [SerializeField] private List<Customer> customers;
         [SerializeField] private List<Transform> queuePositions;
-        
+
+        public override void Sell(out int price)
+        {
+            base.Sell(out price);
+            Manager.payDesks.Remove(this);
+            Manager.CheckForActiveMachineTypes();
+            Destroy(gameObject);
+        }
 
         private bool _inPayment = false;
 

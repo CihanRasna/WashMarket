@@ -334,6 +334,7 @@ MonoBehaviour:
   currentLevel: 1
   machineName: Washing Machine
   singleWorkTime: 5
+  maxDurability: 300
   durability: 300
   capacity: 5
   consumption: 3

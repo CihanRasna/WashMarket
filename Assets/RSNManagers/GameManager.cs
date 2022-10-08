@@ -43,6 +43,7 @@ namespace RSNManagers
         public List<WashingMachine> washingMachines = new List<WashingMachine>();
         public List<DryerMachine> dryerMachines = new List<DryerMachine>();
         public List<IronMachine> ironMachines = new List<IronMachine>();
+        public List<Paydesk> payDesks = new List<Paydesk>();
 
         protected override void Awake()
         {
@@ -76,13 +77,17 @@ namespace RSNManagers
                 {
                     washingMachines.Add(currentMachine as WashingMachine);
                 }
-                if (currentMachine.GetType() == typeof(DryerMachine) && !dryerMachines.Contains(currentMachine as DryerMachine))
+                else if (currentMachine.GetType() == typeof(DryerMachine) && !dryerMachines.Contains(currentMachine as DryerMachine))
                 {
                     dryerMachines.Add(currentMachine as DryerMachine);
                 }
-                if (currentMachine.GetType() == typeof(IronMachine) && !ironMachines.Contains(currentMachine as IronMachine))
+                else if (currentMachine.GetType() == typeof(IronMachine) && !ironMachines.Contains(currentMachine as IronMachine))
                 {
                     ironMachines.Add(currentMachine as IronMachine);
+                }
+                else
+                {
+                    payDesks.Add(currentMachine as Paydesk);
                 }
             }
         }

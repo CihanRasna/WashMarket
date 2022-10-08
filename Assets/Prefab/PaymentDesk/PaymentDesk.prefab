@@ -358,18 +358,20 @@ MonoBehaviour:
   currentLevel: 1
   machineName: Paydesk
   singleWorkTime: 3
+  maxDurability: 0
   durability: 0
   capacity: 0
   consumption: 0
   usingPrice: 0
   animator: {fileID: 3227894102229257444}
   buyPrice: 500
-  sellPrice: 0
+  sellPrice: 250
   totalGain: 0
   unplaceableLayers:
     serializedVersion: 2
     m_Bits: 832
   machineMesh: {fileID: 9032458203491192417}
+  machineButton: {fileID: 0}
   navMeshObstacle: {fileID: 121571667314662877}
   obstacleEnabled: 0
   occupied: 0

@@ -54,6 +54,19 @@ namespace RSNManagers
                 UIManager.SingleMachineSelected(null);
                 UIManager.PurchaseButtonIsPressed();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (_currentDraggable)
+                {
+                    Destroy(_currentDraggable.gameObject);
+                    HasDraggableObject(null,null);
+                }
+                else
+                {
+                    UIManager.CloseAllPanels();
+                }
+            }
             
             if (_currentDraggable)
             {
@@ -125,7 +138,7 @@ namespace RSNManagers
                 }
                 else
                 {
-                    Debug.Log("NO RAY HIT");
+                    UIManager.CloseAllPanels();
                 }
             }
 

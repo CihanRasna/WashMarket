@@ -9,7 +9,6 @@ namespace GameplayScripts
         public override void Sell(out int price)
         {
             base.Sell(out price);
-            Manager.allMachines.Remove(this);
             Manager.ironMachines.Remove(this);
             Manager.CheckForActiveMachineTypes();
             Destroy(gameObject);
