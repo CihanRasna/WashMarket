@@ -81,17 +81,9 @@ namespace RSNManagers
             var day = ES3.Load(dayKey, 1);
             persist.Currency = currency;
             persist.PassedDayCount = day;
-            var scene = SceneManager.GetActiveScene();
-
-            //yield return new WaitForSecondsRealtime(1f);
-
-            SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Single);
-            //StartCoroutine(SceneLoader(slotIdx));
-        }
-
-        private IEnumerator SceneLoader(int slotIdx)
-        {
-            yield return null;
+            
+            bl_SceneLoaderManager.LoadScene("GameScene");
+            //SceneManager.LoadSceneAsync(sceneBuildIndex: 1, LoadSceneMode.Single);
         }
     }
 

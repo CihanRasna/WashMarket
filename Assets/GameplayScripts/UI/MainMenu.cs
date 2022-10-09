@@ -1,5 +1,6 @@
-using System;
 using RSNManagers;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,23 +18,30 @@ namespace GameplayScripts.UI
         [SerializeField] private Button loadGameButton;
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button quitGameButton;
+        [SerializeField] private TextMeshProUGUI gameVersionText;
+        
 
         private void Start()
         {
-            resumeGameButton.onClick.AddListener(ResumeGame);
-            saveGameButton.onClick.AddListener(OpenSavePanel);
-            loadGameButton.onClick.AddListener(OpenLoadPanel);
-            settingsButton.onClick.AddListener(OpenSettingsPanel);
-            quitGameButton.onClick.AddListener(QuitGame);
+            if (gameVersionText != null)
+            {
+                gameVersionText.text = $"Version : Alpha {PlayerSettings.bundleVersion}";
+            }
+            
+            resumeGameButton?.onClick.AddListener(ResumeGame);
+            saveGameButton?.onClick.AddListener(OpenSavePanel);
+            loadGameButton?.onClick.AddListener(OpenLoadPanel);
+            settingsButton?.onClick.AddListener(OpenSettingsPanel);
+            quitGameButton?.onClick.AddListener(QuitGame);
         }
 
         private void OnDestroy()
         {
-            resumeGameButton.onClick.RemoveAllListeners();
-            saveGameButton.onClick.RemoveAllListeners();
-            loadGameButton.onClick.RemoveAllListeners();
-            settingsButton.onClick.RemoveAllListeners();
-            quitGameButton.onClick.RemoveAllListeners();
+            resumeGameButton?.onClick.RemoveAllListeners();
+            saveGameButton?.onClick.RemoveAllListeners();
+            loadGameButton?.onClick.RemoveAllListeners();
+            settingsButton?.onClick.RemoveAllListeners();
+            quitGameButton?.onClick.RemoveAllListeners();
         }
 
         public void OpenMainMenuPanel()

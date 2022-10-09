@@ -36,6 +36,7 @@ MonoBehaviour:
     - NavMeshComponents
     - Sirenix.OdinInspector.CompatibilityLayer
     - FbxBuildTestAssets
+    - LoadingScreen.Misc
     - NavMeshComponentsEditor
     - Sirenix.OdinInspector.CompatibilityLayer.Editor
     - Autodesk.Fbx.Editor

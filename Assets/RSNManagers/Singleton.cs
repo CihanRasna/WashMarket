@@ -66,10 +66,10 @@ namespace RSNManagers
 
         protected virtual void Awake()
         {
+            _instance = Instance;
             if (transform.parent) transform.SetParent(null,true);
             if (persistent) DontDestroyOnLoad(gameObject);
         }
-
         protected virtual void Start()
         {
         }
