@@ -29,6 +29,34 @@ namespace GameplayScripts
             CreateDummyMesh();
         }
 
+        public void GetMachineMeshObject(Machine machine, Transform meshObject)
+        {
+            this.machine = machine;
+            meshObject.transform.localPosition += Vector3.up;
+            machineObject = meshObject;
+            machineObject.DOShakeScale(0.5f, .2f, 5).SetLoops(-1, LoopType.Yoyo).SetId(this);
+        }
+
+        private Transform GetClosestRoom(List<Room> rooms)
+        {
+            Transform bestTarget = null;
+            var closestDistanceSqr = Mathf.Infinity;
+            var currentPosition = transform.position;
+
+            foreach (var potentialTarget in rooms)
+            {
+                var directionToTarget = potentialTarget.transform.position - currentPosition;
+                var dSqrToTarget = directionToTarget.sqrMagnitude;
+                if (dSqrToTarget < closestDistanceSqr)
+                {
+                    closestDistanceSqr = dSqrToTarget;
+                    bestTarget = potentialTarget.transform;
+                }
+            }
+
+            return bestTarget;
+        }
+
         private bool _canPlace = false;
         public bool CanPlace => _canPlace;
 
@@ -63,38 +91,18 @@ namespace GameplayScripts
             dummyMaterial.DOColor(Color.green, 0.2f);
         }
 
-        private Transform GetClosestRoom(List<Room> rooms)
-        {
-            Transform bestTarget = null;
-            var closestDistanceSqr = Mathf.Infinity;
-            var currentPosition = transform.position;
-
-            foreach (var potentialTarget in rooms)
-            {
-                var directionToTarget = potentialTarget.transform.position - currentPosition;
-                var dSqrToTarget = directionToTarget.sqrMagnitude;
-                if (dSqrToTarget < closestDistanceSqr)
-                {
-                    closestDistanceSqr = dSqrToTarget;
-                    bestTarget = potentialTarget.transform;
-                }
-            }
-
-            return bestTarget;
-        }
-
         public void Placed()
         {
             var roomManager = RoomManager.Instance;
             var gameManager = GameManager.Instance;
-            
+
             var roomList = roomManager.ActiveRooms;
             gameManager.CheckForActiveMachineTypes();
             transform.parent = GetClosestRoom(roomList);
             machine.obstacleEnabled = true;
             navMeshObstacle.enabled = true;
             Destroy(dummyGameObject);
-            DOTween.Kill(this,true);
+            DOTween.Kill(this, true);
             machineObject.DOScale(1f, 0.4f);
             machineObject.DOLocalMoveY(0f, 0.5f).OnComplete((() =>
             {
@@ -102,14 +110,6 @@ namespace GameplayScripts
                     PersistManager.Instance.Currency -= _price;
                 Destroy(this);
             })).SetEase(Ease.OutBounce);
-        }
-
-        public void GetMachineMeshObject(Machine machine,Transform meshObject)
-        {
-            this.machine = machine;
-            meshObject.transform.localPosition += Vector3.up;
-            machineObject = meshObject;
-            machineObject.DOShakeScale(0.5f, .2f, 5).SetLoops(-1, LoopType.Yoyo).SetId(this);
         }
 
         private void CreateDummyMesh()

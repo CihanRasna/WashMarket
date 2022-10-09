@@ -262,8 +262,8 @@ GameObject:
   - component: {fileID: 8303348802049925523}
   - component: {fileID: 8168519392163610458}
   - component: {fileID: 8724097740378962990}
-  - component: {fileID: 7348942349668219222}
   - component: {fileID: 6622622915416581941}
+  - component: {fileID: 7348942349668219222}
   - component: {fileID: 8523108626586189314}
   - component: {fileID: -3729881538575675559}
   - component: {fileID: -5769037801402631926}
@@ -319,6 +319,26 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 1.014, z: 0.075}
   m_TimeToStationary: 0.5
+--- !u!95 &6622622915416581941
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678642170257324841}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6a686dc84701fb45937812babdc9632, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &7348942349668219222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,26 +372,6 @@ MonoBehaviour:
   obstacleEnabled: 0
   occupied: 0
   <Filled>k__BackingField: 0
---- !u!95 &6622622915416581941
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8678642170257324841}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c6a686dc84701fb45937812babdc9632, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!54 &8523108626586189314
 Rigidbody:
   m_ObjectHideFlags: 0

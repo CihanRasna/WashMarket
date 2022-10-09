@@ -354,6 +354,7 @@ MonoBehaviour:
   currentLevel: 1
   machineName: Dryer Machine
   singleWorkTime: 5
+  maxDurability: 0
   durability: 300
   capacity: 5
   consumption: 3
@@ -366,6 +367,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 832
   machineMesh: {fileID: 3825342024921481124}
+  machineButton: {fileID: 2420274882521719335}
   navMeshObstacle: {fileID: 5371849983166210153}
   obstacleEnabled: 0
   occupied: 0

@@ -78,9 +78,9 @@ namespace GameplayScripts
 
         protected virtual void Start()
         {
-            var euler = transform.localEulerAngles;
-            Debug.Log(euler);
-            transform.localEulerAngles = new Vector3(0, euler.y, 0);
+            var mTransform = transform;
+            var euler = mTransform.localEulerAngles;
+            mTransform.localEulerAngles = new Vector3(0, euler.y, 0);
             
             navMeshObstacle ??= GetComponent<NavMeshObstacle>();
             

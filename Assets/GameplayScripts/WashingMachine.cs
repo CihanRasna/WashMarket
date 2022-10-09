@@ -28,7 +28,6 @@ namespace GameplayScripts
 
         protected override void RepairBehaviourOverride()
         {
-            Debug.Log("ANAN");
             animator.SetTrigger(CoverOpen);
             base.RepairBehaviourOverride();
         }
