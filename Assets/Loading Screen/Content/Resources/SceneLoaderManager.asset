@@ -37,5 +37,5 @@ MonoBehaviour:
   - Create as many tips as you need
   - Improved the look of your game with awasome backgrounds.
   - Good backgrounds sounds increase the motivation of players.
-  buildSettingsAsFallback: 0
-  useSynchronousAsFallback: 0
+  buildSettingsAsFallback: 1
+  useSynchronousAsFallback: 1

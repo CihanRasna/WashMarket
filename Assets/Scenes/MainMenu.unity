@@ -5875,6 +5875,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader 11
       objectReference: {fileID: 0}
+    - target: {fileID: 114747623612119538, guid: f36a8f2c2525a7146887e92284252a96, type: 3}
+      propertyPath: useTimeScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114747623612119538, guid: f36a8f2c2525a7146887e92284252a96, type: 3}
+      propertyPath: useBackgrounds
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114747623612119538, guid: f36a8f2c2525a7146887e92284252a96, type: 3}
+      propertyPath: ShowDescription
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224446522046454718, guid: f36a8f2c2525a7146887e92284252a96, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
