@@ -64,7 +64,15 @@ namespace RSNManagers
                 }
                 else
                 {
-                    UIManager.CloseAllPanels();
+                    if (UIManager.anyPanelActive)
+                    {
+                        UIManager.CloseAllPanels();
+                    }
+                    else
+                    {
+                        UIManager.OpenMainMenu();
+                    }
+                    
                 }
             }
             
@@ -138,7 +146,10 @@ namespace RSNManagers
                 }
                 else
                 {
-                    UIManager.CloseAllPanels();
+                    if (UIManager.anyPanelActive)
+                    {
+                        UIManager.CloseAllPanels();
+                    }
                 }
             }
 

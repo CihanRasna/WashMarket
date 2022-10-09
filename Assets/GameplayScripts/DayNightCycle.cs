@@ -39,7 +39,7 @@ namespace GameplayScripts
         private void Start()
         {
             if (transform.parent) transform.SetParent(null,true);
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             passedDayCount = PersistManager.Instance.PassedDayCount;
             _normalizeShiftValue = shiftTimeInSecond / dayTimeInSecond;
 
@@ -107,6 +107,7 @@ namespace GameplayScripts
             ShiftEndedAction.Invoke();
             
             PersistManager.Instance.PassedDayCount = passedDayCount;
+            ES3AutoSaveMgr.Current.settings.path = "AutoSave.rsn";
 
             StartOrSkipDay();
         }

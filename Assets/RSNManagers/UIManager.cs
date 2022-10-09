@@ -13,9 +13,12 @@ namespace RSNManagers
     {
         [SerializeField] private MachineList machineList;
         [SerializeField] private SingleMachinePanel singleMachinePanel;
+        [SerializeField] private MainMenu mainMenuPanel;
         [SerializeField] private TextMeshProUGUI currencyText;
 
         [SerializeField] private List<Panel> uiPanels;
+
+        public bool anyPanelActive;
         
         private int _lastKnownCurrency;
 
@@ -50,11 +53,24 @@ namespace RSNManagers
             {
                 panel.HidePanel();
             }
+
+            anyPanelActive = false;
+            if (Time.timeScale == 0f)
+            {
+                Time.timeScale = 1f;
+            }
+        }
+
+        public void OpenMainMenu()
+        {
+            anyPanelActive = true;
+            mainMenuPanel.OpenMainMenuPanel();
         }
 
 
         public void OpenFailedPanel()
         {
+            anyPanelActive = true;
             Debug.Log("failed");
         }
     }

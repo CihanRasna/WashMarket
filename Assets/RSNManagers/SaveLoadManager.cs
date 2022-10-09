@@ -1,12 +1,72 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RSNManagers
 {
-    public class SaveLoadManager : MonoBehaviour//Singleton<SaveLoadManager> NOT USING FOR NOW
+    public class SaveLoadManager : Singleton<SaveLoadManager> 
     {
+        protected override void Awake()
+        {
+            base.Awake();
+            SceneManager.sceneLoaded += OnLevelFinishedLoading;
+        }
+
+        protected void OnApplicationQuit()
+        {
+            base.OnDestroy();
+            SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+        }
+
+        private int _slotIdx;
+        
+        public void SaveData(int slotIdx)
+        {
+            _slotIdx = slotIdx;
+            var pathString = $"SaveSlot{slotIdx.ToString()}.rsn";
+            var key = $"{slotIdx.ToString()}.rsn";
+            var autoSaves = ES3AutoSaveMgr.Current.autoSaves;
+            var gameObjects = new List<GameObject>();
+            foreach (var autoSave in autoSaves)
+            {
+                if (autoSave.enabled)
+                    gameObjects.Add(autoSave.gameObject);
+            }
+            var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+            {
+                location = ES3.Location.File,
+                path = pathString
+            };
+            
+            ES3.Save<GameObject[]>(key, gameObjects.ToArray(), settings);
+        }
+
+        private void OnLevelFinishedLoading(Scene arg0, LoadSceneMode arg1)
+        {
+            Debug.Log("ANAN");
+            var pathString = $"SaveSlot{_slotIdx.ToString()}.rsn";
+            var key = $"{_slotIdx.ToString()}.rsn";
+            var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+            {
+                location = ES3.Location.File,
+                path = pathString
+            };
+            ES3.Load<GameObject[]>(key, Array.Empty<GameObject>(), settings);
+        }
+
+        public void LoadData(int slotIdx)
+        {
+            _slotIdx = slotIdx;
+            var scene = SceneManager.GetActiveScene();
+            SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Single);
+        }
+    }
+    
+    /*#region OldSaveManager
+
         private const string SaveDirectory = "/SaveData/";
         private const string FileName = "SaveGame.rsn";
 
@@ -75,5 +135,6 @@ namespace RSNManagers
                 }
             }
         }
-    }
+
+        #endregion*/
 }

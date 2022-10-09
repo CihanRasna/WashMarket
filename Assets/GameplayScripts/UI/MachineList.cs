@@ -32,6 +32,8 @@ namespace GameplayScripts.UI
 
         public void OpenUpList(bool forceDeactivate = false)
         {
+            UIManager.Instance.anyPanelActive = true;
+            
             DOTween.Kill(1);
 
             isActive = !forceDeactivate && !isActive;

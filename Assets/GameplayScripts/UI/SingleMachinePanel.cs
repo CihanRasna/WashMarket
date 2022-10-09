@@ -72,6 +72,7 @@ namespace GameplayScripts.UI
 
             if (_isActive)
             {
+                UIManager.Instance.anyPanelActive = true;
                 currentSelectedMachine = machine;
                 RefValuesFromMachine();
                 rectTransform.DOAnchorPosX(-100f, 1f);

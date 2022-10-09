@@ -60,10 +60,15 @@ namespace RSNManagers
             shiftTimer.ShiftStartedAction += ShiftStarted;
             shiftTimer.ShiftEndedAction += ShiftEnded;
             
-            ES3AutoSaveMgr.Current.Load();
+            //ES3AutoSaveMgr.Current.Load();
             
             CheckForActiveMachineTypes();
             CalculateCornerPoints();
+        }
+
+        private void OnApplicationQuit()
+        {
+            ES3AutoSaveMgr.Current.Save();
         }
 
         private void MachineListSeparator()

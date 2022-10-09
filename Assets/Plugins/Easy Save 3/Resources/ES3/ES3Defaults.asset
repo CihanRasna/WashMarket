@@ -17,7 +17,7 @@ MonoBehaviour:
     path: SaveFile.rsn
     encryptionType: 0
     compressionType: 0
-    encryptionPassword: password
+    encryptionPassword: myPassword
     directory: 0
     format: 0
     prettyPrint: 1
