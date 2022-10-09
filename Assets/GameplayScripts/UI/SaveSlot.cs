@@ -14,6 +14,8 @@ namespace GameplayScripts.UI
         [SerializeField] private TextMeshProUGUI money;
         [SerializeField] private TextMeshProUGUI buttonText;
         [SerializeField] private SaveGamePanel saveGamePanel;
+        [SerializeField] private LoadGamePanel loadGamePanel;
+        
 
         private bool _overwriteable;
 
@@ -36,25 +38,41 @@ namespace GameplayScripts.UI
             else
             {
                 saveManager.SaveData(saveIdx);
-                LoadDataIfExist(true);
+                LoadDataIfExist(true,false);
             }
         }
 
-        public void LoadDataIfExist(bool exist)
+        public void LoadData()
+        {
+            loadGamePanel.LoadData(this);
+        }
+
+        public void LoadDataIfExist(bool exist, bool isLoadScene)
         {
             if (exist)
             {
+                var currencyKey = $"{saveIdx.ToString()}.currency";
+                var dayKey = $"{saveIdx.ToString()}.day";
                 _overwriteable = true;
                 dayIdx.transform.parent.gameObject.SetActive(true);
-                dayIdx.text = $"Day : {PersistManager.Instance.PassedDayCount.ToString()}";
-                money.text = $"Day : {PersistManager.Instance.Currency.ToString()}";
-                buttonText.text = $"Overwrite Save";
+                saveButton.gameObject.SetActive(true);
+                money.text = $"Money : {ES3.Load(currencyKey)}";
+                dayIdx.text = $"Day : {ES3.Load(dayKey)}";
+                buttonText.text = isLoadScene ? $"Load Game" : $"Overwrite Save";
             }
             else
             {
                 _overwriteable = false; 
                 dayIdx.transform.parent.gameObject.SetActive(false);
-                buttonText.text = $"Save Game";
+                if (isLoadScene)
+                {
+                    buttonText.text = $"NO LOAD DATA";
+                    saveButton.gameObject.SetActive(false);
+                }
+                else
+                {
+                    buttonText.text = $"Save Game";
+                }
             }
         }
     }

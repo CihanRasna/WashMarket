@@ -25,14 +25,21 @@ namespace GameplayScripts.UI
         private void Start()
         {
             LoadDataIfExist();
+            SaveLoadManager.Instance.GameSavedEvent += GameSaved;
             overwriteButton.onClick.AddListener(OverwriteData);
             cancelButton.onClick.AddListener(CloseOverwritePanel);
         }
 
         private void OnApplicationQuit()
         {
+            SaveLoadManager.Instance.GameSavedEvent -= GameSaved;
             overwriteButton.onClick.RemoveAllListeners();
             cancelButton.onClick.RemoveAllListeners();
+        }
+
+        private void GameSaved()
+        {
+            LoadDataIfExist();
         }
 
         public void OpenOverwritePanel(SaveSlot slot)
@@ -58,7 +65,7 @@ namespace GameplayScripts.UI
             })).SetId(9999);
         }
 
-        public void OverwriteData()
+        private void OverwriteData()
         {
             var manager = SaveLoadManager.Instance;
             manager.SaveData(_selectedSlotIdx);
@@ -82,15 +89,7 @@ namespace GameplayScripts.UI
                     location = ES3.Location.File,
                     path = pathString
                 };
-                if (ES3.KeyExists(key, settings))
-                {
-                    Debug.Log("EXIST");
-                    saveSlots[i - 1].LoadDataIfExist(true);
-                }
-                else
-                {
-                    saveSlots[i - 1].LoadDataIfExist(false);
-                }
+                saveSlots[i - 1].LoadDataIfExist(ES3.KeyExists(key, settings), false);
             }
         }
 

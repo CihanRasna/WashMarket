@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +10,6 @@ namespace RSNManagers
         
         private const string CurrencyKey = "Currency";
         private int _currency;
-
         public int Currency
         {
             get => _currency;
@@ -70,9 +70,10 @@ namespace RSNManagers
         protected override void Awake()
         { 
             base.Awake();
+            
             Currency = PlayerPrefs.GetInt(CurrencyKey, 1000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
-            PassedDayCount = PlayerPrefs.GetInt(PassedDayCountKey, 1);
+            //PassedDayCount = PlayerPrefs.GetInt(PassedDayCountKey, 1);
         }
     }
 }
