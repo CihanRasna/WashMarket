@@ -1,10 +1,9 @@
 using System;
-using System.Collections;
 using DG.Tweening;
 using RSNManagers;
 using UnityEngine;
 
-namespace GameplayScripts
+namespace GameplayScripts.Characters
 {
     [SelectionBase]
     public class Player : Actor
@@ -19,20 +18,6 @@ namespace GameplayScripts
         private void OnApplicationQuit()
         {
             PersistManager.Instance.PlayersLastPos = transform.position;
-        }
-
-        private void StartAAA()
-        {
-            var pos = Vector3.zero;
-            var roomManager = RoomManager.Instance;
-            var activeRooms = roomManager.ActiveRooms;
-            var count = activeRooms.Count;
-            for (var i = 0; i < count; i++)
-            {
-                pos += activeRooms[i].transform.position;
-            }
-
-            transform.position = pos / count;
         }
 
         public void Move(Vector2 direction)

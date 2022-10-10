@@ -1,19 +1,15 @@
-using System;
-using RSNManagers;
 using UnityEngine;
 
-namespace GameplayScripts
+namespace GameplayScripts.Machines
 {
-    public class WashingMachine : Machine
+    public class IronMachine : Machine
     {
-        private static readonly int CoverOpen = Animator.StringToHash("CoverOpen");
-        private static readonly int CoverClosed = Animator.StringToHash("CoverClosed");
         private static readonly int IsWorking = Animator.StringToHash("IsWorking");
 
         public override void Sell(out int price)
         {
             base.Sell(out price);
-            Manager.washingMachines.Remove(this);
+            Manager.ironMachines.Remove(this);
             Manager.CheckForActiveMachineTypes();
             Destroy(gameObject);
         }
@@ -22,19 +18,11 @@ namespace GameplayScripts
         {
             if (occupied && Filled)
             {
-               Working();
+                Working();
             }
         }
-
-        protected override void RepairBehaviourOverride()
-        {
-            animator.SetTrigger(CoverOpen);
-            base.RepairBehaviourOverride();
-        }
-
         public override void StartInteraction()
         {
-            animator.SetTrigger(CoverOpen);
         }
 
         public override void CurrentlyWorking()
@@ -44,7 +32,6 @@ namespace GameplayScripts
 
         public override void FinishInteraction()
         {
-            animator.SetTrigger(CoverClosed);
         }
     }
 }

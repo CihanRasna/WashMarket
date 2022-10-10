@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameplayScripts
+namespace GameplayScripts.Machines
 {
     public class DryerMachine : Machine
     {

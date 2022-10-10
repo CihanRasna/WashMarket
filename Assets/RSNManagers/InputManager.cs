@@ -1,6 +1,6 @@
-using System;
 using DG.Tweening;
-using GameplayScripts;
+using GameplayScripts.Characters;
+using GameplayScripts.Machines;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

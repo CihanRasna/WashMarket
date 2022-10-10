@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace GameplayScripts
+namespace GameplayScripts.Cloth
 {
     [CreateAssetMenu(fileName = "ClothType", menuName = "Cloth", order = 1)]
     public class CustomerItem : ScriptableObject

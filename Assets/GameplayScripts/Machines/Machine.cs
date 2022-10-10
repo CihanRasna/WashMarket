@@ -1,10 +1,12 @@
 using System;
 using DG.Tweening;
+using GameplayScripts.Characters;
+using GameplayScripts.Cloth;
 using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace GameplayScripts
+namespace GameplayScripts.Machines
 {
     [Serializable,SelectionBase]
     public abstract class Machine : MonoBehaviour, IWorkable, IRepairable

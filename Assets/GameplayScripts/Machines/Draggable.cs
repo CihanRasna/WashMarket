@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using DG.Tweening;
 using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace GameplayScripts
+namespace GameplayScripts.Machines
 {
     public class Draggable : MonoBehaviour
     {

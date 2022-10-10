@@ -1,4 +1,5 @@
 using System;
+using GameplayScripts.Machines;
 using UnityEngine;
 
 namespace ES3Types
@@ -9,12 +10,12 @@ namespace ES3Types
 	{
 		public static ES3Type Instance = null;
 
-		public ES3UserType_WashingMachine() : base(typeof(GameplayScripts.WashingMachine)){ Instance = this; priority = 1;}
+		public ES3UserType_WashingMachine() : base(typeof(WashingMachine)){ Instance = this; priority = 1;}
 
 
 		protected override void WriteComponent(object obj, ES3Writer writer)
 		{
-			var instance = (GameplayScripts.WashingMachine)obj;
+			var instance = (WashingMachine)obj;
 			
 			writer.WritePrivateField("machineName", instance);
 			writer.WritePrivateField("durability", instance);
@@ -27,32 +28,32 @@ namespace ES3Types
 
 		protected override void ReadComponent<T>(ES3Reader reader, object obj)
 		{
-			var instance = (GameplayScripts.WashingMachine)obj;
+			var instance = (WashingMachine)obj;
 			foreach(string propertyName in reader.Properties)
 			{
 				switch(propertyName)
 				{
 					
 					case "machineName":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("machineName", reader.Read<System.String>(), instance);
+					instance = (WashingMachine)reader.SetPrivateField("machineName", reader.Read<System.String>(), instance);
 					break;
 					case "durability":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("durability", reader.Read<System.Single>(), instance);
+					instance = (WashingMachine)reader.SetPrivateField("durability", reader.Read<System.Single>(), instance);
 					break;
 					case "totalGain":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("totalGain", reader.Read<System.Int32>(), instance);
+					instance = (WashingMachine)reader.SetPrivateField("totalGain", reader.Read<System.Int32>(), instance);
 					break;
 					case "obstacleEnabled":
 						instance.obstacleEnabled = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;
 					case "remainDurability":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("remainDurability", reader.Read<System.Single>(), instance);
+					instance = (WashingMachine)reader.SetPrivateField("remainDurability", reader.Read<System.Single>(), instance);
 					break;
 					case "_workedTime":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("_workedTime", reader.Read<System.Single>(), instance);
+					instance = (WashingMachine)reader.SetPrivateField("_workedTime", reader.Read<System.Single>(), instance);
 					break;
 					case "_needsRepair":
-					instance = (GameplayScripts.WashingMachine)reader.SetPrivateField("_needsRepair", reader.Read<System.Boolean>(), instance);
+					instance = (WashingMachine)reader.SetPrivateField("_needsRepair", reader.Read<System.Boolean>(), instance);
 					break;
 					default:
 						reader.Skip();
@@ -67,7 +68,7 @@ namespace ES3Types
 	{
 		public static ES3Type Instance;
 
-		public ES3UserType_WashingMachineArray() : base(typeof(GameplayScripts.WashingMachine[]), ES3UserType_WashingMachine.Instance)
+		public ES3UserType_WashingMachineArray() : base(typeof(WashingMachine[]), ES3UserType_WashingMachine.Instance)
 		{
 			Instance = this;
 		}

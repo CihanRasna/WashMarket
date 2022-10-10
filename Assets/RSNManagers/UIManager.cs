@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using GameplayScripts;
+using GameplayScripts.Machines;
 using GameplayScripts.UI;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace RSNManagers
 {

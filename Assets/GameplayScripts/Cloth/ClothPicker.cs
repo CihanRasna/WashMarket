@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameplayScripts
+namespace GameplayScripts.Cloth
 {
     public class ClothPicker : MonoBehaviour
     {

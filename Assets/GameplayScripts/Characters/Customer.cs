@@ -1,11 +1,12 @@
-using System;
 using System.Collections;
+using GameplayScripts.Cloth;
+using GameplayScripts.Machines;
 using RSNManagers;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace GameplayScripts
+namespace GameplayScripts.Characters
 {
     [SelectionBase]
     public class Customer : Actor

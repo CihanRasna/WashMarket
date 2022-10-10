@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace GameplayScripts
+namespace GameplayScripts.Characters
 {
     public abstract class Actor : MonoBehaviour
     {

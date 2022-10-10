@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameplayScripts.Characters;
 using UnityEngine;
 
-namespace GameplayScripts
+namespace GameplayScripts.Machines
 {
     public class Paydesk : Machine
     {

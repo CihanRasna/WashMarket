@@ -1,11 +1,10 @@
 using System;
 using DG.Tweening;
-using RSNManagers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GameplayScripts
+namespace RSNManagers
 {
     public class DayNightCycle : MonoBehaviour
     {

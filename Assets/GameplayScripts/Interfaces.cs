@@ -1,3 +1,5 @@
+using GameplayScripts.Characters;
+
 namespace GameplayScripts
 {
     public interface IWorkable

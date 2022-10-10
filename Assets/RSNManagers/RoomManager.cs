@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using GameplayScripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace RSNManagers
 {

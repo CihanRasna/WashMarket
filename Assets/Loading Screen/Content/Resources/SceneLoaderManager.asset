@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7decf71d60cb2fe438b4d9a0a160a517, type: 3}
   m_Name: SceneLoaderManager
   m_EditorClassIdentifier: 
-  loadingScreenMode: 0
+  loadingScreenMode: 1
   sceneList:
   - SceneName: GameScene
     SceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
     DisplayName: GameScene
     Description: 
     SkipType: 4
-    LoadingType: 1
+    LoadingType: 0
     FakeLoadingTime: 5
     Backgrounds: []
   - SceneName: MainMenu
