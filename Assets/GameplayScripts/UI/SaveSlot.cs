@@ -51,8 +51,8 @@ namespace GameplayScripts.UI
         {
             if (exist)
             {
-                var currencyKey = $"{saveIdx.ToString()}.currency";
-                var dayKey = $"{saveIdx.ToString()}.day";
+                var currencyKey = $"SaveSlot{saveIdx.ToString()}.currency";
+                var dayKey = $"SaveSlot{saveIdx.ToString()}.day";
                 _overwriteable = true;
                 dayIdx.transform.parent.gameObject.SetActive(true);
                 saveButton.gameObject.SetActive(true);

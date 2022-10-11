@@ -67,10 +67,11 @@ namespace RSNManagers
             CheckForActiveMachineTypes();
             CalculateCornerPoints();
         }
-
-        private void OnApplicationQuit()
+        
+        protected void OnApplicationQuit()
         {
-            ES3AutoSaveMgr.Current.Save();
+            SaveLoadManager.Instance.SaveData(0);
+            //ES3AutoSaveMgr.Current.Save();
         }
 
         private void MachineListSeparator()

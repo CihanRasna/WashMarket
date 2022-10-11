@@ -22,19 +22,19 @@ namespace RSNManagers
 
         protected void OnApplicationQuit()
         {
-            base.OnDestroy();
             SceneManager.sceneLoaded -= OnSceneLoad;
+            base.OnDestroy();
         }
 
-        private int _slotIdx;
+        private int _slotIdx = -1;
 
         public void SaveData(int slotIdx)
         {
             _slotIdx = slotIdx;
             var pathString = $"SaveSlot{slotIdx.ToString()}.rsn";
-            var key = $"{slotIdx.ToString()}.rsn";
-            var currencyKey = $"{slotIdx.ToString()}.currency";
-            var dayKey = $"{_slotIdx.ToString()}.day";
+            var key = $"SaveSlot{slotIdx.ToString()}";
+            var currencyKey = $"SaveSlot{slotIdx.ToString()}.currency";
+            var dayKey = $"SaveSlot{_slotIdx.ToString()}.day";
             var autoSaves = ES3AutoSaveMgr.Current.autoSaves;
             var gameObjects = new List<GameObject>();
             foreach (var autoSave in autoSaves)
@@ -52,33 +52,42 @@ namespace RSNManagers
             ES3.Save<GameObject[]>(key, gameObjects.ToArray(), settings);
             ES3.Save(currencyKey, PersistManager.Instance.Currency);
             ES3.Save(dayKey, PersistManager.Instance.PassedDayCount);
-            GameSavedEvent.Invoke();
+            if (_slotIdx > 0)
+            {
+                GameSavedEvent?.Invoke();
+            }
         }
 
         private void OnSceneLoad(Scene arg0, LoadSceneMode arg1)
         {
             Time.timeScale = 1f;
-            var pathString = $"SaveSlot{_slotIdx.ToString()}.rsn";
-            var key = $"{_slotIdx.ToString()}.rsn";
-            var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+            if (_slotIdx > -1)
             {
-                location = ES3.Location.File,
-                path = pathString
-            };
-            ES3.Load<GameObject[]>(key, Array.Empty<GameObject>(), settings);
+                var pathString = $"SaveSlot{_slotIdx.ToString()}.rsn";
+                var key = $"SaveSlot{_slotIdx.ToString()}";
+                var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+                {
+                    location = ES3.Location.File,
+                    path = pathString
+                };
+                ES3.Load<GameObject[]>(key, Array.Empty<GameObject>(), settings);
+            }
         }
 
         public void LoadData(int slotIdx)
         {
-            var persist = PersistManager.Instance;
-            _slotIdx = slotIdx;
-            var currencyKey = $"{_slotIdx.ToString()}.currency";
-            var dayKey = $"{_slotIdx.ToString()}.day";
-            var currency = ES3.Load(currencyKey, 1000);
-            var day = ES3.Load(dayKey, 1);
-            persist.Currency = currency;
-            persist.PassedDayCount = day;
-            
+            if (slotIdx >= 0)
+            {
+                var persist = PersistManager.Instance;
+                _slotIdx = slotIdx;
+                var currencyKey = $"SaveSlot{_slotIdx.ToString()}.currency";
+                var dayKey = $"SaveSlot{_slotIdx.ToString()}.day";
+                var currency = ES3.Load(currencyKey, 1000);
+                var day = ES3.Load(dayKey, 1);
+                persist.Currency = currency;
+                persist.PassedDayCount = day;
+            }
+
             bl_SceneLoaderManager.LoadScene("GameScene");
             //SceneManager.LoadSceneAsync(sceneBuildIndex: 1, LoadSceneMode.Single);
         }

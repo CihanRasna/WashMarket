@@ -72,7 +72,7 @@ namespace RSNManagers
             
             Currency = PlayerPrefs.GetInt(CurrencyKey, 1000);
             ActiveRoomCount = PlayerPrefs.GetInt(ActiveRoomKey, 1);
-            //PassedDayCount = PlayerPrefs.GetInt(PassedDayCountKey, 1);
+            PassedDayCount = PlayerPrefs.GetInt(PassedDayCountKey, 1);
         }
     }
 }

@@ -83,7 +83,7 @@ namespace GameplayScripts.UI
             for (int i = 1; i < saveSlots.Count + 1; i++)
             {
                 var pathString = $"SaveSlot{i.ToString()}.rsn";
-                var key = $"{i.ToString()}.rsn";
+                var key = $"SaveSlot{i.ToString()}";
                 var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
                 {
                     location = ES3.Location.File,
