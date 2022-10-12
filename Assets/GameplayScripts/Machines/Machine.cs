@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using GameplayScripts.Characters;
 using GameplayScripts.Cloth;
@@ -8,7 +9,7 @@ using UnityEngine.AI;
 
 namespace GameplayScripts.Machines
 {
-    [Serializable,SelectionBase]
+    [Serializable, SelectionBase]
     public abstract class Machine : MonoBehaviour, IWorkable, IRepairable
     {
         public enum Level
@@ -35,7 +36,7 @@ namespace GameplayScripts.Machines
         [SerializeField] protected LayerMask unplaceableLayers;
         [SerializeField] protected Transform machineMesh;
         [SerializeField] protected Renderer machineButton;
-        
+
         public NavMeshObstacle navMeshObstacle;
         public bool obstacleEnabled = false;
 
@@ -52,26 +53,30 @@ namespace GameplayScripts.Machines
         protected CustomerItem _customerItems;
         protected float _workedTime = 0;
         protected bool _needsRepair = false;
-        
+        public bool Repairing { get; private set; }
+
         protected GameManager Manager;
 
         public bool occupied;
         private static readonly int MachineBroken = Animator.StringToHash("MachineBroken");
         private static readonly int Repaired = Animator.StringToHash("MachineRepaired");
+
         [field: SerializeField] public bool Filled { get; protected set; }
 
         public (string machineName, Level currentLevel, float singleWorkTime, float durability, int usingPrice, int
-            buyPrice, float capacity, float consumption, int sellPrice, int totalGain,int repairPrice) RefValuesForUI()
+            buyPrice, float capacity, float consumption, int sellPrice, int totalGain, int repairPrice) RefValuesForUI()
         {
-            RepairPricing(out var repairPrice,out var ratio,out var corruptAmount);
+            RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
             return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice, capacity, consumption,
-                sellPrice, totalGain,repairPrice);
+                sellPrice, totalGain, repairPrice);
         }
+
         public virtual void Sell(out int price)
         {
             price = sellPrice;
             Manager.allMachines.Remove(this);
         }
+
         protected virtual void Awake()
         {
             Manager = GameManager.Instance;
@@ -83,9 +88,9 @@ namespace GameplayScripts.Machines
             var mTransform = transform;
             var euler = mTransform.localEulerAngles;
             mTransform.localEulerAngles = new Vector3(0, euler.y, 0);
-            
+
             navMeshObstacle ??= GetComponent<NavMeshObstacle>();
-            
+
             ButtonColorChanger(Color.green);
 
             if (remainDurability <= 0f)
@@ -181,19 +186,27 @@ namespace GameplayScripts.Machines
         {
             corruptAmount = maxDurability * 0.1f;
             ratio = Mathf.Clamp01(remainDurability / durability);
-            var halfPrice = buyPrice * 0.5f;
+            var totalCorruption = Mathf.Clamp01(durability / maxDurability);
+            var halfPrice = buyPrice * 0.5f * totalCorruption;
             repairPrice = Mathf.FloorToInt(halfPrice * (1 - ratio));
         }
 
-        public void MachineRepaired()
+        public void MachineRepairing()
         {
-            if (_needsRepair)
-                animator.SetTrigger(Repaired);
-
-            occupied = false;
+            Repairing = true;
             RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
             durability -= (1f - ratio) * corruptAmount;
-            DOTween.To(() => remainDurability, x => remainDurability = x, durability, 0.5f);
+            DOTween.To(() => remainDurability, x => remainDurability = x, durability, 2f).OnComplete(() =>
+            {
+                
+                if (_needsRepair)
+                    animator.SetTrigger(Repaired);
+
+                Repairing = false;
+                _needsRepair = false;
+                occupied = false;
+                Filled = false;
+            });
         }
 
         public void INeedRepair()
@@ -202,6 +215,7 @@ namespace GameplayScripts.Machines
             {
                 MachineBrokeAction.Invoke();
                 MachineBrokeAction -= _currentCustomer.MachineBroke;
+                WorkDoneAction -= _currentCustomer.MachineFinished;
             }
 
             ButtonColorChanger(Color.white);
@@ -209,7 +223,8 @@ namespace GameplayScripts.Machines
             _needsRepair = true;
             occupied = _needsRepair;
             Filled = false;
-            
+
+            CurrentlyWorking();
             animator.SetTrigger(MachineBroken);
         }
 

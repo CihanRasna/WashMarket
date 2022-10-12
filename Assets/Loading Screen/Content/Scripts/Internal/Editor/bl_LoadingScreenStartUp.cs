@@ -39,8 +39,8 @@ namespace Lovatto.SceneLoader.Editor
             PlayerPrefs.SetInt(ONE_TIME_KEY, 1);
             EditorApplication.update -= Update;
 
-            bl_LoadingScreenWelcome.ShowWindow();
-            Setup();
+            //bl_LoadingScreenWelcome.ShowWindow();
+            //Setup();
       
         }
 

@@ -112,10 +112,15 @@ namespace GameplayScripts.UI
                 var maxDurability = _machineMaxDurability.ToString("00", CultureInfo.InvariantCulture);
                 var fillAmount = machine.RemainDurability / _machineMaxDurability;
                 var color = Color.Lerp(Color.red, Color.green, fillAmount);
-                repairPriceTMP.text = $"RepairPrice :{repairPrice.ToString("00", CultureInfo.InvariantCulture)}";
                 durabilityTMP.text = $"Durability : {currentDurability} / {maxDurability}";
                 durabilityFillImage.fillAmount = fillAmount;
                 durabilityFillImage.color = color;
+                repairPriceTMP.text = machine.Repairing ? $"Repairing..." :
+                    machine.Filled ? $"Working" :
+                    $"RepairPrice :{repairPrice.ToString("00", CultureInfo.InvariantCulture)}";
+
+                repairButton.gameObject.SetActive(ratio < 1f);
+                repairButton.interactable = !machine.Filled && !machine.Repairing;
             }
         }
 
@@ -135,9 +140,9 @@ namespace GameplayScripts.UI
             {
                 currentSelectedMachine.RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
                 var persist = PersistManager.Instance;
-                if (repairPrice >= persist.Currency)
+                if (repairPrice <= persist.Currency)
                 {
-                    currentSelectedMachine.MachineRepaired();
+                    currentSelectedMachine.MachineRepairing();
                     persist.Currency -= repairPrice;
                     RefValuesFromMachine();
                 }
