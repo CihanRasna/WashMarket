@@ -43,8 +43,9 @@ namespace RSNManagers
                     gameObjects.Add(autoSave.gameObject);
             }
 
-            var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+            var settings = new ES3Settings(ES3.EncryptionType.AES, "saveCrypt")
             {
+                compressionType = ES3.CompressionType.Gzip,
                 location = ES3.Location.File,
                 path = pathString
             };
@@ -65,8 +66,9 @@ namespace RSNManagers
             {
                 var pathString = $"SaveSlot{_slotIdx.ToString()}.rsn";
                 var key = $"SaveSlot{_slotIdx.ToString()}";
-                var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+                var settings = new ES3Settings(ES3.EncryptionType.AES, "saveCrypt")
                 {
+                    compressionType = ES3.CompressionType.Gzip,
                     location = ES3.Location.File,
                     path = pathString
                 };

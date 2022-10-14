@@ -12,6 +12,7 @@ namespace RSNManagers
         [SerializeField] private MachineList machineList;
         [SerializeField] private SingleMachinePanel singleMachinePanel;
         [SerializeField] private MainMenu mainMenuPanel;
+        [SerializeField] private AllMachinesRect allMachinesMenu;
         [SerializeField] private TextMeshProUGUI currencyText;
 
         [SerializeField] private List<Panel> uiPanels;
@@ -40,12 +41,12 @@ namespace RSNManagers
             machineList.OpenUpList(forceDeactivate);
         }
 
-        public void SingleMachineSelected(Machine machine)
+        public void OpenSingleMachinePanel(Machine machine)
         {
-            singleMachinePanel.OpenUpMachinePanel(machine);
+            singleMachinePanel.OpenSingleMachinePanel(machine);
         }
 
-        public void CloseAllPanels()
+        public void HideAllPanels()
         {
             foreach (var panel in uiPanels)
             {
@@ -63,6 +64,11 @@ namespace RSNManagers
         {
             anyPanelActive = true;
             mainMenuPanel.OpenMainMenuPanel();
+        }
+
+        public void OpenAllMachinesList()
+        {
+            allMachinesMenu.OpenAllMachinesPanel();
         }
 
 

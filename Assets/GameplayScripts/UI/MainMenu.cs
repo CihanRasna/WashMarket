@@ -57,12 +57,6 @@ namespace GameplayScripts.UI
             quitGameButton?.onClick.RemoveAllListeners();
         }
 
-        public void OpenMainMenuPanel()
-        {
-            gameObject.SetActive(true);
-            Time.timeScale = 0f;
-        }
-
         private void CheckForAutoLoadData()
         {
             var pathString = $"SaveSlot0.rsn";
@@ -90,7 +84,7 @@ namespace GameplayScripts.UI
             var pathString = $"SaveSlot0.rsn";
             if (isGameScene)
             {
-                UIManager.Instance.CloseAllPanels();
+                UIManager.Instance.HideAllPanels();
             }
             else
             {
@@ -104,6 +98,12 @@ namespace GameplayScripts.UI
                 }
                 
             }
+        }
+
+        public void OpenMainMenuPanel()
+        {
+            gameObject.SetActive(true);
+            Time.timeScale = 0f;
         }
 
         private void OpenSavePanel()

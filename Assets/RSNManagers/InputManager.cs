@@ -49,10 +49,19 @@ namespace RSNManagers
                 currentPlayer.Move(joystick.Direction);
             }
 
-            if (!_currentDraggable && Input.GetKeyDown(KeyCode.B))
+            if (!_currentDraggable)
             {
-                UIManager.SingleMachineSelected(null);
-                UIManager.PurchaseButtonIsPressed();
+                if (Input.GetKeyDown(KeyCode.B))
+                {
+                    UIManager.OpenSingleMachinePanel(null);
+                    UIManager.PurchaseButtonIsPressed();
+                }
+
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    UIManager.HideAllPanels();
+                    UIManager.OpenAllMachinesList();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -66,13 +75,12 @@ namespace RSNManagers
                 {
                     if (UIManager.anyPanelActive)
                     {
-                        UIManager.CloseAllPanels();
+                        UIManager.HideAllPanels();
                     }
                     else
                     {
                         UIManager.OpenMainMenu();
                     }
-                    
                 }
             }
             
@@ -141,14 +149,14 @@ namespace RSNManagers
                 {
                     hit.collider.TryGetComponent(out Machine machine);
                     UIManager.PurchaseButtonIsPressed(true);
-                    UIManager.SingleMachineSelected(machine);
+                    UIManager.OpenSingleMachinePanel(machine);
                     return;
                 }
                 else
                 {
                     if (UIManager.anyPanelActive)
                     {
-                        UIManager.CloseAllPanels();
+                        UIManager.HideAllPanels();
                     }
                 }
             }

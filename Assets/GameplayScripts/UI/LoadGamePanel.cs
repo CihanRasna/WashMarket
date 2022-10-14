@@ -48,8 +48,9 @@ namespace GameplayScripts.UI
             {
                 var pathString = $"SaveSlot{i.ToString()}.rsn";
                 var key = $"SaveSlot{i.ToString()}";
-                var settings = new ES3Settings(ES3.EncryptionType.None, "myPassword")
+                var settings = new ES3Settings(ES3.EncryptionType.AES, "saveCrypt")
                 {
+                    compressionType = ES3.CompressionType.Gzip,
                     location = ES3.Location.File,
                     path = pathString
                 };

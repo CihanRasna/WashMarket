@@ -61,7 +61,7 @@ namespace GameplayScripts.UI
             CloseMachinePanel();
         }
 
-        public void OpenUpMachinePanel(Machine machine)
+        public void OpenSingleMachinePanel(Machine machine)
         {
             if (!machine)
             {
@@ -106,7 +106,7 @@ namespace GameplayScripts.UI
         {
             if (currentSelectedMachine)
             {
-                currentSelectedMachine.RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
+                currentSelectedMachine.RepairPricing(out var repairPrice, out var ratio,out var sellPricing);
                 var machine = currentSelectedMachine;
                 var currentDurability = machine.RemainDurability.ToString("00", CultureInfo.InvariantCulture);
                 var maxDurability = _machineMaxDurability.ToString("00", CultureInfo.InvariantCulture);
@@ -119,8 +119,9 @@ namespace GameplayScripts.UI
                     machine.Filled ? $"Working" :
                     $"RepairPrice :{repairPrice.ToString("00", CultureInfo.InvariantCulture)}";
 
+                sellPriceTMP.text = $"Sell : {sellPricing.ToString()} $";
+
                 repairButton.gameObject.SetActive(ratio < 1f);
-                repairButton.interactable = !machine.Filled && !machine.Repairing;
             }
         }
 
@@ -138,7 +139,7 @@ namespace GameplayScripts.UI
         {
             if (currentSelectedMachine)
             {
-                currentSelectedMachine.RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
+                currentSelectedMachine.RepairPricing(out var repairPrice, out var ratio,out var sellPricing);
                 var persist = PersistManager.Instance;
                 if (repairPrice <= persist.Currency)
                 {
