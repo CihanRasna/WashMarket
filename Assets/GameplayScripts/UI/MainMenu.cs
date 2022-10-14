@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using RSNManagers;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -59,6 +60,20 @@ namespace GameplayScripts.UI
 
         private void CheckForAutoLoadData()
         {
+            var exist = false;
+            loadGameButton.gameObject.SetActive(false);
+            
+            for (var i = 1; i < 5; i++)
+            {
+                var manualSavePathString = $"SaveSlot{i}.rsn";
+                exist = ES3.FileExists(manualSavePathString);
+                if (exist)
+                {
+                    break;
+                }
+            }
+            loadGameButton.gameObject.SetActive(exist);
+            
             var pathString = $"SaveSlot0.rsn";
 
             if (ES3.FileExists(pathString))
