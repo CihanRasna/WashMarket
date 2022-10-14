@@ -27,22 +27,7 @@ namespace GameplayScripts.Machines
         {
             navMeshObstacle.enabled = obstacleEnabled;
             CustomerQueuePositions = new Dictionary<int, Transform>(5);
-
-            /*for (var i = 0; i < 5; i++)
-            {
-                var pos = new Vector3(.3f, 0, ((i * 1.5f) * offset));
-                var posHandler = new GameObject
-                {
-                    transform =
-                    {
-                        name = $"[{i}]. Slot",
-                        parent = transform,
-                        localPosition = pos
-                    }
-                };
-                CustomerQueuePositions[i] = posHandler.transform;
-            }*/
-
+            
             for (var i = 0; i < queuePositions.Count; i++)
             {
                 CustomerQueuePositions[i] = queuePositions[i];

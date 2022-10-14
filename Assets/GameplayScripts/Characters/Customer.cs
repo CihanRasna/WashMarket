@@ -97,10 +97,19 @@ namespace GameplayScripts.Characters
 
         public void MachineBroke()
         {
-            _currentlyUsingMachine = null;
-            animator.SetTrigger(Walk);
-            state = State.DudeGoingHome;
-            agent.destination = _gameManager.leavePos.position;
+            if (_currentlyUsingMachine.Filled)
+            {
+                _currentlyUsingMachine = null;
+                animator.SetTrigger(Walk);
+                state = State.DudeGoingHome;
+                agent.destination = _gameManager.leavePos.position;
+            }
+            else
+            {
+                state = State.LookingForFreeMachine;
+                StartCoroutine(LookingForFreeMachine());
+            }
+            
         }
         
         public void MachineFinished()

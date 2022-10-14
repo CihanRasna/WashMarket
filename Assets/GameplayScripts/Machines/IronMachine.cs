@@ -27,7 +27,7 @@ namespace GameplayScripts.Machines
 
         public override void CurrentlyWorking()
         {
-            animator.SetBool(IsWorking, occupied && Filled);
+            animator.SetBool(IsWorking, occupied && Filled && !_needsRepair);
         }
 
         public override void FinishInteraction()

@@ -46,7 +46,6 @@ namespace GameplayScripts.Machines
         public Transform MeshObject => machineMesh;
         public float RemainDurability => remainDurability;
         private event Action WorkDoneAction;
-        private event Action MachineBrokeAction;
 
         protected Customer _currentCustomer;
         protected float remainDurability;
@@ -66,14 +65,14 @@ namespace GameplayScripts.Machines
         public (string machineName, Level currentLevel, float singleWorkTime, float durability, int usingPrice, int
             buyPrice, float capacity, float consumption, int sellPrice, int totalGain, int repairPrice) RefValuesForUI()
         {
-            RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
+            RepairPricing(out var repairPrice, out var ratio,out var sellPricing);
             return (machineName, currentLevel, singleWorkTime, durability, usingPrice, buyPrice, capacity, consumption,
-                sellPrice, totalGain, repairPrice);
+                sellPricing, totalGain, repairPrice);
         }
 
         public virtual void Sell(out int price)
         {
-            price = sellPrice;
+            price = SellPricing();
             Manager.allMachines.Remove(this);
         }
 
@@ -125,6 +124,8 @@ namespace GameplayScripts.Machines
 
         protected virtual void Working()
         {
+            if (Repairing) return;
+            
             var deltaTime = Time.deltaTime;
             if (remainDurability <= 0)
             {
@@ -148,13 +149,12 @@ namespace GameplayScripts.Machines
         public void MachineIsOccupied(Customer customer)
         {
             _currentCustomer = customer;
+            WorkDoneAction += _currentCustomer.MachineFinished;
         }
 
         public void StartWork(Customer customer)
         {
             ButtonColorChanger(Color.red);
-            WorkDoneAction += _currentCustomer.MachineFinished;
-            MachineBrokeAction += _currentCustomer.MachineBroke;
 
             if (!Filled)
             {
@@ -177,24 +177,35 @@ namespace GameplayScripts.Machines
         public void Empty()
         {
             WorkDoneAction -= _currentCustomer.MachineFinished;
-            MachineBrokeAction -= _currentCustomer.MachineBroke;
             _currentCustomer = null;
             occupied = false;
         }
 
-        public void RepairPricing(out int repairPrice, out float ratio, out float corruptAmount)
+        public void RepairPricing(out int repairPrice, out float ratio, out int sellPricing)
         {
-            corruptAmount = maxDurability * 0.1f;
             ratio = Mathf.Clamp01(remainDurability / durability);
             var totalCorruption = Mathf.Clamp01(durability / maxDurability);
             var halfPrice = buyPrice * 0.5f * totalCorruption;
             repairPrice = Mathf.FloorToInt(halfPrice * (1 - ratio));
+            sellPricing = SellPricing();
+        }
+
+        private int SellPricing()
+        {
+            var nonCorruptPrice = buyPrice;
+            var currentCorruption = Mathf.Clamp01(durability / maxDurability);
+            if (float.IsNaN(currentCorruption))
+            {
+                currentCorruption = 1f;
+            }
+            return Mathf.FloorToInt(nonCorruptPrice * currentCorruption);
         }
 
         public void MachineRepairing()
         {
             Repairing = true;
-            RepairPricing(out var repairPrice, out var ratio, out var corruptAmount);
+            RepairPricing(out var repairPrice, out var ratio,out var sellPricing);
+            var corruptAmount = maxDurability * 0.1f;
             durability -= (1f - ratio) * corruptAmount;
             DOTween.To(() => remainDurability, x => remainDurability = x, durability, 2f).OnComplete(() =>
             {
@@ -204,25 +215,13 @@ namespace GameplayScripts.Machines
 
                 Repairing = false;
                 _needsRepair = false;
-                occupied = false;
-                Filled = false;
             });
         }
 
         public void INeedRepair()
         {
-            if (_currentCustomer)
-            {
-                MachineBrokeAction.Invoke();
-                MachineBrokeAction -= _currentCustomer.MachineBroke;
-                WorkDoneAction -= _currentCustomer.MachineFinished;
-            }
-
             ButtonColorChanger(Color.white);
-            _currentCustomer = null;
             _needsRepair = true;
-            occupied = _needsRepair;
-            Filled = false;
 
             CurrentlyWorking();
             animator.SetTrigger(MachineBroken);

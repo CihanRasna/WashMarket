@@ -97,6 +97,7 @@ namespace GameplayScripts.Machines
             var roomList = roomManager.ActiveRooms;
             gameManager.CheckForActiveMachineTypes();
             transform.parent = GetClosestRoom(roomList);
+            machine.enabled = true;
             machine.obstacleEnabled = true;
             navMeshObstacle.enabled = true;
             Destroy(dummyGameObject);
