@@ -46,7 +46,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209110068860759106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9dec77613fa4fb0a62bc89693457069, type: 3}
   m_Name: 
@@ -54,6 +54,7 @@ MonoBehaviour:
   currentLevel: 1
   machineName: Ironing Table
   singleWorkTime: 5
+  maxDurability: 0
   durability: 500
   capacity: 3
   consumption: 0
@@ -66,7 +67,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 832
   machineMesh: {fileID: 4957429949862994285}
+  machineButton: {fileID: 0}
   navMeshObstacle: {fileID: 7419542543216421167}
+  obstacleEnabled: 0
   occupied: 0
   <Filled>k__BackingField: 0
 --- !u!65 &7496623720865217904
@@ -177,7 +180,6 @@ MonoBehaviour:
   componentsToSave:
   - {fileID: 7661911302501536338}
   - {fileID: 697275998212159224}
-  - {fileID: 7419542543216421167}
 --- !u!1 &712064445670148703
 GameObject:
   m_ObjectHideFlags: 0
