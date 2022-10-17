@@ -7,6 +7,12 @@ namespace GameplayScripts.Characters
     {
         [SerializeField] protected float speed = 3f;
         [SerializeField] protected NavMeshAgent agent;
-        [SerializeField] private protected Animator animator;
+        [SerializeField] protected Animator animator;
+        
+        protected bool AgentIsArrived()
+        {
+            return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance &&
+                   (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
+        }
     }
 }

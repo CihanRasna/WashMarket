@@ -25,13 +25,14 @@ namespace RSNManagers
 
         [SerializeField] private GameStates currentState = GameStates.Loading;
 
-        [SerializeField] private Actor playerPrefab;
+        [SerializeField] private Player playerPrefab;
         public Player currentPlayer;
         [SerializeField] private CinemachineVirtualCamera playerCamera;
         [SerializeField] private DayNightCycle shiftTimer;
 
         [SerializeField] private List<Actor> possibleCustomers;
         public List<Machine> allMachines;
+        public List<Worker> allWorkers;
         public Transform leavePos;
         public MeshFilter waitingAreaDemo;
 
@@ -208,24 +209,16 @@ namespace RSNManagers
         }
 
         [CanBeNull]
-        public Machine FindClosestMachine(Customer.WorkType workType, Transform lookerTransform)
+        public Machine FindClosestMachine(Type workType, Transform lookerTransform)
         {
             Machine machine = null;
-            var desiredType = workType switch
-            {
-                Customer.WorkType.Wash => typeof(WashingMachine),
-                Customer.WorkType.Dry => typeof(DryerMachine),
-                Customer.WorkType.Iron => typeof(IronMachine),
-                Customer.WorkType.Pay => typeof(Paydesk),
-                _ => throw new ArgumentOutOfRangeException(nameof(workType), workType, null)
-            };
             var closestDist = float.PositiveInfinity;
 
             for (var i = 0; i < allMachines.Count; i++)
             {
                 var currentMachine = allMachines[i];
                 var machineTransform = currentMachine.transform;
-                if (currentMachine.GetType() == desiredType)
+                if (currentMachine.GetType() == workType)
                 {
                     if (!currentMachine.occupied)
                     {
@@ -240,12 +233,7 @@ namespace RSNManagers
             }
 
             if (machine == null) return null;
-            if (desiredType == typeof(Paydesk))
-            {
-                //Debug.Log("PAYDESK AQ", machine.gameObject);
-                machine.occupied = false;
-            }
-            else
+            if (workType != typeof(Paydesk))
             {
                 machine.occupied = true;
             }

@@ -7,12 +7,12 @@ namespace GameplayScripts.Machines
 {
     public class Paydesk : Machine
     {
-        [SerializeField] private Actor clerk;
+        public Worker clerk;
         private Dictionary<int, Transform> CustomerQueuePositions { get; set; }
 
         [SerializeField] private List<Customer> customers;
         [SerializeField] private List<Transform> queuePositions;
-
+        
         public override void Sell(out int price)
         {
             base.Sell(out price);
@@ -55,8 +55,8 @@ namespace GameplayScripts.Machines
 
         private void OnTriggerEnter(Collider other)
         {
-            var currentClerk = other.GetComponentInParent<Player>();
-            if (currentClerk)
+            var currentClerk = other.GetComponentInParent<Worker>();
+            if (!clerk && currentClerk)
             {
                 clerk = currentClerk;
             }
@@ -64,8 +64,8 @@ namespace GameplayScripts.Machines
 
         private void OnTriggerExit(Collider other)
         {
-            var currentClerk = other.GetComponentInParent<Player>();
-            if (currentClerk)
+            var currentClerk = other.GetComponentInParent<Worker>();
+            if (clerk && currentClerk)
             {
                 clerk = null;
             }

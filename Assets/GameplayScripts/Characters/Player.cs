@@ -2,14 +2,12 @@ using System;
 using DG.Tweening;
 using RSNManagers;
 using UnityEngine;
-
+ 
 namespace GameplayScripts.Characters
 {
     [SelectionBase]
-    public class Player : Actor
+    public class Player : Worker
     {
-        private static readonly int Blend = Animator.StringToHash("Blend");
-
         private void Start()
         {
             transform.position = PersistManager.Instance.PlayersLastPos;
@@ -42,7 +40,6 @@ namespace GameplayScripts.Characters
         {
             animator.SetFloat(Blend, v);
         }
-
 
         [Serializable]
         public struct SaveData

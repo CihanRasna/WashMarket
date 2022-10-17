@@ -57,7 +57,7 @@ MonoBehaviour:
   maxDurability: 0
   durability: 500
   capacity: 3
-  consumption: 0
+  consumption: 5
   usingPrice: 10
   animator: {fileID: 6244180412341777689}
   buyPrice: 1000

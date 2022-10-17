@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GameplayScripts.Cloth;
 using GameplayScripts.Machines;
@@ -38,7 +39,7 @@ namespace GameplayScripts.Characters
 
         [SerializeField] private State state = State.Idle;
         public State StateReadonly => state;
-        
+
         private Vector3 _targetPosition;
         private Machine _currentlyUsingMachine;
 
@@ -71,28 +72,32 @@ namespace GameplayScripts.Characters
             {
                 StartCoroutine(LookingForFreeMachine());
             }
-            
+
             Debug.Log("SPAWNED");
         }
 
-        private WorkType CheckClothesWorkType()
+        private Type CheckClothesWorkType(out WorkType clothesWorkType)
         {
             if (_customerItem.needWash)
             {
-                return workType = WorkType.Wash;
+                workType = clothesWorkType = WorkType.Wash;
+                return typeof(WashingMachine);
             }
 
             if (_customerItem.needDry)
             {
-                return workType = WorkType.Dry;
+                workType = clothesWorkType = WorkType.Dry;
+                return typeof(DryerMachine);
             }
 
             if (_customerItem.needIron)
             {
-                return workType = WorkType.Iron;
+                workType = clothesWorkType = WorkType.Iron;
+                return typeof(IronMachine);
             }
 
-            return workType = WorkType.Pay;
+            workType = clothesWorkType = WorkType.Pay;
+            return typeof(Paydesk);
         }
 
         public void MachineBroke()
@@ -109,12 +114,11 @@ namespace GameplayScripts.Characters
                 state = State.LookingForFreeMachine;
                 StartCoroutine(LookingForFreeMachine());
             }
-            
         }
-        
+
         public void MachineFinished()
         {
-            var clothesWorkType = CheckClothesWorkType();
+            CheckClothesWorkType(out var clothesWorkType);
             if (clothesWorkType == WorkType.Wash)
             {
                 _customerItem.needWash = false;
@@ -135,8 +139,8 @@ namespace GameplayScripts.Characters
 
         private IEnumerator LookingForFreeMachine()
         {
-            var clothesWorkType = CheckClothesWorkType();
-            _currentlyUsingMachine = _gameManager.FindClosestMachine(clothesWorkType, transform);
+            var machine = CheckClothesWorkType(out var clothesWorkType);
+            _currentlyUsingMachine = _gameManager.FindClosestMachine(machine, transform);
 
             if (_currentlyUsingMachine)
             {
@@ -225,7 +229,7 @@ namespace GameplayScripts.Characters
 
             state = State.Patrol;
             animator.SetTrigger(Walk);
-            
+
             agent.destination = _gameManager.CalculateRandomPoint();
             //agent.destination = RandomNavSphere(transform.position, 5f, -1); //_gameManager.leavePos.position; //;
         }
@@ -287,16 +291,10 @@ namespace GameplayScripts.Characters
             return navHit.position;
         }
 
-        private bool AgentIsArrived()
-        {
-            return !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance &&
-                   (!agent.hasPath || agent.velocity.sqrMagnitude == 0f);
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawSphere(agent.destination,0.2f);
+            Gizmos.DrawSphere(agent.destination, 0.2f);
         }
     }
 }
