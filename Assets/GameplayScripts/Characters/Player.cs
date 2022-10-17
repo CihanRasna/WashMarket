@@ -8,7 +8,7 @@ namespace GameplayScripts.Characters
     [SelectionBase]
     public class Player : Worker
     {
-        private void Start()
+        protected override void Start()
         {
             transform.position = PersistManager.Instance.PlayersLastPos;
         }

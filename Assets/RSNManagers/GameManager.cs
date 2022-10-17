@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cinemachine;
 using GameplayScripts.Characters;
 using GameplayScripts.Cloth;
@@ -48,6 +49,8 @@ namespace RSNManagers
         public List<IronMachine> ironMachines = new List<IronMachine>();
         public List<Paydesk> payDesks = new List<Paydesk>();
 
+        public List<Clerk> allClerks = new List<Clerk>();
+
         protected override void Awake()
         {
             base.Awake();
@@ -62,13 +65,13 @@ namespace RSNManagers
 
             shiftTimer.ShiftStartedAction += ShiftStarted;
             shiftTimer.ShiftEndedAction += ShiftEnded;
-            
+
             //ES3AutoSaveMgr.Current.Load();
-            
+
             CheckForActiveMachineTypes();
             CalculateCornerPoints();
         }
-        
+
         protected void OnApplicationQuit()
         {
             SaveLoadManager.Instance.SaveData(0);
@@ -78,7 +81,7 @@ namespace RSNManagers
         private void MachineListSeparator()
         {
             var currentMachines = allMachines;
-            
+
             for (var i = 0; i < currentMachines.Count; i++)
             {
                 var currentMachine = currentMachines[i];
@@ -94,7 +97,7 @@ namespace RSNManagers
                 {
                     ironMachines.Add(currentMachine as IronMachine);
                 }
-                else
+                else if (currentMachine.GetType() == typeof(Paydesk) && !payDesks.Contains(currentMachine as Paydesk))
                 {
                     payDesks.Add(currentMachine as Paydesk);
                 }
@@ -108,7 +111,7 @@ namespace RSNManagers
             shopHasWasher = washingMachines.Count != 0;
             shopHasDryer = dryerMachines.Count != 0;
             shopHasIronTable = ironMachines.Count != 0;
-            
+
             clothPicker.usableClothTypes = new List<CustomerItem>(clothPicker.allClothTypes);
 
             for (var i = 0; i < clothPicker.allClothTypes.Count; i++)
@@ -244,7 +247,7 @@ namespace RSNManagers
         private List<Vector3> _verticesList = new List<Vector3>();
         private readonly List<Vector3> _corners = new List<Vector3>();
         private readonly List<Vector3> _edgeVectors = new List<Vector3>();
-        
+
         private void CalculateEdgeVectors(int vectorCorner)
         {
             _edgeVectors.Clear();
@@ -257,7 +260,7 @@ namespace RSNManagers
         {
             _verticesList = new List<Vector3>(waitingAreaDemo.mesh.vertices);
             _corners.Clear();
-            
+
             _corners.Add(transform.TransformPoint(_verticesList[0])); //corner points are added to show  on the editor
             _corners.Add(transform.TransformPoint(_verticesList[10]));
             _corners.Add(transform.TransformPoint(_verticesList[110]));
@@ -266,10 +269,10 @@ namespace RSNManagers
 
         public Vector3 CalculateRandomPoint()
         {
-            int randomCornerIdx = Random.Range(0, 2) == 0 ? 0 : 2; 
+            int randomCornerIdx = Random.Range(0, 2) == 0 ? 0 : 2;
             CalculateEdgeVectors(randomCornerIdx);
 
-            var u = Random.Range(0.0f, 1.0f); 
+            var u = Random.Range(0.0f, 1.0f);
             var v = Random.Range(0.0f, 1.0f);
 
             if (v + u > 1)

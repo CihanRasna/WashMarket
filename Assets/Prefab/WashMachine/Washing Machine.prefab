@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 7348942349668219222}
   - component: {fileID: 8523108626586189314}
   - component: {fileID: -3729881538575675559}
-  - component: {fileID: -5769037801402631926}
+  - component: {fileID: -6280932665540518864}
   m_Layer: 6
   m_Name: Washing Machine
   m_TagString: Untagged
@@ -430,7 +430,7 @@ MonoBehaviour:
     - {fileID: 4809794220370922126, guid: c182608ecc5df014eaac88e6d05c1a6f, type: 3}
     - {fileID: 7474771267959749648}
     _Values: 50c9b6c1a1e6fa41661c5be38279d926f61eec2d4b95016026b09439b049b26b01b3776b52983300f4bbd06706109f4ab1dd071dea534f1a35e818ae85cc0e1c6aefe2cf026ed45debeb220666696635af21772dbe6a7f52645d366a7f857b3e37122e0a0d90b342f655cd00cfb64b347e1da259bcc4242b6f346ca4376ade65901c2facc5a3d7402c46c99763817d1a56951763d82a0505c9a56427dbf1f560cccc8f4d79609124456184038dbb8f1248ae04327ebec265e9d51cdfc1509a1d3d29cb96f130a048273c1d76a501770d
---- !u!114 &-5769037801402631926
+--- !u!114 &-6280932665540518864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -449,5 +449,5 @@ MonoBehaviour:
   saveActive: 0
   saveChildren: 0
   componentsToSave:
-  - {fileID: 7348942349668219222}
   - {fileID: 8303348802049925523}
+  - {fileID: 7348942349668219222}

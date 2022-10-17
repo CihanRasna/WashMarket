@@ -15,6 +15,7 @@ namespace GameplayScripts.Characters
         protected override void Start()
         {
             base.Start();
+            GameManager.allClerks.Add(this);
             workerType = WorkerType.Clerk;
             if (state == State.Idle)
             {
@@ -22,7 +23,7 @@ namespace GameplayScripts.Characters
             }
         }
 
-        private void LookingForWorkPlace()
+        public void LookingForWorkPlace()
         {
             Paydesk machine = null;
             var desks = new List<Paydesk>(GameManager.payDesks);
@@ -53,7 +54,8 @@ namespace GameplayScripts.Characters
             }
             else
             {
-                Debug.Log("NO PLACE TO WORK");
+                state = State.Idle;
+                workingPlace = null;
                 agent.destination = GameManager.CalculateRandomPoint();
                 // TODO: ALERT NO PLACE TO WORK VFX
             }

@@ -131,15 +131,12 @@ namespace RSNManagers
                 GameManager.Instance.StartGame();
             }
 
-            if (_currentDraggable)
+            if (_currentDraggable is {CanPlace:true})
             {
-                if (_currentDraggable.CanPlace)
-                {
-                    _currentMachine.navMeshObstacle.enabled = true;
-                    _currentDraggable.Placed();
-                    _currentDraggable = null;
-                    _currentMachine = null;
-                }
+                _currentMachine.navMeshObstacle.enabled = true;
+                _currentDraggable.Placed();
+                _currentDraggable = null;
+                _currentMachine = null;
             }
             else
             {

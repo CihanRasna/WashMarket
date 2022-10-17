@@ -18,6 +18,10 @@ namespace GameplayScripts.Machines
             base.Sell(out price);
             Manager.payDesks.Remove(this);
             Manager.CheckForActiveMachineTypes();
+            if (clerk is Clerk myClerk)
+            {
+                myClerk.LookingForWorkPlace();
+            }
             Destroy(gameObject);
         }
 
